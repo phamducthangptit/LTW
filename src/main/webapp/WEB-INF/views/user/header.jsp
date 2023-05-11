@@ -1,5 +1,6 @@
 
 <!-- Start Top Nav -->
+<%@page import="ptithcm.model.NhanVien"%>
 <%@page import="ptithcm.model.KhachHang"%>
 <nav
 	class="navbar navbar-expand-lg bg-dark navbar-light d-none d-lg-block"
@@ -9,21 +10,7 @@
 			<div>
 				<i class="fa fa-envelope mx-2"></i> <a
 					class="navbar-sm-brand text-light text-decoration-none"
-					href="mailto:info@company.com">info@company.com</a> <i
-					class="fa fa-phone mx-2"></i> <a
-					class="navbar-sm-brand text-light text-decoration-none"
-					href="tel:010-020-0340">010-020-0340</a>
-			</div>
-			<div>
-				<a class="text-light" href="https://fb.com/templatemo"
-					target="_blank" rel="sponsored"><i
-					class="fab fa-facebook-f fa-sm fa-fw me-2"></i></a> <a
-					class="text-light" href="https://www.instagram.com/"
-					target="_blank"><i class="fab fa-instagram fa-sm fa-fw me-2"></i></a>
-				<a class="text-light" href="https://twitter.com/" target="_blank"><i
-					class="fab fa-twitter fa-sm fa-fw me-2"></i></a> <a class="text-light"
-					href="https://www.linkedin.com/" target="_blank"><i
-					class="fab fa-linkedin fa-sm fa-fw"></i></a>
+					href="mailto:banlaptop12ptit@gmail.com">banlaptop12ptit@gmail.com</a>
 			</div>
 		</div>
 	</div>
@@ -80,14 +67,21 @@
 					class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark"></span>
 				</a>
 				<%
-				String hr = "";
-				Object ob = session.getAttribute("user");
-				KhachHang kh = new KhachHang();
-				kh = (KhachHang) ob;
-				hr = "thongtincanhan.htm";
-				if (kh == null) {
-					hr = "dangnhap.htm";
-				}
+					String hr = "";
+					Object ob = session.getAttribute("user");
+					KhachHang kh = new KhachHang();
+					NhanVien nv = new NhanVien();
+					try{
+						kh = (KhachHang) ob;
+						hr = "thongtincanhanuser.htm";
+					}
+					catch (Exception ex){
+						nv = (NhanVien) ob;
+						hr = "thongtincanhannv.htm";
+					}
+					if (ob == null) {
+						hr = "dangnhap.htm";
+					}
 				%>
 				<a class="nav-icon position-relative text-decoration-none"
 					href="<%=hr%>"> <i class="fa fa-fw fa-user text-dark mr-3"></i>

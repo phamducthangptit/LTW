@@ -1,10 +1,13 @@
 package ptithcm.model;
 
 import java.sql.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -41,6 +44,9 @@ public class NhanVien {
 	@Column(name = "ROLE")
 	private String role;
 
+	@OneToMany(mappedBy = "nhanVien", fetch = FetchType.EAGER)
+	private List<DotGiamGia> dsDotGiamGia;
+	
 	public NhanVien() {
 	}
 
