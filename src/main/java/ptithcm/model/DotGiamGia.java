@@ -1,45 +1,53 @@
 package ptithcm.model;
 
 import java.sql.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "DOT_GIAM_GIA")
 public class DotGiamGia {
-	
 	@Id
 	@Column(name = "MADOT")
 	private String maDot;
-	
+
+//	@Temporal(TemporalType.TIMESTAMP)
+//	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
 	@Column(name = "NGAYBATDAU")
-	private Date ngayBD;
-	
+	private Date ngayBatDau;
+
+//	@Temporal(TemporalType.TIMESTAMP)
+//	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
 	@Column(name = "NGAYKETTHUC")
-	private Date ngayKT;
-	
+	private Date ngayKetThuc;
+
 	@Column(name = "MOTA")
 	private String moTa;
-	
-	@ManyToOne
-	@JoinColumn(name = "maNV")
-	private NhanVien nhanVien;
 
-	
+	@ManyToOne
+	@JoinColumn(name = "MANV")
+	private NhanVien maNV;
+
+	@OneToMany(mappedBy = "maDot", fetch = FetchType.LAZY)
+	private List<CTDotGiamGia> ctDotGiamGia;
+
 	public DotGiamGia() {
 	}
 
-	public DotGiamGia(String maDot, Date ngayBD, Date ngayKT, String moTa, NhanVien nhanVien) {
+	public DotGiamGia(String maDot, Date ngayBatDau, Date ngayKetThuc, String moTa, NhanVien maNV) {
 		this.maDot = maDot;
-		this.ngayBD = ngayBD;
-		this.ngayKT = ngayKT;
+		this.ngayBatDau = ngayBatDau;
+		this.ngayKetThuc = ngayKetThuc;
 		this.moTa = moTa;
-		this.nhanVien = nhanVien;
+		this.maNV = maNV;
 	}
 
 	public String getMaDot() {
@@ -50,20 +58,20 @@ public class DotGiamGia {
 		this.maDot = maDot;
 	}
 
-	public Date getNgayBD() {
-		return ngayBD;
+	public Date getNgayBatDau() {
+		return ngayBatDau;
 	}
 
-	public void setNgayBD(Date ngayBD) {
-		this.ngayBD = ngayBD;
+	public void setNgayBatDau(Date ngayBatDau) {
+		this.ngayBatDau = ngayBatDau;
 	}
 
-	public Date getNgayKT() {
-		return ngayKT;
+	public Date getNgayKetThuc() {
+		return ngayKetThuc;
 	}
 
-	public void setNgayKT(Date ngayKT) {
-		this.ngayKT = ngayKT;
+	public void setNgayKetThuc(Date ngayKetThuc) {
+		this.ngayKetThuc = ngayKetThuc;
 	}
 
 	public String getMoTa() {
@@ -74,13 +82,20 @@ public class DotGiamGia {
 		this.moTa = moTa;
 	}
 
-	public NhanVien getNhanVien() {
-		return nhanVien;
+	public NhanVien getMaNV() {
+		return maNV;
 	}
 
-	public void setNhanVien(NhanVien nhanVien) {
-		this.nhanVien = nhanVien;
+	public void setMaNV(NhanVien maNV) {
+		this.maNV = maNV;
 	}
-	
-	
+
+	public List<CTDotGiamGia> getCtDotGiamGia() {
+		return ctDotGiamGia;
+	}
+
+	public void setCtDotGiamGia(List<CTDotGiamGia> ctDotGiamGia) {
+		this.ctDotGiamGia = ctDotGiamGia;
+	}
+
 }

@@ -1,10 +1,13 @@
 package ptithcm.model;
 
 import java.sql.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -35,6 +38,12 @@ public class KhachHang {
 	@Column(name = "TRANGTHAI")
 	private int trangThai;
 
+	@OneToMany(mappedBy = "email", fetch = FetchType.LAZY)
+	private List<BinhLuan> binhLuan;
+	
+	@OneToMany(mappedBy = "email", fetch = FetchType.LAZY)
+	private List<GioHang> gioHang;
+	
 	public KhachHang() {
 	}
 
@@ -122,6 +131,22 @@ public class KhachHang {
 
 	public void setTrangThai(int trangThai) {
 		this.trangThai = trangThai;
+	}
+
+	public List<BinhLuan> getBinhLuan() {
+		return binhLuan;
+	}
+
+	public void setBinhLuan(List<BinhLuan> binhLuan) {
+		this.binhLuan = binhLuan;
+	}
+
+	public List<GioHang> getGioHang() {
+		return gioHang;
+	}
+
+	public void setGioHang(List<GioHang> gioHang) {
+		this.gioHang = gioHang;
 	}
 
 }

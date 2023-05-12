@@ -1,7 +1,9 @@
 package ptithcm.controller;
 
 import java.sql.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -15,8 +17,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import ptithcm.model.CTDotGiamGia;
 import ptithcm.model.DotGiamGia;
+import ptithcm.model.LoaiSanPham;
 import ptithcm.model.NhaCungCap;
 import ptithcm.model.NhanVien;
 
@@ -27,34 +32,96 @@ public class StaffController {
 	SessionFactory factory;
 
 	@RequestMapping(value = "/taodotgiamgia")
-	public String taoDotGiamGia() {
+	public String taoDotGiamGia(Model model) {
+		String hql = "FROM LoaiSanPham";
+		Session session = factory.getCurrentSession();
+		Query query = session.createQuery(hql);
+		model.addAttribute("maxLSP", query.list().size());
 		return "staff/taodotgiamgia";
 	}
 
 	@RequestMapping(value = "/taodotgiamgia", method = RequestMethod.POST)
-	public String luuDotGiamGia(HttpServletRequest request, Model model, HttpSession session) {
-		String nBD = request.getParameter("ngayBD");
-		Date ngayBD = Date.valueOf(nBD);
-		String nKT = request.getParameter("ngayKT");
-		Date ngayKT = Date.valueOf(nKT);
-		String moTa = request.getParameter("moTa");
-		Object user = session.getAttribute("user");
-		NhanVien nhanVien = new NhanVien();
-		nhanVien = (NhanVien) user;
+	public String luuDotGiamGia(HttpServletRequest request, Model model, HttpSession session,
+			@RequestParam(value = "taoDGG", required = false) String taoDGG,
+			@RequestParam(value = "luuDGG", required = false) String luuDGG) {
 		Session s = factory.getCurrentSession();
+		if (taoDGG != null) {// neu click vao button tao dgg
+			String nBD = request.getParameter("ngayBD");
+			Date ngayBD = Date.valueOf(nBD);
+			String nKT = request.getParameter("ngayKT");
+			Date ngayKT = Date.valueOf(nKT);
+			String moTa = request.getParameter("moTa");
+			int soLuongSPGG = Integer.parseInt(request.getParameter("slSP"));
+			Object user = session.getAttribute("user");
+			NhanVien nhanVien = new NhanVien();
+			nhanVien = (NhanVien) user;
+			String hql = "from DotGiamGia";
+			Query query = s.createQuery(hql);
+			DotGiamGia dotGG = new DotGiamGia("", ngayBD, ngayKT, moTa, nhanVien);
+			dotGG.setMaDot("DGG" + (query.list().size() + 1));
+			if (ngayBD.compareTo(ngayKT) < 0) { // ngay bd nho hon ngay kt -> true
+				s.save(dotGG);
+				model.addAttribute("ErrorGG", "");
+			} else {
+				model.addAttribute("ErrorGG", "Ngày kết thúc không hợp lệ, vui lòng chọn lại!");
+			}
+			model.addAttribute("DGG", dotGG);
+			model.addAttribute("slSP", soLuongSPGG);
+			hql = "FROM LoaiSanPham";
+			query = s.createQuery(hql);
+			model.addAttribute("listLoaiSP", query.list());
+			return "staff/taodotgiamgia";
+		} else if (luuDGG != null) {
+			String[] listSPGG = request.getParameterValues("maLSP");
+			String[] listPTGiamGia = request.getParameterValues("phamTramGiam");
+			int n = listPTGiamGia.length;
+			String maDot = request.getParameter("maDot");
+			// check xem 1 loại sp có được giảm giá trong cùng 1 lần hay không
+			Set<String> setSPGG = new HashSet<>();
+			for (String string : listSPGG) {
+				setSPGG.add(string);
+			}
+			if (setSPGG.size() != listSPGG.length) {
+				model.addAttribute("ErrorDGG", "Đã trùng loại sản phẩm trong đợt giảm giá!Vui lòng chọn lại!");
+				
+				String nBD = request.getParameter("ngayBD");
+				Date ngayBD = Date.valueOf(nBD);
+				String nKT = request.getParameter("ngayKT");
+				Date ngayKT = Date.valueOf(nKT);
+				String moTa = request.getParameter("moTa");
+				
+				int soLuongSPGG = Integer.parseInt(request.getParameter("slSP"));
+				Object user = session.getAttribute("user");
+				NhanVien nhanVien = new NhanVien();
+				nhanVien = (NhanVien) user;
+				DotGiamGia dotGG = new DotGiamGia(maDot, ngayBD, ngayKT, moTa, nhanVien);
+				
+				model.addAttribute("DGG", dotGG);
+				model.addAttribute("slSP", soLuongSPGG);
+				String hql = "FROM LoaiSanPham";
+				Query query = s.createQuery(hql);
+				model.addAttribute("listLoaiSP", query.list());
+				return "staff/taodotgiamgia";
+			} else {
+				for (int i = 0; i < n; i++) {
+					DotGiamGia dgg = (DotGiamGia) s.get(DotGiamGia.class, maDot);
+					LoaiSanPham lsp = (LoaiSanPham) s.get(LoaiSanPham.class, listSPGG[i]);
+//					String hql = "INSERT INTO CTDotGiamGia(maLoai, maDot, tiLeGiam) VALUES (:maLoai, :maDot, :tiLeGiam)";
+//					Query query = s.createQuery(hql);
+//					query.setParameter("maDot", dgg);
+//					query.setParameter("maLoai", lsp);
+//					query.setParameter("tiLeGiam", listPTGiamGia[i]);
+					CTDotGiamGia ctDGG = new CTDotGiamGia(Integer.parseInt(listPTGiamGia[i]), lsp, dgg);
+					s.save(ctDGG);
+//					query.executeUpdate();
+				}
+			}
+		}
 		String hql = "from DotGiamGia";
 		Query query = s.createQuery(hql);
 		List<DotGiamGia> listDGG = query.list();
-		DotGiamGia dotGG = new DotGiamGia("", ngayBD, ngayKT, moTa, nhanVien);
-		dotGG.setMaDot("DGG" + (listDGG.size() + 1));
-		if (ngayBD.compareTo(ngayKT) < 0) { // ngay bd nho hon ngay kt -> true
-			s.save(dotGG);
-			model.addAttribute("ErrorGG", "");
-		} else {
-			model.addAttribute("ErrorGG", "Ngày kết thúc không hợp lệ, vui lòng chọn lại!");
-		}
-		model.addAttribute("DGG", dotGG);
-		return "staff/taodotgiamgia";
+		model.addAttribute("listDGG", listDGG);
+		return "staff/danhsachdotgiamgia";
 	}
 
 	@RequestMapping(value = "/danhsachdotgiamgia")
@@ -115,10 +182,73 @@ public class StaffController {
 			return "staff/themnhacungcap";
 		}
 	}
-	
+
 	@RequestMapping(value = "/danhsachnhacungcap")
 	public String danhSachNCC(Model model) {
 		Session session = factory.getCurrentSession();
+		String hql = "FROM NhaCungCap";
+		Query query = session.createQuery(hql);
+		model.addAttribute("listNCC", query.list());
+		return "staff/danhsachnhacungcap";
+	}
+
+	@RequestMapping(value = "/ctncc")
+	public String chiTietNCC(@RequestParam("id") String id, Model model) {
+		Session session = factory.getCurrentSession();
+		String hql = "FROM NhaCungCap NCC WHERE NCC.maNCC = :mancc";
+		Query query = session.createQuery(hql);
+		query.setParameter("mancc", id);
+		NhaCungCap nhaCungCap = (NhaCungCap) query.list().get(0);
+		model.addAttribute("nhaCC", nhaCungCap);
+		model.addAttribute("tontaiDDH", nhaCungCap.getDonDatHang().size());
+		model.addAttribute("id", id);
+		return "staff/ctnhacungcap";
+	}
+
+	@RequestMapping(value = "/ctncc", method = RequestMethod.POST)
+	public String luuThongTinNCC(HttpServletRequest request, Model model) {
+		String maNCC = request.getParameter("maNCC");
+		String tenNCC = request.getParameter("tenNCC");
+		String diaChi = request.getParameter("diaChi");
+		String email = request.getParameter("email");
+		String sdt = request.getParameter("SDT");
+		String id = request.getParameter("id");
+		Session session = factory.getCurrentSession();
+		NhaCungCap nhaCungCapCheck = (NhaCungCap) session.get(NhaCungCap.class, maNCC); // check xem nếu có thay đổi mã
+																						// thì mã đã tồn tại chưa
+		NhaCungCap nhaCC = new NhaCungCap(maNCC, tenNCC, diaChi, sdt, email);
+		if (nhaCungCapCheck != null && !maNCC.equals(id)) {
+			model.addAttribute("ErrorNCC", "Mã nhà cung cấp đã tồn tại! Vui lòng nhập mã khác!");
+			model.addAttribute("nhaCC", nhaCC);
+			model.addAttribute("tontaiDDH", "0");
+		} else {
+			NhaCungCap nhaCungCapOld = (NhaCungCap) session.get(NhaCungCap.class, id); // lay ra nha cc cu
+			if (nhaCungCapOld.getDonDatHang().size() == 0) {
+				session.delete(nhaCungCapOld);
+				session.save(nhaCC); // insert lai nha cc
+				model.addAttribute("nhaCC", nhaCC);
+				model.addAttribute("tontaiDDH", "0");
+			} else {
+				nhaCungCapCheck.setDiaChi(diaChi);
+				nhaCungCapCheck.setEmail(email);
+				nhaCungCapCheck.setSdt(sdt);
+				session.merge(nhaCungCapCheck);
+				model.addAttribute("nhaCC", nhaCungCapCheck);
+				model.addAttribute("tontaiDDH", nhaCungCapCheck.getDonDatHang().size());
+			}
+		}
+		model.addAttribute("id", maNCC);
+		return "staff/ctnhacungcap";
+
+	}
+
+	@RequestMapping(value = "/deletencc")
+	public String deleteNCC(@RequestParam("id") String id, Model model) {
+		Session session = factory.getCurrentSession();
+		NhaCungCap nhaCungCapCheck = (NhaCungCap) session.get(NhaCungCap.class, id);
+		if (nhaCungCapCheck.getDonDatHang().size() == 0) {
+			session.delete(nhaCungCapCheck);
+		}
 		String hql = "FROM NhaCungCap";
 		Query query = session.createQuery(hql);
 		model.addAttribute("listNCC", query.list());

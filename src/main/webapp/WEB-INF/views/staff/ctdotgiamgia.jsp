@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Tạo đợt giảm giá</title>
+<title>Chi tiết đợt giảm giá</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -35,7 +35,7 @@
 
 <body>
 	<div class="container mt-4">
-		<h2 style="text-align: center;">Tạo đợt giảm giá</h2>
+		<h2 style="text-align: center;">Chi tiết đợt giảm giá</h2>
 		<form action="taodotgiamgia.htm" method="post">
 			<div class="row justify-content-center">
 				<div class="col-sm-6">

@@ -44,9 +44,35 @@ public class NhanVien {
 	@Column(name = "ROLE")
 	private String role;
 
-	@OneToMany(mappedBy = "nhanVien", fetch = FetchType.EAGER)
-	private List<DotGiamGia> dsDotGiamGia;
+	@OneToMany(mappedBy = "maNV", fetch = FetchType.LAZY)
+	private List<DotGiamGia> dotGiamGia;
 	
+	@OneToMany(mappedBy = "maNV", fetch = FetchType.LAZY)
+	private List<ChinhSuaGia> chinhSuaGia;
+	
+	@OneToMany(mappedBy = "maNV", fetch = FetchType.LAZY)
+	private List<DonDatHang> donDatHang;
+	
+	@OneToMany(mappedBy = "maNV", fetch = FetchType.LAZY)
+	private List<PhieuNhap> phieuNhap;
+	
+	@OneToMany(mappedBy = "maNV", fetch = FetchType.LAZY)
+	private List<GioHang> gioHang;
+	
+	@OneToMany(mappedBy = "maShipper", fetch = FetchType.LAZY)
+	private List<GioHang> gioHangShip;
+	
+	@OneToMany(mappedBy = "maNV", fetch = FetchType.LAZY)
+	private List<PhieuBaoHanh> phieuBaoHanh;
+	
+	@OneToMany(mappedBy = "maNVNhan", fetch = FetchType.LAZY)
+	private List<CTBaoHanh> ctBaoHanh1;
+	
+	@OneToMany(mappedBy = "maNVTra", fetch = FetchType.LAZY)
+	private List<CTBaoHanh> ctBaoHanh2;
+	
+	@OneToMany(mappedBy = "maNV", fetch = FetchType.LAZY)
+	private List<PhieuTra> phieuTra;
 	public NhanVien() {
 	}
 

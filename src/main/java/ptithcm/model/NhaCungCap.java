@@ -1,28 +1,38 @@
 package ptithcm.model;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "NHA_CUNG_CAP")
+@Table(name="NHA_CUNG_CAP")
 public class NhaCungCap {
 	@Id
-	@Column(name = "MANCC")
+	@Column(name="MANCC")
 	private String maNCC;
 	
-	@Column(name = "TENNCC")
+	@Column(name="TENNCC")
 	private String tenNCC;
 	
-	@Column(name = "DIACHI")
+	@Column(name="DIACHI")
 	private String diaChi;
-
-	@Column(name = "SDT")
+	
+	@Column(name="SDT")
 	private String sdt;
 	
-	@Column(name = "EMAIL")
+	@Column(name="EMAIL")
 	private String email;
+	
+	@OneToMany(mappedBy = "maNCC", fetch = FetchType.EAGER)
+	private List<CungCap> cungCap;
+	
+	@OneToMany(mappedBy = "maNCC", fetch = FetchType.EAGER)
+	private List<DonDatHang> donDatHang;
 
 	public NhaCungCap() {
 	}
@@ -74,4 +84,21 @@ public class NhaCungCap {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
+	public List<CungCap> getCungCap() {
+		return cungCap;
+	}
+
+	public void setCungCap(List<CungCap> cungCap) {
+		this.cungCap = cungCap;
+	}
+
+	public List<DonDatHang> getDonDatHang() {
+		return donDatHang;
+	}
+
+	public void setDonDatHang(List<DonDatHang> donDatHang) {
+		this.donDatHang = donDatHang;
+	}
+	
 }

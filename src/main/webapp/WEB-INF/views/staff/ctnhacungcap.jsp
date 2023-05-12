@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Thêm nhà cung cấp</title>
+<title>Chi tiết nhà cung cấp</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -34,21 +34,23 @@
 </head>
 
 <body>
-	<h2 style="text-align: center;">Thêm nhà cung cấp</h2>
+	<h2 style="text-align: center;">Chi tiết nhà cung cấp</h2>
 		<div class="container mt-4">
-		<form action="themnhacungcap.htm" method="post">
+		<form action="ctncc.htm" method="post">
 			<div class="row justify-content-center">
 				<div class="col-sm-6">
 					<div class="mb-3">
-						<h6 style="color: red;">${ErrorMaNCC}</h6>
+						<h6 style="color: red;">${ErrorNCC}</h6>
 						<label for="maNCC" class="form-label">Mã nhà cung cấp</label> 
-						<input type="text" class="form-control" name="maNCC" required="required" value="${nhaCC.maNCC}">
+						<input hidden="hidden" name="id" value="${id }">
+						<input type="text" class="form-control" name="maNCC" required="required" value="${nhaCC.maNCC}" 
+						${ tontaiDDH == 0 ? '' :'readonly'} >
 					</div>
 
 					<div class="mb-3">
-					<h6 style="color: red;">${ErrorTenNCC}</h6>
 						<label for="tenNCC" class="form-label">Tên nhà cung cấp</label> 
-						<input type="text" class="form-control" name="tenNCC" required="required" value="${nhaCC.tenNCC}">
+						<input type="text" class="form-control" name="tenNCC" required="required" value="${nhaCC.tenNCC}" 
+						${ tontaiDDH == 0 ? '' :'readonly'}>
 					</div>
 
 					<div class="mb-3">
@@ -67,7 +69,7 @@
 					
 					<div class="button-container">
 						<button type="submit" class="btn btn-success mb-4"
-							style="width: 170px;">Thêm nhà cung cấp</button>
+							style="width: 200px;">Lưu thông tin nhà cung cấp</button>
 					</div>
 
 				</div>

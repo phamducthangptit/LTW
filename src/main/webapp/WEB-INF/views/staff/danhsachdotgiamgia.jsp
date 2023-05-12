@@ -59,10 +59,10 @@
 						<tr class="body">
 							<td><%=count%></td>
 							<td>${DGG.maDot }</td>
-							<td>${DGG.ngayBD }</td>
-							<td>${DGG.ngayKT }</td>
+							<td>${DGG.ngayBatDau }</td>
+							<td>${DGG.ngayKetThuc }</td>
 							<td>${DGG.moTa }</td>
-							<td>${DGG.nhanVien.maNV }</td>
+							<td>${DGG.maNV.maNV }</td>
 							<td><a href="ctdotgg.htm?id=${DGG.maDot}"> <i
 									class="fa fa-pencil-alt"></i>
 							</a></td>

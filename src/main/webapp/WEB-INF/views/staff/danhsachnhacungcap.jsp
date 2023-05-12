@@ -32,8 +32,8 @@
 }
 </style>
 </head>
-
 <body>
+	<section class="bg-light">
 	<h2 style="text-align: center;">Danh sách nhà cung cấp</h2>
 	<div class="container mt-4">
 		<form action="" method="post">
@@ -63,11 +63,11 @@
 							<td>${NCC.diaChi }</td>
 							<td>${NCC.email }</td>
 							<td>${NCC.sdt }</td>
-							<td><a href="ctdotgg.htm?id=${DGG.maDot}"> <i
+							<td><a href="ctncc.htm?id=${NCC.maNCC}"> <i
 									class="fa fa-pencil-alt"></i>
 							</a></td>
-							<td><a href="deletencc.htm?id=${NCC.maNCC}"
-								onclick="return confirmDelete(event)"> <i
+							<td ><a href="deletencc.htm?id=${NCC.maNCC}" onclick="return confirmDelete(event)"
+								${NCC.getDonDatHang().size() == 0 ? '' : 'hidden' }> <i
 									class="fa fa-trash"></i>
 							</a></td>
 
@@ -80,6 +80,7 @@
 			</table>
 		</form>
 	</div>
+	</section>
 </body>
 <script>
 	function confirmDelete(event) {
