@@ -247,5 +247,11 @@ public class LoaiSanPham {
 	public void setBinhLuan(List<BinhLuan> binhLuan) {
 		this.binhLuan = binhLuan;
 	}
+
+	@Override
+	public String toString() {
+		return "[Tên: " + tenSP + ", CPU: " + cPU + ", RAM: " + ram + ", HardWare: " + hardWare + ", Card: "
+				+ card + ", Screen: " + screen + ", OS: " + os + "]";
+	}
 	
 }

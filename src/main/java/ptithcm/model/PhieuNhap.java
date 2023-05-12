@@ -36,8 +36,9 @@ public class PhieuNhap {
 	@JoinColumn(name="MANV")
 	private NhanVien maNV;
 	
-	@OneToOne(mappedBy = "soPhieuNhap")
-	private DonDatHang donDatHang;
+	@OneToOne
+	@JoinColumn(name="MADDH")
+	private DonDatHang maDDH;
 	
 	@OneToMany(mappedBy = "soPhieuNhap", fetch = FetchType.LAZY)
 	private List<SanPham> sanPham;
@@ -45,12 +46,16 @@ public class PhieuNhap {
 	public PhieuNhap() {
 	}
 
-	public PhieuNhap(int soPhieuNhap, Date ngayLapPN, NhanVien maNV, DonDatHang donDatHang) {
+	
+	public PhieuNhap(int soPhieuNhap, Date ngayLapPN, NhanVien maNV, DonDatHang maDDH, List<SanPham> sanPham) {
+		super();
 		this.soPhieuNhap = soPhieuNhap;
 		this.ngayLapPN = ngayLapPN;
 		this.maNV = maNV;
-		this.donDatHang = donDatHang;
+		this.maDDH = maDDH;
+		this.sanPham = sanPham;
 	}
+
 
 	public int getSoPhieuNhap() {
 		return soPhieuNhap;
@@ -76,13 +81,17 @@ public class PhieuNhap {
 		this.maNV = maNV;
 	}
 
-	public DonDatHang getDonDatHang() {
-		return donDatHang;
+	
+
+	public DonDatHang getMaDDH() {
+		return maDDH;
 	}
 
-	public void setDonDatHang(DonDatHang donDatHang) {
-		this.donDatHang = donDatHang;
+
+	public void setMaDDH(DonDatHang maDDH) {
+		this.maDDH = maDDH;
 	}
+
 
 	public List<SanPham> getSanPham() {
 		return sanPham;
