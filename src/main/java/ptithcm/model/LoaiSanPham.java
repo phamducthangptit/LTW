@@ -78,7 +78,8 @@ public class LoaiSanPham {
 	public LoaiSanPham() {
 	}
 
-	public LoaiSanPham(String maLoai, String tenSP, BigDecimal gia, String anh, String moTa, String cPU, String ram,
+	public LoaiSanPham(String maLoai, String tenSP, BigDecimal gia, String anh, String moTa, String cPU, 
+			String ram,
 			String hardWare, String card, String screen, String os, HangSanXuat maHang, TheLoai maTheLoai) {
 		this.maLoai = maLoai;
 		this.tenSP = tenSP;
