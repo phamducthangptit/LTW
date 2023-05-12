@@ -88,7 +88,7 @@ public class UserController {
 				if (nhanVien.getTrangThai() != 0) {
 					HttpSession s = request.getSession();
 					s.setAttribute("user", nhanVien);
-					return "staff/home";
+					return "staff/homeNV";
 				} else {
 					model.addAttribute("ErrorLogin", "Nhân viên không thể đăng nhập vào hệ thống!");
 					return "user/login";

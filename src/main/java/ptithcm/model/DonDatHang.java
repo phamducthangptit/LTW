@@ -49,12 +49,14 @@ public class DonDatHang {
 		this.ngayDat = ngayDat;
 	}
 
-	public NhaCungCap getNcc() {
+	
+
+	public NhaCungCap getMaNCC() {
 		return maNCC;
 	}
 
-	public void setNcc(NhaCungCap ncc) {
-		this.maNCC = ncc;
+	public void setMaNCC(NhaCungCap maNCC) {
+		this.maNCC = maNCC;
 	}
 
 	public PhieuNhap getSoPhieuNhap() {
@@ -86,13 +88,14 @@ public class DonDatHang {
 		this.maNV = maNV;
 	}
 
-	public DonDatHang(String maDDH, Date ngayDat, NhaCungCap ncc, NhanVien maNV, PhieuNhap soPhieuNhap) {
-		super();
+	public DonDatHang(String maDDH, Date ngayDat, NhaCungCap maNCC, NhanVien maNV, PhieuNhap soPhieuNhap) {
 		this.maDDH = maDDH;
 		this.ngayDat = ngayDat;
-		this.maNCC = ncc;
+		this.maNCC = maNCC;
 		this.maNV = maNV;
 		this.soPhieuNhap = soPhieuNhap;
 	}
+
+	
 
 }

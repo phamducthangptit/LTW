@@ -81,7 +81,7 @@
 					<tr>
 						<td>${ddh.maDDH }</td>
 						<td>${ddh.ngayDat }</td>
-						<td>${ddh.maNCC.maNCC} - ${ddh.maNCC.tenNCC}</td>
+						<td>${ddh.getMaNCC().maNCC} - ${ddh.getMaNCC().tenNCC}</td>
 						<td>${ddh.maNV.maNV } - ${ddh.maNV.ho } ${ddh.maNV.ten }</td>
 
 						<c:if test = "${ddh.soPhieuNhap == null}">
