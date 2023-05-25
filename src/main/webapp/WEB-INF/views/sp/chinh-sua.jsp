@@ -2,7 +2,6 @@
     pageEncoding="utf-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%> 
-<%@ taglib  uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html>
 
@@ -138,113 +137,104 @@ https://templatemo.com/tm-559-zay-shop
             </form>
         </div>
     </div>
-    
+
 
 
     <!-- Open Content -->
     <section class="bg-light">
+    <form action="/BanLaptop/home/danh-muc-san-pham/chinh-sua.htm" method="post" enctype="multipart/form-data">
         <div class="container pb-5">
-           
-                
-                <!-- col end -->
-               
-          <div class="card">
-                    
-                    
-                     
-            <div class="card-body">
-	              <div class="row">
-	                        <div class="col-lg-8 mt-5">
-	                    	<h4>Danh mục sản phẩm:</h4>
-	                    	</div>
-	                    	<div class="col-lg-4 mt-5">
-	                    		<div class="col d-grid">
-	                    	<a  class="btn btn-success btn-lg" href="${url}/../add.htm">Thêm sản phẩm</a>
-	                    		</div>
-	                    	</div>
-	                    </div>
-                    <div class="row">
-                        <table class=" table table-light table-striped table-hover bordered-dark">
-                        <thead>
-                            <tr>
-                                <th scope="col" class="text-center align-middle">STT</th>
-                                <th scope="col" class="text-center align-middle">Hình ảnh</th>
-                                <th scope="col" class="text-center align-middle">Mã <br> Tên sản phẩm</th>
-                                <th scope="col" class="text-center align-middle">Chi tiết</th>
-                                <th scope="col" class="text-center align-middle">Giá bán</th>
-                                <th scope="col" class="text-center align-middle">Chỉnh sửa</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                         	
-                        	<c:forEach items="${listLoaiSanPham}" var="product">
-                            <tr>
-                                <th scope="row" class="text-center align-middle">${stt}</th>
-                                <td class="col-md-2">
-                                 <div class="card mb-2 product-wap rounded-0">
-                                 <div class="card rounded-0">
-                                <img class="card-img rounded-0 img-fluid" src="<c:url value ='/resource/images/${product.getAnh()}'/>">
-                                	</div>
-                                	</div>
-                                </td>   
-                                <td class="text-center">${product.getMaLoai()} ${product.getTenSP()}</td>
-                                <td>
-                                	- CPU: ${product.getcPU()} <br>
-                                	- RAM: ${product.getRam()} <br>
-                                	- Hardware: ${product.getHardWare()} <br>
-                                	- ...
-                                </td>
-                                <td class="text-center">
-                                	<div>${product.getGia().toPlainString()} VND </div>
-                                </td>
-                                <td class="text-center align-middle">
-                                	<a href="/BanLaptop/home/danh-muc-san-pham/chinh-sua.htm?sp=${product.getMaLoai()}">
-                                	<i class="fas fa-cog fa-spin fa-lg" style="color: #000000;"></i>
-                                	</a>
-                                </td>
-                            </tr>
-                              <c:set var="stt" value="${stt + 1}" />
-                            </c:forEach>
-                        </tbody>
-                    </table>
-                           </div>
-                           <div div="row">
-                           
-                    <ul class="pagination pagination-lg justify-content-end">
-			    			<li class="page-item ${currentPage == 0 ? 'disabled' : ''}">
-					        <a class="page-link rounded-0 mr-3 shadow-sm border-top-0 border-left-0 text-dark" href="${url}?page=${currentPage - 1}">Trước</a>
-					    </li>
-					    <c:if test="${currentPage > 1}">
-					        <li class="page-item">
-					            <a class="page-link rounded-0 mr-3 shadow-sm border-top-0 border-left-0 text-dark" href="${url}?page=0">1</a>
-					        </li>
-					        <li class="page-item disabled">
-					            <a class="page-link rounded-0 mr-3 shadow-sm border-top-0 border-left-0 text-dark">...</a>
-					        </li>
-					    </c:if>
-					    <c:forEach begin="${startPage}" end="${endPage}" var="i">
-					        <li class="page-item ${currentPage == i ? 'active' : ''}">
-					            <a class="${currentPage == i ? 'page-link active rounded-0 mr-3 shadow-sm border-top-0 border-left-0' : 'page-link rounded-0 mr-3 shadow-sm border-top-0 border-left-0 text-dark'}" 
-					            href="/BanLaptop/home/danh-muc-san-pham.htm?page=${i}" style="border-color:transparent;">${i + 1}</a>
-					        </li>
-					    </c:forEach>
-					    <c:if test="${currentPage < totalPages - 2}">
-					        <li class="page-item disabled">
-					            <a class="page-link rounded-0 mr-3 shadow-sm border-top-0 border-left-0 text-dark">...</a>
-					        </li>
-					        <li class="page-item">
-					            <a class="page-link rounded-0 mr-3 shadow-sm border-top-0 border-left-0 text-dark" href="${url}?page=${totalPages - 1}">${totalPages}</a>
-					        </li>
-					    </c:if>
-					    <li class="page-item ${currentPage == totalPages - 1 ? 'disabled' : ''}">
-					        <a class="page-link rounded-0 mr-3 shadow-sm border-top-0 border-left-0 text-dark" href="${url}?page=${currentPage + 1}">Sau</a>
-					    </li>
-					</ul>
-                </div>
-                           
+            <div class="row">
+                <div class="col-lg-5 mt-5">
+                    <div class="card mb-3">
+                        <img class="card-img img-fluid" src="<c:url value ='/resource/images/${hinhanh}'/>" alt="Card image cap" id="product-detail">
                     </div>
+                    <div class = "row">
+           
+							          
+                    </div>
+                </div>
+                <!-- col end -->
+                <div class="col-lg-7 mt-5">
+                    <div class="card">
+                        <div class="card-body">
+                            <h1 class="h2">Thông tin sản phẩm:</h1>
+                        	<div class="row g-3">
+							  <div class="col-md-4">
+							    <label for="productType">Mã loại sản phẩm:</label>
+							    <input type="text" class="form-control" name="maLoai" readonly="readonly" value="${maLoai}">
+							  </div>
+							  <div class="col-md-8">
+							    <label for="productName">Tên sản phẩm:</label>
+							    <input type="text" class="form-control"  name="ten" value="${ten}">
+							  </div>
+							  <div class="col-md-12">
+							    <label for="productPrice">Giá sản phẩm:</label>
+							    <input type="number" class="form-control" name="gia" value="${gia}">
+							  </div>
+							  <div class="col-md-6">
+							    <label for="productCPU">CPU:</label>
+							    <input type="text" class="form-control"  name="cpu" value="${cpu}">
+							  </div>
+							  <div class="col-md-6">
+							    <label for="productRAM">RAM:</label>
+							    <input type="text" class="form-control" name="ram" value="${ram}">
+							  </div>
+							  <div class="col-md-6">
+							    <label for="productHardware">Hardware:</label>
+							    <input type="text" class="form-control"  name="hardware" value="${hardware}">
+							  </div>
+							  <div class="col-md-6">
+							    <label for="productCard">Card màn hình:</label>
+							    <input type="text" class="form-control"  name="card" value="${card}">
+							  </div>
+							  <div class="col-md-12">
+							    <label for="productScreen">Màn hình:</label>
+							    <input type="text" class="form-control"  name="screen" value="${screen}">
+							  </div>
+							  <div class="col-md-12">
+							    <label for="productOS">Hệ điều hành:</label>
+							    <input type="text" class="form-control"  name="os" value="${os}">
+							  </div>
+							  <div class="col-md-6">
+							  	<label for="theLoai" class="form-label">Thể loại:</label>
+							  	<input list="theLoais" name="theLoai" class="form-control" value="${theLoai}">
+							  	<datalist id="theLoais">
+							      <c:forEach items="${listTheLoai}" var="product">
+							        <option value="${product.getMaTheLoai()}">${product.getTenTL()}</option>
+							      </c:forEach>
+							    </datalist>  	
+							  </div>
+							  <div class="col-md-6">
+							  	<label for="moTa" class="form-label">Hãng sản xuất:</label>
+							  	<input list="listHang" name="hangSanXuat" class="form-control" value="${hangSanXuat}">
+							  	<datalist id="listHang">
+							      <c:forEach items="${listHang}" var="product">
+							      <option value="${product.getMaHang()}">${product.getTenHang()}</option>
+							      </c:forEach>
+							    </datalist>  	
+							  </div>
+								<div class="col-md-12">
+								<label for="moTa" class="form-label">Mô tả:</label>
+	  							<textarea class="form-control" name="moTa" value="${moTa}"></textarea>
+	  							</div>
+	  						<div class="row pb-3" style="margin-top: 10px;">
+	  							<div class="col d-grid">
+							  	<button type="submit" class="btn btn-primary" style="display: none;">Ẩn</button>
+							  	</div>
+	  							<div class="col d-grid">
+							  	<button type="submit" class="btn btn-success btn-lg">Lưu thay đổi</button>
+							  	${message}
+							  	</div>
+							  </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
             </div>
-       </div>
+        </div>
+        </form>
     </section>
     <!-- Close Content -->
 

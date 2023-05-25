@@ -45,8 +45,7 @@ public class ChinhSuaGia {
 	
 	
 
-	public ChinhSuaGia(int idCS, Date ngay, BigDecimal gia, NhanVien maNV, LoaiSanPham maLoai) {
-		this.idCS = idCS;
+	public ChinhSuaGia( Date ngay, BigDecimal gia, NhanVien maNV, LoaiSanPham maLoai) {
 		this.ngay = ngay;
 		this.gia = gia;
 		this.maNV = maNV;

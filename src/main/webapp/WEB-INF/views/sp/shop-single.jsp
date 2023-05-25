@@ -44,81 +44,7 @@ https://templatemo.com/tm-559-zay-shop
 
 <body>
     <!-- Start Top Nav -->
-    <nav class="navbar navbar-expand-lg bg-dark navbar-light d-none d-lg-block" id="templatemo_nav_top">
-        <div class="container text-light">
-            <div class="w-100 d-flex justify-content-between">
-                <div>
-                    <i class="fa fa-envelope mx-2"></i>
-                    <a class="navbar-sm-brand text-light text-decoration-none" href="mailto:info@company.com">info@company.com</a>
-                    <i class="fa fa-phone mx-2"></i>
-                    <a class="navbar-sm-brand text-light text-decoration-none" href="tel:010-020-0340">010-020-0340</a>
-                </div>
-                <div>
-                    <a class="text-light" href="https://fb.com/templatemo" target="_blank" rel="sponsored"><i class="fab fa-facebook-f fa-sm fa-fw me-2"></i></a>
-                    <a class="text-light" href="https://www.instagram.com/" target="_blank"><i class="fab fa-instagram fa-sm fa-fw me-2"></i></a>
-                    <a class="text-light" href="https://twitter.com/" target="_blank"><i class="fab fa-twitter fa-sm fa-fw me-2"></i></a>
-                    <a class="text-light" href="https://www.linkedin.com/" target="_blank"><i class="fab fa-linkedin fa-sm fa-fw"></i></a>
-                </div>
-            </div>
-        </div>
-    </nav>
-    <!-- Close Top Nav -->
-
-
-    <!-- Header -->
-    <nav class="navbar navbar-expand-lg navbar-light shadow">
-        <div class="container d-flex justify-content-between align-items-center">
-
-            <a class="navbar-brand text-success logo h1 align-self-center" href="index.html">
-                Zay
-            </a>
-
-            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#templatemo_main_nav" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="align-self-center collapse navbar-collapse flex-fill  d-lg-flex justify-content-lg-between" id="templatemo_main_nav">
-                <div class="flex-fill">
-                    <ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="index.html">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="about.html">About</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="shop.html">Shop</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="contact.html">Contact</a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="navbar align-self-center d-flex">
-                    <div class="d-lg-none flex-sm-fill mt-3 mb-4 col-7 col-sm-auto pr-3">
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="inputMobileSearch" placeholder="Search ...">
-                            <div class="input-group-text">
-                                <i class="fa fa-fw fa-search"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <a class="nav-icon d-none d-lg-inline" href="#" data-bs-toggle="modal" data-bs-target="#templatemo_search">
-                        <i class="fa fa-fw fa-search text-dark mr-2"></i>
-                    </a>
-                    <a class="nav-icon position-relative text-decoration-none" href="#">
-                        <i class="fa fa-fw fa-cart-arrow-down text-dark mr-1"></i>
-                        <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">7</span>
-                    </a>
-                    <a class="nav-icon position-relative text-decoration-none" href="#">
-                        <i class="fa fa-fw fa-user text-dark mr-3"></i>
-                        <span class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">+99</span>
-                    </a>
-                </div>
-            </div>
-
-        </div>
-    </nav>
+    <%@include file="headerKH.jsp"%>
     <!-- Close Header -->
 
     <!-- Modal -->
@@ -147,90 +73,51 @@ https://templatemo.com/tm-559-zay-shop
             <div class="row">
                 <div class="col-lg-5 mt-5">
                     <div class="card mb-3">
-                        <img class="card-img img-fluid" src="<c:url value ='/resource/images/${hinhanh}'/>" alt="Card image cap" id="product-detail">
+                        <img class="card-img img-fluid" src="<c:url value ='/resource/images/${product.getAnh()}'/>" alt="Card image cap" id="product-detail">
                     </div>
-                    <div class = "row">
-                    	<ul class="list-inline">
-                                <li class="list-inline-item">
-                                    <h1 class="h2">Hình ảnh</h1>
-                                </li>
-                                <li class="list-inline-item">
-                                    <input type="file" name="photo" >
-                                </li>
-                            </ul>
-							          
-                    </div>
+                    
                 </div>
                 <!-- col end -->
                 <div class="col-lg-7 mt-5">
                     <div class="card">
                         <div class="card-body">
-                            <h1 class="h2">Nhập thông tin sản phẩm:</h1>
+                            <h1 class="h2">Thông tin sản phẩm:</h1>
                         	<div class="row g-3">
-							  <div class="col-md-4">
-							    <label for="productType">Mã loại sản phẩm:</label>
-							    <input type="text" class="form-control" name="maLoai" placeholder="Vostro 15 3520">
-							  </div>
-							  <div class="col-md-8">
-							    <label for="productName">Tên sản phẩm:</label>
-							    <input type="text" class="form-control"  name="ten" placeholder="Laptop DELL">
-							  </div>
+							  <h1 class="h3">${product.getTenSP()} - ${product.getMaLoai()}</h1>
 							  <div class="col-md-12">
-							    <label for="productPrice">Giá sản phẩm:</label>
-							    <input type="number" class="form-control" name="gia" placeholder="Nhập giá sản phẩm">
+							    <p class="h3 py-2">Giá bán: ${product.getGia().toPlainString()} VND</p>
 							  </div>
-							  <div class="col-md-6">
-							    <label for="productCPU">CPU:</label>
-							    <input type="text" class="form-control"  name="cpu" placeholder="Nhập thông tin CPU">
-							  </div>
-							  <div class="col-md-6">
-							    <label for="productRAM">RAM:</label>
-							    <input type="text" class="form-control" name="ram" placeholder="Nhập thông tin RAM">
-							  </div>
-							  <div class="col-md-6">
-							    <label for="productHardware">Hardware:</label>
-							    <input type="text" class="form-control"  name="hardware" placeholder="Nhập thông tin phần cứng">
-							  </div>
-							  <div class="col-md-6">
-							    <label for="productCard">Card màn hình:</label>
-							    <input type="text" class="form-control"  name="card" placeholder="Nhập thông tin card màn hình">
-							  </div>
-							  <div class="col-md-12">
-							    <label for="productScreen">Màn hình:</label>
-							    <input type="text" class="form-control"  name="screen" placeholder="Nhập thông tin màn hình">
-							  </div>
-							  <div class="col-md-12">
-							    <label for="productOS">Hệ điều hành:</label>
-							    <input type="text" class="form-control"  name="os" placeholder="Nhập thông tin hệ điều hành">
-							  </div>
-							  <div class="col-md-6">
-							  	<label for="theLoai" class="form-label">Thể loại:</label>
-							  	<input type="text" list="theLoais" name="theLoai" class="form-control">
-							  	<datalist id="theLoais">
-							      <c:forEach items="${listTheLoai}" var="product">
-							        <option value="${product.getMaTheLoai()}">${product.getTenTL()}</option>
-							      </c:forEach>
-							    </datalist>  	
-							  </div>
-							  <div class="col-md-6">
-							  	<label for="moTa" class="form-label">Hãng sản xuất:</label>
-							  	<input type="text" list="listHang" name="hangSanXuat" class="form-control" >
-							  	<datalist id="listHang">
-							      <c:forEach items="${listHang}" var="product">
-							        <option value="${product.getMaHang()}">${product.getTenHang()}</option>
-							      </c:forEach>
-							    </datalist>  	
-							  </div>
-								<div class="col-md-12">
-								<label for="moTa" class="form-label">Mô tả:</label>
-	  							<textarea class="form-control" name="moTa"></textarea>
-	  							</div>
+							  <ul class="list-inline">
+                                <li class="list-inline-item">
+                                    <h6>Thể loại:</h6>
+                                </li>
+                                <li class="list-inline-item">
+                                    <p class="text-muted"><strong>${product.getMaTheLoai().getTenTL()}</strong></p>
+                                </li>
+                                <li class="list-inline-item">
+                                    <h6>Hãng:</h6>
+                                </li>
+                                <li class="list-inline-item">
+                                    <p class="text-muted"><strong>${product.getMaHang().getTenHang()}</strong></p>
+                                </li>
+                            </ul>
+                            
+                            
+                            <p>- CPU: ${product.getcPU()} -RAM: ${product.getRam()}
+                            <br>- Hardware: ${product.getHardWare()}
+                            <br>- Card màn hình: ${product.getCard()}
+                            <br>- Màn hình: ${product.getScreen()}
+                            <br>- Hệ điều hành: ${product.getOs()}
+                            </p>
+                            <h6>Mô tả:</h6>
+                            <textarea class="form-control" readonly="readonly">${product.getMoTa()}</textarea>
+                            
 	  						<div class="row pb-3" style="margin-top: 10px;">
 	  							<div class="col d-grid">
 							  	<button type="submit" class="btn btn-primary" style="display: none;">Ẩn</button>
 							  	</div>
 	  							<div class="col d-grid">
-							  	<button type="submit" class="btn btn-success btn-lg">Thêm sản phẩm</button>
+							  	<button type="submit" class="btn btn-success btn-lg">Thêm vào giỏ hàng</button>
 							  	${message}
 							  	</div>
 							  </div>
