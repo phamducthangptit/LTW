@@ -60,10 +60,11 @@
             <div class = "container py-5">
                 <h2>Đơn Đặt Hàng</h2>
                <h6 style="color: red; right: 15px ; text-align: right">${ThongBao}</h6>
-            <h3><a href="taodondathang.htm" style="text-decoration: none; border: 2px solid #343a40;padding: 5px;"><i class="fa fa-plus-circle" aria-hidden="true"></i>  Tạo Đơn Đặt Hàng Mới</a></h3>
+            <h3><a href="taodondathang.htm" class="btn btn-success btn-lg px-3"><i class="fa fa-plus-circle" aria-hidden="true"></i>  Tạo Đơn Đặt Hàng Mới</a></h3>
             <p>   </p>
             <form class="employee-list" action="staff/dondathang.htm" method="POST">
-                <table>
+               <table class="table table-light table-striped table-hover bordered-dark"
+				style="text-align: center;">
                   <thead>
                     <tr>
                       <th>Mã DDH</th>
@@ -77,22 +78,38 @@
                     </tr>
                   </thead>
                   <tbody>
+                 
                     <c:forEach var="ddh" items="${DSDDH}">
+                    
 					<tr>
+					 
 						<td>${ddh.maDDH }</td>
 						<td>${ddh.ngayDat }</td>
 						<td>${ddh.getMaNCC().maNCC} - ${ddh.getMaNCC().tenNCC}</td>
 						<td>${ddh.maNV.maNV } - ${ddh.maNV.ho } ${ddh.maNV.ten }</td>
-
+						
 						<c:if test = "${ddh.soPhieuNhap == null}">
-						  <td><a href="#?idDDH=${ddh.maDDH}">Xuất Phiếu Nhập</a></td>
+						  <td class="text-center align-middle"><div  id="templatemo_main_nav">
+						  <a class = "nav-link" href="taophieunhap.htm?idDDH=${ddh.maDDH}">Tạo Phiếu Nhập</a>
+						  </div>
+						  </td>
 						  </c:if>
 						  <c:if test = "${ddh.soPhieuNhap != null}">
-					  	<td><a href="#?idDDH=${ddh.maDDH}">Xem Phiếu Nhập</a></td>
+					  	<td class="text-center align-middle"><div id="templatemo_main_nav">
+					  	<a class = "nav-link" href="xemphieunhap.htm?idPN=${ddh.soPhieuNhap.soPhieuNhap}">Xem Phiếu Nhập</a>
+					  	</div>
+					  	</td>
 					  	</c:if>
-					  	<td><a href="chitietdondathang.htm?maDDH=${ddh.maDDH}"><i class="fa fa-bars" aria-hidden="true"></i></a></td>
-					  	<td><a href="detetedondathang.htm?idDDH=${ddh.maDDH}"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+					  	
+					  	<td>
+					  	<a class = "nav-link"  href="chitietdondathang.htm?maDDH=${ddh.maDDH}"><i class="fa fa-bars" style = "color : black" aria-hidden="true"></i></a>
+					  	
+					  	</td>
+					  		
+					  	<td><a class = "nav-link" href="detetedondathang.htm?idDDH=${ddh.maDDH}"><i class="fa fa-trash" style = "color : black" aria-hidden="true"></i></a></td>
+					
 					</tr>
+					
 				</c:forEach>
                   </tbody>
                 </table>

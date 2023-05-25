@@ -54,56 +54,52 @@
     <!-- Start Content Page -->
     <main>
         <section class = "bg-light">
+        <form  action="staff/danhsachdangbaohanh.htm" method="POST">
+        <a class="btn btn-success btn-lg px-3 mt-1"href="danhsachdangbaohanh.htm?loaiBtn=troVe"><i class="fa fa-angle-double-left" aria-hidden="true"></i>Về Trang Bảo Hành</a>
         	<div class = "card-body">
             <div class = "container py-5">
-                <h2>Danh sách nhân viên</h2>
-                
-            <h3><a href="themnhanvien.htm" class="btn btn-success btn-lg px-3"><i class="fa fa-user-plus" aria-hidden="true"></i>  Thêm Nhân Viên Mới</a></h3>
-            <p>   </p>
-            <form class="employee-list" action="staff/danhsachnhanvien.htm" method="POST">
-                <table class="table table-light table-striped table-hover bordered-dark"
+                <h2>Danh Sách Sản Phẩm Đang Nhận Bảo Hành</h2>
+            
+              <table class="table table-light table-striped table-hover bordered-dark"
 				style="text-align: center;">
                   <thead>
                     <tr>
-                      <th>Mã NV</th>
-                      <th>Họ</th>
-                      <th>Tên</th>
-                      <th>Ngày sinh</th>
-                      <th>Số Điện Thoại</th>
-                      <th>Email</th>
-                      <th>Địa chỉ</th>
-                      <th>Trạng thái tài khoản</th>
+                      <th>Seri</th>
+                      <th>Mã Loại</th>
+                      <th>Tên Sản Phẩm</th>
+                       <th>Nhân Viên Nhận</th>
+                      <th>Ngày Nhận</th>
+                      <th>Trạng Thái Nhận</th>
                       <th></th>
                     </tr>
                   </thead>
                   <tbody>
-                    <c:forEach var="nv" items="${DSNhanVien}">
+                 <c:if test = "${listBH.size() == 0 }">
+                 <tr><td colspan="7">Hiện Không Có Sản Phẩm Nào Đang Nhận Bảo Hành</td></tr>
+                 </c:if>
+                 <c:if test = "${listSP.size() != 0 }">
+                    <c:forEach var="BH" items="${listBH}">
 					<tr>
-						<td>${nv.maNV }</td>
-						<td>${nv.ho }</td>
-						<td>${nv.ten }</td>
-						<td>${nv.ngaySinh }</td>
-						<td>${nv.sDT }</td>
-						<td>${nv.email }</td>
-						<td>${nv.diaChi }</td>
-						<c:if test = "${nv.trangThai == 1}">
-						  <td> <a href="trangthainhanvien.htm?idnv=${nv.maNV}&TT=1"><i class="fa fa-toggle-on" style = "color : black" aria-hidden="true"></i></a></td>
-						  </c:if>
-						  <c:if test = "${nv.trangThai == 0}">
-					  	<td><a href="trangthainhanvien.htm?idnv=${nv.maNV}&TT=0"><i class="fa fa-toggle-off" style = "color : black" aria-hidden="true"></i></a></td>
-					  	</c:if>
+						<td>${BH.soPhieuBH.seri.seri }</td>
+						<td>${BH.soPhieuBH.seri.maLoai.maLoai }</td>
+						<td>${BH.soPhieuBH.seri.maLoai.tenSP }</td> 
+						<td>${BH.maNVNhan.maNV } - ${BH.maNVNhan.ho } ${BH.maNVNhan.ten }</td>
+						<td>${BH.ngayNhan}</td>
+						<td>${BH.trangThaiNhan }</td>
 					  	
 					  	 <td>
 					  	 
-					  	 <a href="suathongtinnhanvien.htm?idnv=${nv.maNV}"><i class="fa fa-pencil-alt" style = "color : black" aria-hidden="true"></i></a>
+					  	 <a class="btn btn-success btn-lg px-3 mt-1"href="danhsachdangbaohanh.htm?seri=${BH.soPhieuBH.seri.seri }&loaiBtn=traMay">Sửa Xong</a>
 					  	 </td>
 					</tr>
 				</c:forEach>
+				</c:if>
                   </tbody>
-                </table>
-   				 </form>
+                </table> 
+   				
               </div>
               </div>
+               </form>
              </section>
         </main>
 		
