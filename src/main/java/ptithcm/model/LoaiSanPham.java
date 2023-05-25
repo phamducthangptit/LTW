@@ -83,9 +83,8 @@ public class LoaiSanPham {
 
 	public LoaiSanPham(String maLoai, String tenSP, BigDecimal gia, String anh, String moTa, String cPU, String ram,
 			String hardWare, String card, String screen, String os, BigDecimal giaNhap, HangSanXuat maHang,
-			TheLoai maTheLoai, List<CTDotGiamGia> ctDotGiamGia, List<ChinhSuaGia> chinhSuaGia, List<CungCap> cungCap,
-			List<CTDonDatHang> ctDonDatHang, List<SanPham> sanPham, List<BinhLuan> binhLuan) {
-		super();
+			TheLoai maTheLoai) {
+
 		this.maLoai = maLoai;
 		this.tenSP = tenSP;
 		this.gia = gia;
@@ -100,12 +99,6 @@ public class LoaiSanPham {
 		this.giaNhap = giaNhap;
 		this.maHang = maHang;
 		this.maTheLoai = maTheLoai;
-		this.ctDotGiamGia = ctDotGiamGia;
-		this.chinhSuaGia = chinhSuaGia;
-		this.cungCap = cungCap;
-		this.ctDonDatHang = ctDonDatHang;
-		this.sanPham = sanPham;
-		this.binhLuan = binhLuan;
 	}
 
 

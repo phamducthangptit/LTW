@@ -1,5 +1,6 @@
 package ptithcm.controller;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.List;
 import java.util.Random;
@@ -64,6 +65,8 @@ public class UserController {
 				if (khachHang.getTrangThai() != 0) {
 					HttpSession s = request.getSession();
 					s.setAttribute("user", khachHang);
+					BigDecimal sumTongTien = new BigDecimal(0);
+					s.setAttribute("sumGH", sumTongTien);
 					return "user/home";
 				} else {
 					model.addAttribute("ErrorLogin", "Tài khoản chưa được kích hoạt!");

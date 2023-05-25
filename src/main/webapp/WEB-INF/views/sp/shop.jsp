@@ -38,111 +38,7 @@ https://templatemo.com/tm-559-zay-shop
 
 <body>
     <!-- Start Top Nav -->
-    <nav class="navbar navbar-expand-lg bg-dark navbar-light d-none d-lg-block" id="templatemo_nav_top">
-        <div class="container text-light">
-            <div class="w-100 d-flex justify-content-between">
-                <div>
-                    <i class="fa fa-envelope mx-2"></i>
-                    <a class="navbar-sm-brand text-light text-decoration-none"
-                        href="mailto:info@company.com">info@company.com</a>
-                    <i class="fa fa-phone mx-2"></i>
-                    <a class="navbar-sm-brand text-light text-decoration-none" href="tel:010-020-0340">010-020-0340</a>
-                </div>
-                <div>
-                    <a class="text-light" href="https://fb.com/templatemo" target="_blank" rel="sponsored"><i
-                            class="fab fa-facebook-f fa-sm fa-fw me-2"></i></a>
-                    <a class="text-light" href="https://www.instagram.com/" target="_blank"><i
-                            class="fab fa-instagram fa-sm fa-fw me-2"></i></a>
-                    <a class="text-light" href="https://twitter.com/" target="_blank"><i
-                            class="fab fa-twitter fa-sm fa-fw me-2"></i></a>
-                    <a class="text-light" href="https://www.linkedin.com/" target="_blank"><i
-                            class="fab fa-linkedin fa-sm fa-fw"></i></a>
-                </div>
-            </div>
-        </div>
-    </nav>
-    <!-- Close Top Nav -->
-
-
-    <!-- Header -->
-    <nav class="navbar navbar-expand-lg navbar-light shadow">
-        <div class="container d-flex justify-content-between align-items-center">
-
-            <a class="navbar-brand text-success logo h1 align-self-center" href="index.html">
-                Zay
-            </a>
-
-            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse"
-                data-bs-target="#templatemo_main_nav" aria-controls="navbarSupportedContent" aria-expanded="false"
-                aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="align-self-center collapse navbar-collapse flex-fill  d-lg-flex justify-content-lg-between"
-                id="templatemo_main_nav">
-                <div class="flex-fill">
-                    <ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="index.html">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="about.html">About</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="shop.html">Shop</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="contact.html">Contact</a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="navbar align-self-center d-flex">
-                    <div class="d-lg-none flex-sm-fill mt-3 mb-4 col-7 col-sm-auto pr-3">
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="inputMobileSearch" placeholder="Search ...">
-                            <div class="input-group-text">
-                                <i class="fa fa-fw fa-search"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <a class="nav-icon d-none d-lg-inline" href="#" data-bs-toggle="modal"
-                        data-bs-target="#templatemo_search">
-                        <i class="fa fa-fw fa-search text-dark mr-2"></i>
-                    </a>
-                    <a class="nav-icon position-relative text-decoration-none" href="#">
-                        <i class="fa fa-fw fa-cart-arrow-down text-dark mr-1"></i>
-                        <span
-                            class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">7</span>
-                    </a>
-                    <a class="nav-icon position-relative text-decoration-none" href="#">
-                        <i class="fa fa-fw fa-user text-dark mr-3"></i>
-                        <span
-                            class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">+99</span>
-                    </a>
-                </div>
-            </div>
-
-        </div>
-    </nav>
-    <!-- Close Header -->
-
-    <!-- Modal -->
-    <div class="modal fade bg-white" id="templatemo_search" tabindex="-1" role="dialog"
-        aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="w-100 pt-1 mb-5 text-right">
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form action="" method="get" class="modal-content modal-body border-0 p-0">
-                <div class="input-group mb-2">
-                    <input type="text" class="form-control" id="inputModalSearch" name="q" placeholder="Search ...">
-                    <button type="submit" class="input-group-text bg-success text-light">
-                        <i class="fa fa-fw fa-search text-white"></i>
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
+   <%@include file="headerKH.jsp"%>
 
 
 
@@ -151,37 +47,28 @@ https://templatemo.com/tm-559-zay-shop
         <div class="row">
 
             <div class="col-lg-3">
-                <h1 class="h2 pb-4">Categories</h1>
+                <h1 class="h2 pb-4">Mục sản phẩm</h1>
                 <ul class="list-unstyled templatemo-accordion">
                     <li class="pb-3">
                         <a class="collapsed d-flex justify-content-between h3 text-decoration-none" href="#">
-                            Gender
+                            Thể Loại
                             <i class="fa fa-fw fa-chevron-circle-down mt-1"></i>
                         </a>
                         <ul class="collapse show list-unstyled pl-3">
-                            <li><a class="text-decoration-none" href="#">Men</a></li>
-                            <li><a class="text-decoration-none" href="#">Women</a></li>
+                         <c:forEach items="${listTheLoai}" var="tl">
+                            <li><a class="text-decoration-none" href="#">${tl.getTenTL()}</a></li>
+                            </c:forEach>
                         </ul>
                     </li>
                     <li class="pb-3">
                         <a class="collapsed d-flex justify-content-between h3 text-decoration-none" href="#">
-                            Sale
+                            Hãng
                             <i class="pull-right fa fa-fw fa-chevron-circle-down mt-1"></i>
                         </a>
                         <ul id="collapseTwo" class="collapse list-unstyled pl-3">
-                            <li><a class="text-decoration-none" href="#">Sport</a></li>
-                            <li><a class="text-decoration-none" href="#">Luxury</a></li>
-                        </ul>
-                    </li>
-                    <li class="pb-3">
-                        <a class="collapsed d-flex justify-content-between h3 text-decoration-none" href="#">
-                            Product
-                            <i class="pull-right fa fa-fw fa-chevron-circle-down mt-1"></i>
-                        </a>
-                        <ul id="collapseThree" class="collapse list-unstyled pl-3">
-                            <li><a class="text-decoration-none" href="#">Bag</a></li>
-                            <li><a class="text-decoration-none" href="#">Sweather</a></li>
-                            <li><a class="text-decoration-none" href="#">Sunglass</a></li>
+                            <c:forEach items="${listHang}" var="hang">
+                            <li><a class="text-decoration-none" href="#">${hang.getTenHang()}</a></li>
+                            </c:forEach>
                         </ul>
                     </li>
                 </ul>
@@ -189,8 +76,8 @@ https://templatemo.com/tm-559-zay-shop
 
             <div class="col-lg-9">
                 <div class="row">
-                    <div class="col-md-6">
-                        <ul class="list-inline shop-top-menu pb-3 pt-1">
+                    <div class="col-md-4">
+                        <ul class="list-inline shop-top-menu pb-3 pt-1" style="display: none;">
                             <li class="list-inline-item">
                                 <a class="h3 text-dark text-decoration-none mr-3" href="#">All</a>
                             </li>
@@ -202,15 +89,26 @@ https://templatemo.com/tm-559-zay-shop
                             </li>
                         </ul>
                     </div>
-                    <div class="col-md-6 pb-4">
-                        <div class="d-flex">
-                            <select class="form-control">
-                                <option>Featured</option>
-                                <option>A to Z</option>
-                                <option>Item</option>
-                            </select>
-                        </div>
+                    
+                    <div class="col-md-8 pb-4">
+                    	<form>
+                        <div class="row">
+                        <div class="col-md-8">
+                        <input list="tenLoais" name="searchInput" class="form-control">
+							  	<datalist id="tenLoais">
+							      <c:forEach items="${listLoais}" var="product">
+							        <option value="${product.getMaLoai()} - ${product.getTenSP()}"></option>
+							      </c:forEach>
+							    </datalist>
+					</div>
+                            <div class="col-md-4">
+	                    	<button name="btnsearch" type="submit"
+	                    	  class="btn btn-success btn-lg">Tìm kiếm</button>
+	                    	</div>
+	                    </div>
+ 						</form>
                     </div>
+                   
                 </div>
                 <div class="row">
                 <c:forEach items="${listLoaiSanPham}" var="product">
@@ -221,23 +119,26 @@ https://templatemo.com/tm-559-zay-shop
                                 <div
                                     class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
                                     <ul class="list-unstyled">
-                                        <li><a class="btn btn-success text-white" href="shop-single.html"><i
-                                                    class="far fa-heart"></i></a></li>
-                                        <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i
-                                                    class="far fa-eye"></i></a></li>
-                                        <li><a class="btn btn-success text-white mt-2" href="shop-single.html"><i
+                                        
+                                        <li ><a class="btn btn-success text-white mt-2 ${product.getSanPham() == null ? 'disabled' : ''}" href="${url}?page=${currentPage}&sp=${product.getMaLoai()}"><i
                                                     class="fas fa-cart-plus"></i></a></li>
                                     </ul>
                                 </div>
                             </div>
                             <div class="card-body">
-                                <a href="shop-single.html" class="h3 text-decoration-none">${product.getTenSP()}</a>
+                                <a href="shop-single.htm?lsp=${product.getMaLoai()}" class="h3 text-decoration-none">${product.getTenSP()}</a>
                                 <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
                                     <li><h6>${product.getMaLoai()}( ${product.getcPU()} + ${product.getRam()} + ${product.getHardWare()} )</h6>
                                     </li>
                                     
                                 </ul>
                                 <p class="text-center mb-0">${product.getGia()}</p>
+                                <c:if test="${product.getSanPham().size() > 0}">
+                                <p class="text-center mb-0">Còn hàng</p>
+                                </c:if>
+                                <c:if test="${product.getSanPham() == null}">
+                                <p class="text-center mb-0">Hết hàng</p>
+                                </c:if>
                             </div>
                         </div>
                     </div>
@@ -246,11 +147,11 @@ https://templatemo.com/tm-559-zay-shop
                 <div div="row">
                     <ul class="pagination pagination-lg justify-content-end">
 			    			<li class="page-item ${currentPage == 0 ? 'disabled' : ''}">
-					        <a class="page-link rounded-0 mr-3 shadow-sm border-top-0 border-left-0 text-dark" href="/BanLaptop/home/shop.htm?page=${currentPage - 1}">Trước</a>
+					        <a class="page-link rounded-0 mr-3 shadow-sm border-top-0 border-left-0 text-dark" href="${url}?page=${currentPage - 1}">Trước</a>
 					    </li>
 					    <c:if test="${currentPage > 1}">
 					        <li class="page-item">
-					            <a class="page-link rounded-0 mr-3 shadow-sm border-top-0 border-left-0 text-dark" href="/BanLaptop/home/shop.htm?page=0">1</a>
+					            <a class="page-link rounded-0 mr-3 shadow-sm border-top-0 border-left-0 text-dark" href="${url}?page=0">1</a>
 					        </li>
 					        <li class="page-item disabled">
 					            <a class="page-link rounded-0 mr-3 shadow-sm border-top-0 border-left-0 text-dark">...</a>
@@ -258,7 +159,7 @@ https://templatemo.com/tm-559-zay-shop
 					    </c:if>
 					    <c:forEach begin="${startPage}" end="${endPage}" var="i">
 					        <li class="page-item ${currentPage == i ? 'active' : ''}">
-					            <a class="${currentPage == i ? 'page-link active rounded-0 mr-3 shadow-sm border-top-0 border-left-0' : 'page-link rounded-0 mr-3 shadow-sm border-top-0 border-left-0 text-dark'}" href="/BanLaptop/home/shop.htm?page=${i}"
+					            <a class="${currentPage == i ? 'page-link active rounded-0 mr-3 shadow-sm border-top-0 border-left-0' : 'page-link rounded-0 mr-3 shadow-sm border-top-0 border-left-0 text-dark'}" href="${url}?page=${i}"
 					            style="border-color:transparent;"
 					            >${i + 1}
 					            </a>
@@ -269,11 +170,11 @@ https://templatemo.com/tm-559-zay-shop
 					            <a class="page-link rounded-0 mr-3 shadow-sm border-top-0 border-left-0 text-dark">...</a>
 					        </li>
 					        <li class="page-item">
-					            <a class="page-link rounded-0 mr-3 shadow-sm border-top-0 border-left-0 text-dark" href="/BanLaptop/home/shop.htm?page=${totalPages - 1}">${totalPages}</a>
+					            <a class="page-link rounded-0 mr-3 shadow-sm border-top-0 border-left-0 text-dark" href="${url}?page=${totalPages - 1}">${totalPages}</a>
 					        </li>
 					    </c:if>
 					    <li class="page-item ${currentPage == totalPages - 1 ? 'disabled' : ''}">
-					        <a class="page-link rounded-0 mr-3 shadow-sm border-top-0 border-left-0 text-dark" href="/BanLaptop/home/shop.htm?page=${currentPage + 1}">Sau</a>
+					        <a class="page-link rounded-0 mr-3 shadow-sm border-top-0 border-left-0 text-dark" href="${url}?page=${currentPage + 1}">Sau</a>
 					    </li>
 					</ul>
                 </div>
@@ -503,11 +404,11 @@ https://templatemo.com/tm-559-zay-shop
     <!-- End Footer -->
 
     <!-- Start Script -->
-    <script src="assets/js/jquery-1.11.0.min.js"></script>
-    <script src="assets/js/jquery-migrate-1.2.1.min.js"></script>
-    <script src="assets/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/js/templatemo.js"></script>
-    <script src="assets/js/custom.js"></script>
+    <script src="<c:url value='/resource/assets/js/jquery-1.11.0.min.js'/>"></script>
+    <script src="<c:url value='/resource/assets/js/jquery-migrate-1.2.1.min.js'/>"></script>
+    <script src="<c:url value='/resource/assets/js/bootstrap.bundle.min.js'/>"></script>
+    <script src="<c:url value='/resource/assets/js/templatemo.js'/>"></script>
+    <script src="<c:url value='/resource/assets/js/custom.js'/>"></script>
     <!-- End Script -->
 </body>
 

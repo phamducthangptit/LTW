@@ -719,7 +719,7 @@ public class StaffController {
 					String temp = Integer.toString(sizeSP);
 					 
 					String seri =  TaoSeri(ct.getMaLoai().getTenSP()) + temp ;
-					SanPham newSP = new SanPham(seri,ct.getMaLoai(),null,null,null,null);
+					SanPham newSP = new SanPham(seri,0,ct.getMaLoai(),null,null,null,null);
 					listSPNhap.add(newSP);
 				}
 			}
