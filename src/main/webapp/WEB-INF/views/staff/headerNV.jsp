@@ -1,6 +1,5 @@
-
-<!-- Start Top Nav -->
-
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@page import="ptithcm.model.NhanVien"%>
 <%@page import="ptithcm.model.KhachHang"%>
 <nav
@@ -53,13 +52,13 @@
 			id="templatemo_main_nav">ss
 			<div class="flex-fill">
 				<ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto">
-					<li class="nav-item"><a class="nav-link" href="danhsachnhanvien.htm">Quan Ly Nhan Vien</a>
+					<li class="nav-item"><a class="nav-link" href="danhsachnhanvien.htm">Nhân Viên</a>
 					</li>
-					<li class="nav-item"><a class="nav-link" href="dondathang.htm">Quan Ly Nhap Hang</a>
+					<li class="nav-item"><a class="nav-link" href="dondathang.htm">Nhập Hàng</a>
 					</li>
 					<li class="nav-item"><a class="nav-link" href="shop.html">Shop</a>
 					</li>
-					<li class="nav-item"><a class="nav-link" href="contact.html">Contact</a>
+					<li class="nav-item"><a class="nav-link" href="nhanbaohanh.htm">Bảo Hành</a>
 					</li>
 				</ul>
 			</div>

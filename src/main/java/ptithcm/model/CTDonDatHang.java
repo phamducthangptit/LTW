@@ -36,8 +36,7 @@ public class CTDonDatHang {
 	public CTDonDatHang() {
 	}
 
-	public CTDonDatHang(int idDon, int soLuong, BigDecimal donGia, LoaiSanPham maLoai, DonDatHang maDDH) {
-		this.idDon = idDon;
+	public CTDonDatHang(int soLuong, BigDecimal donGia, LoaiSanPham maLoai, DonDatHang maDDH) {
 		this.soLuong = soLuong;
 		this.donGia = donGia;
 		this.maLoai = maLoai;
