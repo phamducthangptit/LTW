@@ -859,6 +859,7 @@ public class SPController {
 		NhanVien nv = (NhanVien) session.getAttribute("user");
 		String tenSP = request.getParameter("ten");
 		String gia = request.getParameter("gia");
+		String giaNhap = request.getParameter("giaNhap");
 		String cpu = request.getParameter("cpu");
 		String ram = request.getParameter("ram");
 		String hardware = request.getParameter("hardware");
@@ -869,13 +870,13 @@ public class SPController {
 		String theLoai = request.getParameter("theLoai");
 		String hang = request.getParameter("hangSanXuat");
 		BigDecimal gia1 = new BigDecimal(gia);
-		
+		BigDecimal gia2 = new BigDecimal(giaNhap);
 		String fileName = saveImage(photo);
 		if(fileName == null) {
 			fileName = "sp.png";
 		}
 		LoaiSanPham x = new LoaiSanPham(maLoai, tenSP, gia1, fileName, moTa, cpu, 
-				ram, hardware, card, screen, os, null, null);
+				ram, hardware, card, screen, os,gia2, null, null);
 		String s = saveLoaiSanPham(x, theLoai, hang, nv);
 		if (s.equals("TC")) {
 			return "redirect:/home/danh-muc-san-pham.htm";
