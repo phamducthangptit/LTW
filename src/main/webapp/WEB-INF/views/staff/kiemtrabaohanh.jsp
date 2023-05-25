@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Zay Shop eCommerce HTML CSS Template</title>
+<title>Tạo Phiếu Nhập</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -53,6 +53,8 @@
     <!-- Start Content Page -->
     <main>
     	<section class="bg-light">
+    	<form  action="staff/danhsachdangbaohanh.htm" method="POST">
+        <a class="btn btn-success btn-lg px-3 mt-1"href="danhsachdangbaohanh.htm?loaiBtn=troVe"><i class="fa fa-angle-double-left" aria-hidden="true"></i>Về Trang Bảo Hành</a>
        <div class = "container py-5">
        
        <div class = "row">
@@ -60,43 +62,53 @@
        <div class = "card">
        <div class = "card-body">
       
-       <h4>Chi Tiết Đơn Đặt Hàng</h4>
+       <h4>Lịch Sử Bảo Hành</h4>
        <ul >
-       	<li class = "pb-3"> Nhân Viên Đặt : <br>${DDH.maNV.maNV } - ${DDH.maNV.ho } ${DDH.maNV.ten }</li>
-       	<li class = "pb-3"> Mã Đơn : ${DDH.maDDH }</li>
-       	<li class = "pb-3"> Ngày Đặt : ${DDH.ngayDat }</li>
-       	<li class = "pb-3"> Nhà Cung Cấp : ${DDH.maNCC.tenNCC}</li>
+       	<li class = "pb-3">Seri : ${SP.seri}</li>
+       		<li class = "pb-3"> Loại Sản Phẩm : ${SP.maLoai.maLoai}</li>
+       	<li class = "pb-3"> Tên Sản Phẩm : ${SP.maLoai.tenSP}</li>
+       	<li class = "pb-3">Số Phiếu Bảo Hành ${SP.phieuBaoHanh.soPhieuBH}</li>
+       	<li class = "pb-3"> Nhân Viên Lập Phiếu : ${SP.phieuBaoHanh.maNV.maNV} - ${SP.phieuBaoHanh.maNV.ho} ${SP.phieuBaoHanh.maNV.ten}</li>
        </ul>
-     
        </div>
        </div>
        </div>
-       <div class = "col-lg-9">
+       <div class = "col-lg-9 mt-9">
        <table class="table table-light table-striped table-hover bordered-dark"
 				style="text-align: center;">
                     <thead>
                         <tr>
-                            <th width="200">Mã Loại Sản Phẩm</th>
-                            <th >Tên Sản Phẩm</th>
-                            <th width="150">Số lượng</th>
-                            <th width="200">Đơn giá </th>
+                        	<th >Nhân Viên Nhận</th>
+                            <th >Ngày Nhận</th>
+                             <th >Trạng Thái Nhận</th>
+                              <th >Nhân Viên Trả</th>
+                              <th >Ngày Trả</th>
+                             <th >Trạng Thái Trả</th>
                           </tr>
                     </thead>
                     <tbody>
-                    <c:forEach var="ct" items="${DDH.getCtDonDatHang()}">
+                     <c:if test = "${SP.phieuBaoHanh.ctBaoHanh.size() == 0}">
+                    <tr><td colspan = "6">Chưa có chi tiết bảo hành !</td></tr>
+                     
+                     </c:if>
+                   <c:if test = "${SP.phieuBaoHanh.ctBaoHanh.size() != 0}">
+                    <c:forEach var="ct" items="${SP.phieuBaoHanh.ctBaoHanh}">
 					<tr>
-						<td>${ct.maLoai.maLoai }</td>
-						<td>${ct.maLoai.tenSP }</td>
-						<td>${ct.soLuong }</td>
-						<td>${ct.donGia.intValue() } VNĐ</td>
-	
+						<td>${ct.maNVNhan.maNV} - ${ct.maNVNhan.ho} ${ct.maNVNhan.ten}</td>
+						<td>${ct.ngayNhan}</td>
+						<td>${ct.trangThaiNhan}</td>
+						<c:if test = "${ct.maNVTra == null}">
+						<td colspan = "3">Chưa trả máy</td>
+						</c:if>
+						<c:if test = "${ct.maNVNhan != null}">
+						<td>${ct.maNVTra.maNV} - ${ct.maNVTra.ho} ${ct.maNVTra.ten}</td>
+						<td>${ct.ngayTra}</td>
+						<td>${ct.trangThaiTra}</td>
+						</c:if>
 					</tr>
 					</c:forEach>
-					<tr>
-					<td colspan = "2"></td>
-					<td> Tổng cộng :</td>
-					<td>${Tong} VNĐ</td>
-					</tr>
+					</c:if>
+					
                     </tbody>
                     
        </table>
@@ -104,6 +116,7 @@
        </div>
        
        </div>
+       </form>
     </section>
     </main>
     <!-- End Contact -->

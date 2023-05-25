@@ -53,6 +53,7 @@
     <!-- Start Content Page -->
     <main>
     	<section class="bg-light">
+    	<form  action="nhanbaohanh.htm" method="POST">
        <div class = "container py-5">
        
        <div class = "row">
@@ -60,50 +61,92 @@
        <div class = "card">
        <div class = "card-body">
       
-       <h4>Chi Tiết Đơn Đặt Hàng</h4>
+       <h4>Bảo Hành</h4>
        <ul >
-       	<li class = "pb-3"> Nhân Viên Đặt : <br>${DDH.maNV.maNV } - ${DDH.maNV.ho } ${DDH.maNV.ten }</li>
-       	<li class = "pb-3"> Mã Đơn : ${DDH.maDDH }</li>
-       	<li class = "pb-3"> Ngày Đặt : ${DDH.ngayDat }</li>
-       	<li class = "pb-3"> Nhà Cung Cấp : ${DDH.maNCC.tenNCC}</li>
+       
+       	<li class = "pb-3"> Nhân Viên Nhận : <br>${nhanVien.maNV } - ${nhanVien.ho } ${nhanVien.ten }</li>
+       
+       	<li class = "pb-3">Seri Sản Phẩm Cần Tìm: <input type="text" class="form-control" id = "seri" name="seri" required="required" value="${seri }">
+       	 <c:if test = "${SanPhamTim == null}">
+                   
+						<h6 style="color: red;">${ThongBao}</h6>                   
+					
+                    </c:if>
+       	 <button type="submit" class="btn btn-success btn-lg px-3 mt-1" name ="timSeri" value = "timSeri">Tìm <i class="fa fa-search" aria-hidden="true"></i></button>
+       	</li>
+       	<li><a class="btn btn-success btn-lg px-3"href="danhsachdangbaohanh.htm">Sản Phẩm Đã Nhận</a></li>
+       	<h6 style="color: red;">${ThongBao2}</h6>        
        </ul>
-     
+     	
        </div>
        </div>
        </div>
+
        <div class = "col-lg-9">
        <table class="table table-light table-striped table-hover bordered-dark"
 				style="text-align: center;">
                     <thead>
                         <tr>
-                            <th width="200">Mã Loại Sản Phẩm</th>
+                        	<th >Seri</th>
+                            <th >Mã Loại</th>
                             <th >Tên Sản Phẩm</th>
-                            <th width="150">Số lượng</th>
-                            <th width="200">Đơn giá </th>
+                            <th>Thời Gian Bảo Hành</th>
+                            <th></th>
                           </tr>
                     </thead>
                     <tbody>
-                    <c:forEach var="ct" items="${DDH.getCtDonDatHang()}">
-					<tr>
-						<td>${ct.maLoai.maLoai }</td>
-						<td>${ct.maLoai.tenSP }</td>
-						<td>${ct.soLuong }</td>
-						<td>${ct.donGia.intValue() } VNĐ</td>
-	
+                    
+                    <c:if test = "${SanPhamTim != null}">
+                    <tr>
+						<td>${SanPhamTim.seri }</td>
+						<td>${SanPhamTim.maLoai.maLoai }</td>
+						<td>${SanPhamTim.maLoai.tenSP}</td>
+						<td>${SanPhamTim.phieuBaoHanh.ngayBatDau} đến ${SanPhamTim.phieuBaoHanh.ngayKetThuc}</td>
+						
+						<td>
+						<a class="btn btn-success btn-lg px-3"href="kiemtrabaohanh.htm?seri=${SanPhamTim.seri}">Lịch Sử BH</a>
+						<c:if test ="${HetHan != null}">
+						<br>Hết Hạn Bảo Hành
+						</c:if>
+						</td>
+						<c:if test ="${HetHan == null}">
+						<tr>
+						<td colspan = "4">Trạng Thái Nhận Máy : <input type="text" class="form-control" 
+						id = "trangThaiNhan" name="trangThaiNhan" 
+						value="${trangThaiNhan }"  placeholder="Ví dụ : Lỗi Win,..." >
+						<br>
+						<h6 style="color: red;">${ThongBao3}</h6>   
+						</td>
+						<td><button type="submit" class="btn btn-success btn-lg px-3 mt-4" name ="nhanMay" value = "nhanMay">Nhận Máy</button></td>
+						</tr>
+
+						</c:if>
+						
+						<%-- <c:if test = "${SanPhamTim.phieuBaoHanh.ctBaoHanh.ngayNhan == null $$ NgayHienTai<=SanPhamTim.phieuBaoHanh.ngayKetThuc}">
+						<td>
+						<a class="btn btn-success btn-lg px-3"href="nhanbaohanh.htm?seriSP=${SanPhamTim.seri}&loaiBtn=nhan">Nhận Bảo Hành</a>
+						</td>
+						</c:if>
+						<c:if test ="${SanPhamTim.phieuBaoHanh.ngayKetThuc < NgayHienTai}">
+						<td>Hết Hạn Bảo Hành</td>
+						</c:if>
+						<c:if test = "${SanPhamTim.phieuBaoHanh.ctBaoHanh.ngayNhan != null $$ NgayHienTai<=SanPhamTim.phieuBaoHanh.ngayKetThuc}">
+						<a class="btn btn-success btn-lg px-3"href="nhanbaohanh.htm?seriSP=${SanPhamTim.seri}&loaiBtn=nhan">Trả Máy</a>
+						</c:if> --%>
+						
+						
 					</tr>
-					</c:forEach>
-					<tr>
-					<td colspan = "2"></td>
-					<td> Tổng cộng :</td>
-					<td>${Tong} VNĐ</td>
-					</tr>
+                    </c:if>
+                    
                     </tbody>
                     
        </table>
        </div>
        </div>
-       
        </div>
+       
+       </form>
+       
     </section>
     </main>
     <!-- End Contact -->

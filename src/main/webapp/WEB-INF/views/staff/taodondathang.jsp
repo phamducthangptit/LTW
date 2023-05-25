@@ -64,23 +64,33 @@
    
        <h4>Tạo Đơn Đặt Hàng</h4>
        <ul >
-       	<li class = "pb-3"> Nhân Viên Đặt : <br> NV002 - Nguyen Phuc Luan</li>
-       	<li class = "pb-3"> Mã Đơn : DDH022</li>
-       	<li class = "pb-3"> Ngày Đặt : <input type="date" id="ngayDat" name="ngayDat" value="${ngayDat}" placeholder="dd/mm/yyyy" pattern="\d{2}/\d{2}/\d{4}" required></li>
-       	<li class = "pb-3"> Nhà Cung Cấp : <select type="text" id="NCC" name="NCC">
-       				<c:forEach var="NCC" items="${DSNCC}">
-       				 <option value="${NCC.maNCC}">${NCC.tenNCC}</option>
-       				</c:forEach>
-       				</select>
+       	<li class = "pb-3"><lable for="nhanVien">Nhân Viên Đặt :
+       	</lable>
+       	<br>
+       	<p id = "nhanVien">${nhanVien.maNV} - ${nhanVien.ho} ${nhanVien.ten}</p>
+       	
        	</li>
+       	<li class = "pb-3" > Mã Đơn : <input type = "text" style="width: 100px;border :none"id ="maDDH" name = "maDDH" value ="${maDDH }" readonly="readonly"></li>
+       	<li class = "pb-3"> Ngày Đặt : <input type="date" id="ngayDat" name="ngayDat" value="${ngayDat}" placeholder="dd/MM/yyyy" pattern="\d{2}/\d{2}/\d{4}" required></li>
+       	<li class = "pb-3"> Nhà Cung Cấp : <select type="text" id="NCC" name="NCC">
+       		<c:forEach var="NCC" items="${DSNCC}">
+    				<option value="${NCC.maNCC}" ${NCC.maNCC eq NCChientai ? 'selected' : ''}>${NCC.maNCC} - ${NCC.tenNCC}</option>
+			</c:forEach>
+
+       		</select>
+       	</li>
+       	 <button type="submit" class="btn btn-success btn-lg px-3" name ="luuDDH" value = "luuDDH">Lưu Đơn Đặt Hàng</button>
+ 
        </ul>
-     
+           	 <h6 style="color: red; margin-left: 15px">${ThongBao }</h6>
        </div>
        </div>
        </div>
+       
        <div class = "col-lg-9">
       
-       <table>
+       <table  class="table table-light table-striped table-hover bordered-dark"
+				style="text-align: center;">
       	 <thead>
                         <tr>
                             <th >Sản Phẩm</th>
@@ -99,10 +109,17 @@
        				</select>
        				</td>
        				
-						<td> <input type="number" size="4" name="soLuong" min="1" max="100" id="soLuong" value="1" onfocus="this.select();"  style="text-align: center;"></td>
-						<td> <button type="submit" class="btn btn-success btn-lg px-3">Thêm</button></td>
-			
-	
+						<td> <input type="number" size="4" name="soLuong" min="1" max="100" id="soLuong" value="1"   style="text-align: center;"></td>
+						<!-- <td><ul class="list-inline pb-3">
+                            <li class="list-inline-item text-right">
+                            <input type="hidden" name="product-quanity" id="product-quanity" value="1">
+                            </li>
+                            <li class="list-inline-item"><span class="btn btn-success" id="btn-minus">-</span></li>
+                            <li class="list-inline-item"><span class="badge bg-secondary" id="var-value">1</span></li>
+                             <li class="list-inline-item"><span class="btn btn-success" id="btn-plus">+</span></li>
+                             </ul>
+                          </td> -->
+						<td> <button type="submit" class="btn btn-success btn-lg px-3" name ="themDDH" value = "themDDH">Thêm</button></td>
 					</tr>
 		
                     </tbody>
@@ -111,44 +128,29 @@
                    
        </table>
        <br>
-    <table>
+    <table  class="table table-light table-striped table-hover bordered-dark"
+				style="text-align: center;">
     		 <thead>
                         <tr>
                             <th>Sản Phẩm</th>
                             <th>Số lượng</th>
-                            
+                            <th></th>
                           </tr>
                     </thead>
                     <tbody>
+                    <c:if test="${not empty listSP}">
                     <c:forEach var="i"  begin="0" end ="${doLon}">
 					<tr>
 						<td>${listSP.get(i).maLoai} - ${listSP.get(i).tenSP}</td>
 						
 						<td>${listSL.get(i)}</td>
-	
+						<td><a href="XoaSPtabledondathang.htm?maLoai=${listSP.get(i).maLoai}"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
 					</tr>
 					</c:forEach>
+					</c:if>
                     </tbody> 
     </table>
-        <%--  <thead>
-                        <tr>
-                            <th width="200">Mã Loại Sản Phẩm</th>
-                            <th >Tên Sản Phẩm</th>
-                            <th width="150">Số lượng</th>
-                            <th width="200">Đơn giá (VNĐ)</th>
-                          </tr>
-                    </thead>
-                    <tbody>
-                    <c:forEach var="ct" items="${DDH.getCtDonDatHang()}">
-					<tr>
-						<td>${ct.maLoai.maLoai }</td>
-						<td>${ct.maLoai.tenSP }</td>
-						<td>${ct.soLuong }</td>
-						<td>${ct.donGia }</td>
-	
-					</tr>
-					</c:forEach>
-                    </tbody> --%>
+
        </div>
        
        </div>

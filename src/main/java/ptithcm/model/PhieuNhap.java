@@ -47,13 +47,11 @@ public class PhieuNhap {
 	}
 
 	
-	public PhieuNhap(int soPhieuNhap, Date ngayLapPN, NhanVien maNV, DonDatHang maDDH, List<SanPham> sanPham) {
-		super();
-		this.soPhieuNhap = soPhieuNhap;
+	public PhieuNhap(Date ngayLapPN, NhanVien maNV, DonDatHang maDDH) {
+
 		this.ngayLapPN = ngayLapPN;
 		this.maNV = maNV;
 		this.maDDH = maDDH;
-		this.sanPham = sanPham;
 	}
 
 

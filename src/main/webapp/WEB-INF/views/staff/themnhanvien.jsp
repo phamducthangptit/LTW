@@ -60,7 +60,7 @@
                 <h2>Thêm Nhân Viên Mới</h2>
               
          <form class="employee-list" action="themnhanvien.htm" method="POST">
-         <h6 style="color: red; margin-left: 15px">${ErrorId }</h6>
+         <h6 style="color: red; margin-left: 15px">${Error }</h6>
 	<!-- Start Contact -->
     <div class="container py-5" lang="vi">
         <div class="row py-5">
@@ -68,7 +68,7 @@
                 <div class="row">
                     <div class="form-group col-md-6 mb-3">
                         <label for="inputId">Mã Nhân Viên :</label>
-                        <input type="text" class="form-control mt-1" id="Id" name="Id" placeholder="Vui Lòng Không Bỏ Trống" required>
+                        <input type="text" class="form-control mt-1" id="Id" name="Id" value = "${maNV}" placeholder="Vui Lòng Không Bỏ Trống" required readonly="readonly">
                     </div>
                     <div class="form-group col-md-6 mb-3">
                         <label for="selectChucVu" >Chức Vụ :</label>
@@ -105,10 +105,13 @@
                 <div class="mb-3">
                     <label for="inputEmail">Email :</label>
                     <input type="email" class="form-control mt-1" id="email" name="email" value="${email }" placeholder="Vui Lòng Không Bỏ Trống" required>
+               <h6 style="color: red; margin-left: 15px">${ErrorEmail }</h6>
                 </div>
                 <div class="mb-3">
                     <label for="inputDiaChi">Địa Chỉ :</label>
                     <input type="text" class="form-control mt-1" id="diaChi" name="diaChi" value="${diaChi }"  placeholder="Vui Lòng Không Bỏ Trống" required>
+                    <br>
+                    
                 </div>
                 <div class="row">
                     <div class="col text-end mt-2">
