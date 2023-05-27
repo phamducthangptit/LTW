@@ -104,21 +104,12 @@
 					<tr>
 						<td><select type="text" id="sanPham" name="sanPham">
        				<c:forEach var="sp" items="${DSSP}">
-       				 <option value="${sp.maLoai}">${sp.tenSP}</option>
+       				 <option value="${sp.maLoai}">${sp.maLoai} - ${sp.tenSP}</option>
        				</c:forEach>
        				</select>
        				</td>
        				
 						<td> <input type="number" size="4" name="soLuong" min="1" max="100" id="soLuong" value="1"   style="text-align: center;"></td>
-						<!-- <td><ul class="list-inline pb-3">
-                            <li class="list-inline-item text-right">
-                            <input type="hidden" name="product-quanity" id="product-quanity" value="1">
-                            </li>
-                            <li class="list-inline-item"><span class="btn btn-success" id="btn-minus">-</span></li>
-                            <li class="list-inline-item"><span class="badge bg-secondary" id="var-value">1</span></li>
-                             <li class="list-inline-item"><span class="btn btn-success" id="btn-plus">+</span></li>
-                             </ul>
-                          </td> -->
 						<td> <button type="submit" class="btn btn-success btn-lg px-3" name ="themDDH" value = "themDDH">Thêm</button></td>
 					</tr>
 		
@@ -144,7 +135,7 @@
 						<td>${listSP.get(i).maLoai} - ${listSP.get(i).tenSP}</td>
 						
 						<td>${listSL.get(i)}</td>
-						<td><a href="XoaSPtabledondathang.htm?maLoai=${listSP.get(i).maLoai}"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+						<td><a href="XoaSPtabledondathang.htm?maLoai=${listSP.get(i).maLoai}"><i class="fa fa-trash" style = "color : black" aria-hidden="true"></i></a></td>
 					</tr>
 					</c:forEach>
 					</c:if>

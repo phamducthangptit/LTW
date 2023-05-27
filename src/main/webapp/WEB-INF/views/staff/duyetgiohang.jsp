@@ -53,72 +53,39 @@
 
     <!-- Start Content Page -->
     <main>
-   
-          <section class = "bg-light">
+        <section class = "bg-light">
         	<div class = "card-body">
-    
             <div class = "container py-5">
-                <h2>Đơn Đặt Hàng</h2>
-               <h6 style="color: red; right: 15px ; text-align: right">${ThongBao}</h6>
-            <h3><a href="taodondathang.htm" class="btn btn-success btn-lg px-3"><i class="fa fa-plus-circle" aria-hidden="true"></i>  Tạo Đơn Đặt Hàng Mới</a>
-             <a href="danhsachnhacungcap.htm" class="btn btn-success btn-lg px-3"><i class="fa fa-building" aria-hidden="true"></i> Danh Sách Nhà Cung Cấp</a>
-            </h3>
-            
-            <p>   </p>
-            <form class="employee-list" action="staff/dondathang.htm" method="POST">
-               <table class="table table-light table-striped table-hover bordered-dark"
+                <h2>Danh sách Giỏ Hàng Chờ Duyệt</h2>
+                <a class="btn btn-success btn-lg px-3 mt-1"href="duyetgiohang.htm"><i class="fa fa-shopping-cart" aria-hidden="true"></i>-Đơn Hàng Đã Duyệt</a>
+        		<p> </p>
+                <table class="table table-light table-striped table-hover bordered-dark"
 				style="text-align: center;">
                   <thead>
                     <tr>
-                      <th>Mã DDH</th>
-                      <th>Ngày Đặt</th>
-                      <th>Nhà Cung Cấp</th>
-                      <th>Nhân Viên Đặt</th>
-                    
-                      <th>Phiếu Nhập</th>
-                      <th></th>
+                      <th>ID Giỏ Hàng</th>
+                      <th>Ngày Tạo</th>
+                      <th>Email Khách Hàng</th>
                       <th></th>
                     </tr>
                   </thead>
                   <tbody>
-                 
-                    <c:forEach var="ddh" items="${DSDDH}">
-                    
+                    <c:forEach var="GH" items="${listGH}">
 					<tr>
-					 
-						<td>${ddh.maDDH }</td>
-						<td>${ddh.ngayDat }</td>
-						<td>${ddh.getMaNCC().maNCC} - ${ddh.getMaNCC().tenNCC}</td>
-						<td>${ddh.maNV.maNV } - ${ddh.maNV.ho } ${ddh.maNV.ten }</td>
-						
-						<c:if test = "${ddh.soPhieuNhap == null}">
-						  <td class="text-center align-middle"><div  id="templatemo_main_nav">
-						  <a class = "nav-link" href="taophieunhap.htm?idDDH=${ddh.maDDH}">Tạo Phiếu Nhập</a>
+						<td>${GH.idGH }</td>
+						<td>${GH.ngayTao }</td>
+						<td>${GH.email.email }</td>
+					    <td class="text-center align-middle"><div  id="templatemo_main_nav">
+						 <a class = "nav-link" href="chitietGHchuaduyet.htm?idGH=${GH.idGH}">Xem Chi Tiết</a>
 						  </div>
-						  </td>
-						  </c:if>
-						  <c:if test = "${ddh.soPhieuNhap != null}">
-					  	<td class="text-center align-middle"><div id="templatemo_main_nav">
-					  	<a class = "nav-link" href="xemphieunhap.htm?idPN=${ddh.soPhieuNhap.soPhieuNhap}">Xem Phiếu Nhập</a>
-					  	</div>
-					  	</td>
-					  	</c:if>
-					  	
-					  	<td>
-					  	<a class = "nav-link"  href="chitietdondathang.htm?maDDH=${ddh.maDDH}"><i class="fa fa-bars" style = "color : black" aria-hidden="true"></i></a>
-					  	
-					  	</td>
-					  		
-					  	<td><a class = "nav-link" href="detetedondathang.htm?idDDH=${ddh.maDDH}"><i class="fa fa-trash" style = "color : black" aria-hidden="true"></i></a></td>
-					
+						</td>
 					</tr>
-					
 				</c:forEach>
                   </tbody>
                 </table>
-   				 </form>
+
               </div>
-             </div>
+              </div>
              </section>
         </main>
 		

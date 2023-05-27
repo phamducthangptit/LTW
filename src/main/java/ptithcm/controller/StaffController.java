@@ -1,12 +1,12 @@
 package ptithcm.controller;
 
-import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Random;
+import java.util.Map;
 import java.util.Set;
 
 import javax.print.attribute.standard.MediaSize.NA;
@@ -35,10 +35,13 @@ import ptithcm.model.CTDonDatHang;
 import ptithcm.model.CTDotGiamGia;
 import ptithcm.model.DonDatHang;
 import ptithcm.model.DotGiamGia;
+import ptithcm.model.GioHang;
 import ptithcm.model.LoaiSanPham;
 import ptithcm.model.NhaCungCap;
 import ptithcm.model.NhanVien;
+import ptithcm.model.PhieuBaoHanh;
 import ptithcm.model.PhieuNhap;
+import ptithcm.model.PhieuTra;
 import ptithcm.model.SanPham;
 @Transactional
 @Controller
@@ -385,6 +388,17 @@ public class StaffController {
 	    query.setParameter("maNV", request.getParameter("Id"));
 	    List<NhanVien> listNhanVien = query.list();
 	    NhanVien nhanVien = listNhanVien.get(0);
+	    
+	    hql = "FROM NhanVien WHERE email = :email";
+	    query = session.createQuery(hql);
+	    query.setParameter("email", request.getParameter("email"));
+	    NhanVien nvTemp = (NhanVien) query.uniqueResult();
+	    if (!nvTemp.getMaNV().equals(listNhanVien.get(0).getMaNV()))
+	    {
+	    	model.addAttribute("ThongBaoEmail","Email này đã được sử dụng vui lòng nhập email khác !");
+	    	model.addAttribute("nv", nhanVien);
+			return "staff/suathongtinnhanvien";
+	    }
 	    nhanVien.setMaNV(request.getParameter("Id"));
 	    nhanVien.setHo(request.getParameter("Ho"));
 	    nhanVien.setTen(request.getParameter("Ten"));
@@ -700,6 +714,7 @@ public class StaffController {
 				for (SanPham sp : listSPNhap)
 				{
 					sp.setSoPhieuNhap(phieuNhap);
+					session.save(sp);
 					//SanPham sp1 = (SanPham) session1.merge(sp);
 				}
 				listSPNhap.clear();
@@ -736,7 +751,8 @@ public class StaffController {
 		@RequestMapping("nhanbaohanh")
 		public String nhanBaoHanh(Model model ,HttpServletRequest request ,@RequestParam(value = "timSeri", required = false) String timSeri,
 				HttpSession s,
-				@RequestParam(value = "nhanMay", required = false) String nhanMay)
+				@RequestParam(value = "nhanMay", required = false) String nhanMay,
+				@RequestParam(value = "traMay", required = false) String traMay)
 		{
 			NhanVien nhanvien = (NhanVien) s.getAttribute("user");
 			Session session = factory.getCurrentSession();
@@ -747,7 +763,7 @@ public class StaffController {
 			if(timSeri != null )
 			{
 				
-
+			
 				hql = "From SanPham Where seri = :seri";
 				query = session.createQuery(hql);
 				query.setParameter("seri", request.getParameter("seri") );
@@ -758,15 +774,22 @@ public class StaffController {
 				}
 				else 
 				{
-					
+					 
+				        calendar.setTime(spNhan.get(0).getIdGH().getNgayTao());
+				        calendar.add(Calendar.DAY_OF_MONTH, 30);
+				        Date dayreturns = new Date(calendar.getTime().getTime());
 					model.addAttribute("SanPhamTim",spNhan.get(0));
 					model.addAttribute("seri",request.getParameter("seri"));
 					 model.addAttribute("NgayHientai",currentDate);
 					 model.addAttribute("ThongBao"," ");
 					if(currentDate.compareTo(spNhan.get(0).getPhieuBaoHanh().getNgayKetThuc()) > 0 )
 					{
-						model.addAttribute("HetHan","Hết Hạn Bảo Hành");
+						model.addAttribute("HetHan","HetHan");
 					}
+					 if (spNhan.get(0).getIdGH().getNgayTao().compareTo(currentDate) <= 0 && currentDate.compareTo(dayreturns) <= 0)
+					 {
+						 model.addAttribute("DoiTra", "DuocTra");
+					 }
 				}
 			}
 			if (nhanMay != null && request.getParameter("trangThaiNhan") != "")
@@ -803,9 +826,30 @@ public class StaffController {
 					model.addAttribute("seri",request.getParameter("seri"));
 					 model.addAttribute("NgayHientai",currentDate);
 					 model.addAttribute("ThongBao"," ");
+					 model.addAttribute("DoiTra",("DuocTra"));
 					 model.addAttribute("ThongBao3", "Vui lòng điền trạng thái của máy trước khi nhận!");
 				}
 			}
+			
+			if (traMay != null)
+			{
+				hql = "From SanPham Where seri = :seri";
+				query = session.createQuery(hql);
+				query.setParameter("seri", request.getParameter("seri") );
+				SanPham spNhan = (SanPham) query.uniqueResult();
+				spNhan.setDaBan(2);
+				PhieuTra pt = new PhieuTra(currentDate,spNhan.getIdGH().getHoaDon(),nhanvien);
+				session.save(pt);
+				spNhan.setSoPhieuTra(pt);
+				session.update(spNhan);
+				model.addAttribute("SanPhamTim",spNhan);
+				model.addAttribute("seri",request.getParameter("seri"));
+				 model.addAttribute("NgayHientai",currentDate);
+				 model.addAttribute("ThongBao"," ");
+				 model.addAttribute("DoiTra",("DaTra"));
+				 model.addAttribute("HetHan","TraHang");
+			}
+			
 			 model.addAttribute("nhanVien", nhanvien);
 			
 			 return "staff/nhanbaohanh";
@@ -859,6 +903,100 @@ public class StaffController {
 		model.addAttribute("SP",sp);
 		 Hibernate.initialize(sp.getPhieuBaoHanh().getCtBaoHanh());
 		return "staff/kiemtrabaohanh";
+	}
+	
+	@RequestMapping("duyetgiohang")
+	public String danhSachGioHangChuaDuyet(Model model)
+	{
+		Session session = factory.getCurrentSession();
+		String hql ;
+		Query query ;
+		hql = "FROM GioHang Where trangThai = 1";
+		query = session.createQuery(hql);
+		List<GioHang> listGH = query.list();
+		model.addAttribute("listGH",listGH);
+		return "staff/duyetgiohang";
+	}
+	@RequestMapping("chitietGHchuaduyet")
+	public String chiTietGioHangChuaDuyet(Model model,HttpServletRequest request ,HttpSession s)
+	{
+		NhanVien nhanvien = (NhanVien) s.getAttribute("user");
+		Session session = factory.getCurrentSession();
+		String hql;
+		Query query;
+		hql = "from SanPham where idGH.idGH = :idGH";
+		query = session.createQuery(hql);
+		query.setParameter("idGH", Integer.parseInt(request.getParameter("idGH")) );
+		List<SanPham> listSPduyet = query.list();
+		
+		List<SanPham> listSPtemp = new ArrayList<>();
+		List<Integer> listSLtemp = new ArrayList<>();
+
+		for (SanPham sp : listSPduyet) {
+			if (listSPtemp.size()== 0)
+			{
+				listSPtemp.add(sp);
+				listSLtemp.add(1);
+			}
+			else {
+				int check = 0;
+				 for (SanPham temp : listSPtemp)
+				 {
+					 if(temp.getMaLoai().getMaLoai().equals(sp.getMaLoai().getMaLoai()))
+					 {
+						 int index = listSPtemp.indexOf(temp);
+						 int SL = listSLtemp.get(index);
+						 listSLtemp.set(index, SL +1);
+						 check = 1;
+					 }
+				 }
+				 if (check ==0 )
+				 {
+					 listSPtemp.add(sp);
+					listSLtemp.add(1);
+				 }
+			}
+		   
+		}
+		model.addAttribute("listSP",listSPtemp);
+		model.addAttribute("listSL",listSLtemp);
+		model.addAttribute("size" , listSLtemp.size()-1);
+		model.addAttribute("nhanVien", nhanvien);
+		hql = "FROM GioHang Where idGH = :idGH";
+		query = session.createQuery(hql);
+		query.setParameter("idGH",Integer.parseInt(request.getParameter("idGH"))  );
+		GioHang gioHang = (GioHang) query.uniqueResult();
+		model.addAttribute("gioHang" , gioHang);
+		
+		return "staff/chitietGHchuaduyet";
+	}
+	@RequestMapping("duyet")
+	public String duyet(Model model , HttpServletRequest request ,HttpSession s) {
+		NhanVien nhanvien = (NhanVien) s.getAttribute("user");
+		Session session = factory.getCurrentSession();
+		String hql  = "FROM GioHang Where idGH = :idGH";
+		Query query = session.createQuery(hql);
+		query.setParameter("idGH",Integer.parseInt(request.getParameter("idGH"))  );
+		GioHang gioHang = (GioHang) query.uniqueResult();
+		gioHang.setMaNV(nhanvien);
+		gioHang.setTrangThai(2);
+		session.save(gioHang);
+		hql = "from SanPham where idGH.idGH = :idGH";
+		query = session.createQuery(hql);
+		query.setParameter("idGH", Integer.parseInt(request.getParameter("idGH")) );
+		List<SanPham> listSPduyet = query.list();
+		for (SanPham sPham : listSPduyet)
+		{
+			Calendar calendar = Calendar.getInstance();
+			Date currentDate = new Date(calendar.getTime().getTime());
+			calendar.add(Calendar.DAY_OF_YEAR, 2);
+			Date dateBH = new Date(calendar.getTime().getTime());
+			PhieuBaoHanh bHanh = new PhieuBaoHanh(currentDate,dateBH,sPham,nhanvien);
+			session.save(bHanh);
+			sPham.setPhieuBaoHanh(bHanh);
+			session.save(sPham);
+		}
+		return "redirect:duyetgiohang.htm";
 	}
 //	@RequestMapping("taophieunhap")
 //	public String taoPhieuNhap(Model model , HttpServletRequest request,
