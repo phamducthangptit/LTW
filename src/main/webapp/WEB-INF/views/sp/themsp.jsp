@@ -175,9 +175,13 @@ https://templatemo.com/tm-559-zay-shop
 							    <label for="productName">Tên sản phẩm:</label>
 							    <input type="text" class="form-control"  name="ten" placeholder="Laptop DELL">
 							  </div>
-							  <div class="col-md-12">
-							    <label for="productPrice">Giá sản phẩm:</label>
-							    <input type="number" class="form-control" name="gia" placeholder="Nhập giá sản phẩm">
+							  <div class="col-md-6">
+							    <label for="productPrice">Giá bán:</label>
+							    <input type="number" class="form-control" name="gia" >
+							  </div>
+							  <div class="col-md-6">
+							    <label for="productPrice">Giá nhập:</label>
+							    <input type="number" class="form-control" name="giaNhap" >
 							  </div>
 							  <div class="col-md-6">
 							    <label for="productCPU">CPU:</label>

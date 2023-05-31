@@ -173,6 +173,7 @@ https://templatemo.com/tm-559-zay-shop
                                 <th scope="col" class="text-center align-middle">Chi tiết</th>
                                 <th scope="col" class="text-center align-middle">Giá bán</th>
                                 <th scope="col" class="text-center align-middle">Chỉnh sửa</th>
+                                <th scope="col" class="text-center align-middle">Xoá</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -200,6 +201,11 @@ https://templatemo.com/tm-559-zay-shop
                                 <td class="text-center align-middle">
                                 	<a href="/BanLaptop/home/danh-muc-san-pham/chinh-sua.htm?sp=${product.getMaLoai()}">
                                 	<i class="fas fa-cog fa-spin fa-lg" style="color: #000000;"></i>
+                                	</a>
+                                </td>
+                                <td class="text-center align-middle">
+                                	<a class="btn ${product.getSanPham() == null ? '' : 'disabled'}" href="/BanLaptop/home/danh-muc-san-pham/${product.getMaLoai()}.htm?linkDelete" >
+                                	<i class="fas fa-trash-alt fa-lg" style="color: #000000;"></i>
                                 	</a>
                                 </td>
                             </tr>
