@@ -82,7 +82,7 @@ https://templatemo.com/tm-559-zay-shop
                         <tbody>
                          	
                         	<c:forEach items="${cart}" var="product">
-                        	<c:set var="soTien" value ="${product.getLsp().getGia()*product.getSoLuong()}"/>
+                        	
                             <tr>
                                 <td class="col-md-1 text-center align-middle">
                                 
@@ -117,7 +117,19 @@ https://templatemo.com/tm-559-zay-shop
                                 - ...
                                 </td>
                                 <td class="text-center align-middle">
-                                	<div>${product.getLsp().getGia().toPlainString()} VND </div>
+                                	<div>
+                                	<c:if test="${product.getLsp().getCtDotGiamGia() == null}">
+                                	<p class="text-center mb-0">${product.getLsp().getGia().toPlainString()} VND </p>
+                                	<c:set var="soTien" value ="${product.getLsp().getGia()*product.getSoLuong()}"/>
+                                </c:if>
+                                <c:if test="${product.getLsp().getCtDotGiamGia() != null}">
+                                <c:set var="giam" value ="${100-product.getLsp().getCtDotGiamGia().get(0).getTiLeGiam()}"/>
+                                <c:set var="giaGiam" value ="${product.getLsp().getGia().multiply(giam).divide(100)}"/>
+                                	<p class="text-center mb-0"><s>${product.getLsp().getGia().toPlainString()} VND</s></p>
+                                	<h6 class="text-center mb-0" style="color:red;">${giaGiam.toPlainString()} VND</h6>
+                                	<c:set var="soTien" value ="${giaGiam*product.getSoLuong()}"/>
+                                </c:if>
+                                	 </div>
                                 </td>
                                 <td class="col-md-2 text-center align-middle">
                                 	<div class="col-auto">
@@ -181,7 +193,7 @@ https://templatemo.com/tm-559-zay-shop
     <!-- End Article -->
 
 
-    
+     <%@include file="footerKH.jsp"%>
     <!-- End Footer -->
 
     <!-- Start Script -->

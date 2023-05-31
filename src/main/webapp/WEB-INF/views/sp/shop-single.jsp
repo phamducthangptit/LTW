@@ -31,8 +31,44 @@
     <!-- Slick -->
     <link rel="stylesheet" type="text/css" href="<c:url value='/resource/assets/css/slick.min.css'/>">
     <link rel="stylesheet" type="text/css" href="<c:url value ='/resource/assets/css/slick-theme.css'/>">
+    <link rel='stylesheet prefetch' href='https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css'>
     <base href="${pageContext.servletContext.contextPath}/">
-    
+    <style type="text/css">
+		    	div.stars {
+		  width: 270px;
+		  display: inline-block;
+		}
+		 
+		input.star { display: none; }
+		 
+		label.star {
+		  float: right;
+		  padding: 10px;
+		  font-size: 36px;
+		  color: #444;
+		  transition: all .2s;
+		}
+		 
+		input.star:checked ~ label.star:before {
+		  content: '\f005';
+		  color: #FD4;
+		  transition: all .25s;
+		}
+		 
+		input.star-5:checked ~ label.star:before {
+		  color: #FE7;
+		  text-shadow: 0 0 20px #952;
+		}
+		 
+		input.star-1:checked ~ label.star:before { color: #F62; }
+		 
+		label.star:hover { transform: rotate(-15deg) scale(1.3); }
+		 
+		label.star:before {
+		  content: '\f006';
+		  font-family: FontAwesome;
+		}
+    </style>
 <!--
     
 TemplateMo 559 Zay Shop
@@ -68,7 +104,8 @@ https://templatemo.com/tm-559-zay-shop
 
     <!-- Open Content -->
     <section class="bg-light">
-    <form action="home/add.htm" method="post" enctype="multipart/form-data">
+    <form action="home/shop-single.htm" method="post" enctype="multipart/form-data">
+    <input type="hidden" value="${product.getMaLoai()}" name="maLoai">
         <div class="container pb-5">
             <div class="row">
                 <div class="col-lg-5 mt-5">
@@ -85,7 +122,20 @@ https://templatemo.com/tm-559-zay-shop
                         	<div class="row g-3">
 							  <h1 class="h3">${product.getTenSP()} - ${product.getMaLoai()}</h1>
 							  <div class="col-md-12">
-							    <p class="h3 py-2">Giá bán: ${product.getGia().toPlainString()} VND</p>
+							  <c:if test="${product.getCtDotGiamGia() == null}">
+                                	<p class="h3 py-2">Giá bán: ${product.getGia().toPlainString()} VND</p>
+                                </c:if>
+                                <c:if test="${product.getCtDotGiamGia() != null}">
+                                <c:set var="giam" value ="${100-product.getCtDotGiamGia().get(0).getTiLeGiam()}"/>
+                                <c:set var="giaGiam" value ="${product.getGia().multiply(giam).divide(100)}"/>
+                                	<p class="h3 py-2">Giá bán: <s>${product.getGia().toPlainString()} VND</s>
+                                	</p>
+                                	<p class="h3 py-2" style="color:red;">${giaGiam.toPlainString()} VND Giảm: ${product.getCtDotGiamGia().get(0).getTiLeGiam()} %
+                                	
+                                	</p>
+                                	
+                                </c:if>
+							    
 							  </div>
 							  <ul class="list-inline">
                                 <li class="list-inline-item">
@@ -111,16 +161,33 @@ https://templatemo.com/tm-559-zay-shop
                             </p>
                             <h6>Mô tả:</h6>
                             <textarea class="form-control" readonly="readonly">${product.getMoTa()}</textarea>
+                            <c:choose>
+							  <c:when test="${product.getSanPham() == null}">
+							    <h6 style="color:red;">Sản phẩm hết hàng</h6>
+							  </c:when>
+							  <c:otherwise>
+							  <div class="row" style ="margin-top:20px;">
+							    <div class="col-md-2">
+		                            <label for="productPrice">Số lượng:</label>
+		                            </div>
+		                            <div class="col-md-2">
+		                            <input type="number" class="form-control" name="soLuong" value="1" min="1" max="${product.getSanPham().size()}">
+		                            </div>
+		                            </div>
+							  </c:otherwise>
+							</c:choose>
+							                            
                             
 	  						<div class="row pb-3" style="margin-top: 10px;">
 	  							<div class="col d-grid">
-							  	<button type="submit" class="btn btn-primary" style="display: none;">Ẩn</button>
-							  	</div>
+                                        <button type="submit" class="btn btn-success btn-lg ${product.getSanPham() == null ? 'disabled':''}" name="btnBuy" value="buy">Mua ngay</button>
+                                 </div>
 	  							<div class="col d-grid">
-							  	<button type="submit" class="btn btn-success btn-lg">Thêm vào giỏ hàng</button>
-							  	${message}
+							  	<button type="submit" class="btn btn-success btn-lg ${product.getSanPham() == null ? 'disabled':''}">Thêm vào giỏ hàng</button>
+							  	
 							  	</div>
 							  </div>
+							  ${message}
                             </div>
                         </div>
                     </div>
@@ -131,113 +198,101 @@ https://templatemo.com/tm-559-zay-shop
         </form>
     </section>
     <!-- Close Content -->
+    	<section class="bg-light">
+        	<div class="container">
+        	<form>
+        		<div class="row">
+	                <div class="col-lg-1 mt-5">
+	                    <div class="card mb-3">
+	                        <img class="card-img img-fluid" src="<c:url value ='/resource/images/sp.png'/>" alt="Card image cap" id="product-detail">
+	                    </div> 
+	                </div>
+	                <div class="col-lg-11 mt-5">
+	                	<div class="card">
+	                	<div class="card-body">
+	                	<div class="row">
 
+		                		
+		                		<div class="stars">
+		                		<label for="diem" class="form-label">Điểm:</label>
+				                	<input class="star star-5" id="star-5" type="radio" name="star"/>
+								    <label class="star star-5" for="star-5"></label>
+								    <input class="star star-4" id="star-4" type="radio" name="star"/>
+								    <label class="star star-4" for="star-4"></label>
+								    <input class="star star-3" id="star-3" type="radio" name="star"/>
+								    <label class="star star-3" for="star-3"></label>
+								    <input class="star star-2" id="star-2" type="radio" name="star"/>
+								    <label class="star star-2" for="star-2"></label>
+								    <input class="star star-1" id="star-1" type="radio" name="star"/>
+								    <label class="star star-1" for="star-1"></label>
+								  </div>
+						    
+						    
+	                			<label for="binhLuan" class="form-label">Nội dung:</label>
+		                		<div class="col-md-10">
+			  					<textarea class="form-control" name="binhLuan"></textarea>
+			  					</div>
+			  					<div class="col-md-2">
+		                		<button name="btnBinhLuan" type="submit"
+		                    	  class="btn btn-success btn-lg">Bình Luận</button>
+			  					</div>
+		  					</div>
+		  					</div>
+	                	</div>
+                	</div>
+                </div>
+                </form>
+        	</div>
+        </section>
+        
+	<section class="bg-light">
+        	<div class="container">
+  
+        	<c:forEach items="${product.getBinhLuan()}" var="binhLuan">
+        	<div class="row">
+        	      	
+        	 <div class="col-lg-1 mt-5">
+	                    <div class="card mb-3">
+	                        <img class="card-img img-fluid" src="<c:url value ='/resource/images/sp.png'/>" alt="Card image cap" id="product-detail">
+	                    </div> 
+	                </div>
+	                <div class="col-lg-11 mt-5">
+	                
+	                	<div class="card">
+	                	<div class="card-body">
+	                	<h6>${binhLuan.getEmail().getEmail()}</h6>
+        		<p class="py-2">
+        		 <c:forEach begin="1" end="${binhLuan.getDiem()}" var="i">
+                                <i class="fa fa-star text-warning"></i>
+                   </c:forEach>
+                   <c:forEach begin="${binhLuan.getDiem()+1}" end="5" var="i">
+                                <i class="fa fa-star text-secondary"></i>
+                   </c:forEach> 
+                  </p>
+                  <label for="binhLuan" class="form-label">Nội dung:</label>
+			  		<textarea class="form-control" name="binhLuan" readonly>${binhLuan.getMoTa()}</textarea>
+			  			</div>
+			  			</div>
+        		</div>
+        		</div>
+        	</c:forEach>
+        	</div>
+    </section>
     <!-- Start Article -->
     
     <!-- End Article -->
 
 
     <!-- Start Footer -->
-    <footer class="bg-dark" id="tempaltemo_footer">
-        <div class="container">
-            <div class="row">
-
-                <div class="col-md-4 pt-5">
-                    <h2 class="h2 text-success border-bottom pb-3 border-light logo">Zay Shop</h2>
-                    <ul class="list-unstyled text-light footer-link-list">
-                        <li>
-                            <i class="fas fa-map-marker-alt fa-fw"></i>
-                            123 Consectetur at ligula 10660
-                        </li>
-                        <li>
-                            <i class="fa fa-phone fa-fw"></i>
-                            <a class="text-decoration-none" href="tel:010-020-0340">010-020-0340</a>
-                        </li>
-                        <li>
-                            <i class="fa fa-envelope fa-fw"></i>
-                            <a class="text-decoration-none" href="mailto:info@company.com">info@company.com</a>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="col-md-4 pt-5">
-                    <h2 class="h2 text-light border-bottom pb-3 border-light">Products</h2>
-                    <ul class="list-unstyled text-light footer-link-list">
-                        <li><a class="text-decoration-none" href="#">Luxury</a></li>
-                        <li><a class="text-decoration-none" href="#">Sport Wear</a></li>
-                        <li><a class="text-decoration-none" href="#">Men's Shoes</a></li>
-                        <li><a class="text-decoration-none" href="#">Women's Shoes</a></li>
-                        <li><a class="text-decoration-none" href="#">Popular Dress</a></li>
-                        <li><a class="text-decoration-none" href="#">Gym Accessories</a></li>
-                        <li><a class="text-decoration-none" href="#">Sport Shoes</a></li>
-                    </ul>
-                </div>
-
-                <div class="col-md-4 pt-5">
-                    <h2 class="h2 text-light border-bottom pb-3 border-light">Further Info</h2>
-                    <ul class="list-unstyled text-light footer-link-list">
-                        <li><a class="text-decoration-none" href="#">Home</a></li>
-                        <li><a class="text-decoration-none" href="#">About Us</a></li>
-                        <li><a class="text-decoration-none" href="#">Shop Locations</a></li>
-                        <li><a class="text-decoration-none" href="#">FAQs</a></li>
-                        <li><a class="text-decoration-none" href="#">Contact</a></li>
-                    </ul>
-                </div>
-
-            </div>
-
-            <div class="row text-light mb-4">
-                <div class="col-12 mb-3">
-                    <div class="w-100 my-3 border-top border-light"></div>
-                </div>
-                <div class="col-auto me-auto">
-                    <ul class="list-inline text-left footer-icons">
-                        <li class="list-inline-item border border-light rounded-circle text-center">
-                            <a class="text-light text-decoration-none" target="_blank" href="http://facebook.com/"><i class="fab fa-facebook-f fa-lg fa-fw"></i></a>
-                        </li>
-                        <li class="list-inline-item border border-light rounded-circle text-center">
-                            <a class="text-light text-decoration-none" target="_blank" href="https://www.instagram.com/"><i class="fab fa-instagram fa-lg fa-fw"></i></a>
-                        </li>
-                        <li class="list-inline-item border border-light rounded-circle text-center">
-                            <a class="text-light text-decoration-none" target="_blank" href="https://twitter.com/"><i class="fab fa-twitter fa-lg fa-fw"></i></a>
-                        </li>
-                        <li class="list-inline-item border border-light rounded-circle text-center">
-                            <a class="text-light text-decoration-none" target="_blank" href="https://www.linkedin.com/"><i class="fab fa-linkedin fa-lg fa-fw"></i></a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="col-auto">
-                    <label class="sr-only" for="subscribeEmail">Email address</label>
-                    <div class="input-group mb-2">
-                        <input type="text" class="form-control bg-dark border-light" id="subscribeEmail" placeholder="Email address">
-                        <div class="input-group-text btn-success text-light">Subscribe</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="w-100 bg-black py-3">
-            <div class="container">
-                <div class="row pt-2">
-                    <div class="col-12">
-                        <p class="text-left text-light">
-                            Copyright &copy; 2021 Company Name 
-                            | Designed by <a rel="sponsored" href="https://templatemo.com" target="_blank">TemplateMo</a>
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </footer>
+     <%@include file="footerKH.jsp"%>
     <!-- End Footer -->
 
     <!-- Start Script -->
-    <script src="assets/js/jquery-1.11.0.min.js"></script>
-    <script src="assets/js/jquery-migrate-1.2.1.min.js"></script>
-    <script src="assets/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/js/templatemo.js"></script>
-    <script src="assets/js/custom.js"></script>
+     <script src="<c:url value='/resource/assets/js/jquery-1.11.0.min.js'/>"></script>
+    <script src="<c:url value='/resource/assets/js/jquery-migrate-1.2.1.min.js'/>"></script>
+    <script src="<c:url value='/resource/assets/js/bootstrap.bundle.min.js'/>"></script>
+    <script src="<c:url value='/resource/assets/js/templatemo.js'/>"></script>
+    <script src="<c:url value='/resource/assets/js/custom.js'/>"></script>
     <!-- End Script -->
 
     <!-- Start Slider Script -->

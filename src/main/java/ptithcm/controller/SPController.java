@@ -25,6 +25,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,10 +33,14 @@ import org.springframework.web.multipart.MultipartFile;
 
 
 import ptit.bean.UploadFile;
+import ptithcm.model.BinhLuan;
+import ptithcm.model.CTDotGiamGia;
 import ptithcm.model.Cart;
 import ptithcm.model.ChinhSuaGia;
+import ptithcm.model.DotGiamGia;
 import ptithcm.model.GioHang;
 import ptithcm.model.HangSanXuat;
+import ptithcm.model.HoaDon;
 import ptithcm.model.KhachHang;
 import ptithcm.model.LoaiSanPham;
 import ptithcm.model.NhanVien;
@@ -56,6 +61,58 @@ public class SPController {
 	// Xử lý danh muc sản phẩm
 	String inputSearch = "";
 	
+	@RequestMapping(value={ "/", "/index" },method = RequestMethod.GET)
+	public String showHome(ModelMap model) {
+		List<LoaiSanPham> list1 = getLoaiSanPham_HOME();
+		sort(list1);
+		ArrayList<LoaiSanPham> list2 = new ArrayList<>();
+		int n = list1.size() >= 5 ? 5:list1.size();
+		Hibernate.initialize(list1.get(0).getMaTheLoai());
+		Hibernate.initialize(list1.get(0).getMaHang());
+		for(int i=1 ; i < n; i ++ ) {
+			Hibernate.initialize(list1.get(i).getMaTheLoai());
+			Hibernate.initialize(list1.get(i).getMaHang());
+			list2.add(list1.get(i));
+		}
+		model.addAttribute("listProducts", list2);
+		model.addAttribute("product1",list1.get(0));
+		return "sp/home";
+	}
+	private void sort(List<LoaiSanPham> list) {
+        int n = list.size();
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = 0; j < n - i - 1; j++) {
+            	int a = list.get(j).getSanPham()== null ? 0 : list.get(j).getSanPham().size();
+            	int b = list.get(j+1).getSanPham()== null ? 0 : list.get(j+1).getSanPham().size();
+                if (a < b) {
+                    LoaiSanPham temp = list.get(j);
+                    list.set(j, list.get(j + 1));
+                    list.set(j + 1, temp);
+                }
+            }
+        }
+    }
+	private List<LoaiSanPham> getLoaiSanPham_HOME() {
+		Session session = factory.getCurrentSession();
+		String hql = "FROM LoaiSanPham";
+		Query query = session.createQuery(hql);
+
+		List<LoaiSanPham> list = query.list();
+		DotGiamGia dgg = getDotGiamGia();
+		for (LoaiSanPham loaiSanPham : list) {
+		    loaiSanPham.setSanPham(getSanPhamBestSell(loaiSanPham.getMaLoai()));
+		}
+		return list;
+	}
+	private List<SanPham> getSanPhamBestSell(String s) {
+		Session session = factory.getCurrentSession();
+		String hql = "FROM SanPham WHERE maLoai.maLoai =:maLoai1 AND daBan = 1";
+		Query query = session.createQuery(hql);
+		query.setParameter("maLoai1", s);
+		List<SanPham> list = query.list();
+		if(list.size() ==0) return null;
+		return list;
+	}
 	@RequestMapping(value="danh-muc-san-pham", method = RequestMethod.GET)
 	public String showDanhMucSanPham(ModelMap model,
 			@RequestParam(defaultValue = "0") int page
@@ -66,7 +123,7 @@ public class SPController {
 		int startPage = Math.max(0, page - 1);
 		int endPage = Math.min(totalPages - 1, page + 1);
 		String url ="/BanLaptop/home/danh-muc-san-pham.htm";
-		List<LoaiSanPham> listLoaiSanPham = getLoaiSanPham(page,pageSize);
+		List<LoaiSanPham> listLoaiSanPham = getLoaiSanPhamDMSP(page,pageSize);
 		for (LoaiSanPham sp: listLoaiSanPham) {
 			BigDecimal strippedValue = sp.getGia().stripTrailingZeros();
 			sp.setGia(strippedValue);
@@ -88,24 +145,13 @@ public class SPController {
 			@RequestParam String sp
 			) {
 		LoaiSanPham sanPham = tim1LoaiSanPham(sp);
-		//System.out.println(sanPham);
 		Hibernate.initialize(sanPham.getMaTheLoai());
 		Hibernate.initialize(sanPham.getMaHang());
-		model.addAttribute("hinhanh", sanPham.getAnh());
-		model.addAttribute("maLoai", sanPham.getMaLoai());
-		model.addAttribute("ten", sanPham.getTenSP());
 		BigDecimal strippedValue = sanPham.getGia().stripTrailingZeros();
 		sanPham.setGia(strippedValue);
-		model.addAttribute("gia", sanPham.getGia().toPlainString());
-		model.addAttribute("cpu", sanPham.getcPU());
-		model.addAttribute("ram", sanPham.getRam());
-		model.addAttribute("hardware", sanPham.getHardWare());
-		model.addAttribute("card", sanPham.getCard());
-		model.addAttribute("screen", sanPham.getScreen());
-		model.addAttribute("os", sanPham.getOs());
-		model.addAttribute("theLoai", sanPham.getMaTheLoai().getMaTheLoai());
-		model.addAttribute("hangSanXuat", sanPham.getMaHang().getMaHang());
-		model.addAttribute("moTa", sanPham.getMoTa());
+		strippedValue = sanPham.getGiaNhap().stripTrailingZeros();
+		sanPham.setGiaNhap(strippedValue);
+		model.addAttribute("product",sanPham);
 		List<TheLoai> theLoai = getALLTheLoai();
 		List<HangSanXuat> hangSanXuat = getALLHangSanxuat();
 		model.addAttribute("listTheLoai", theLoai);
@@ -115,7 +161,8 @@ public class SPController {
 	@RequestMapping(value="danh-muc-san-pham/chinh-sua", method = RequestMethod.POST) 
 	public String updateLoaiSanPham(ModelMap model,
 				HttpSession session,
-			  	HttpServletRequest request
+			  	HttpServletRequest request,
+			  	@RequestParam("photo") MultipartFile photo
 	 ) {
 		int check = 0;
 		int check1 = 0;
@@ -177,8 +224,19 @@ public class SPController {
 			sanPham.setGia(gia1);
 			check1++;
 		}
-		System.out.println(check);
-		System.out.println(check1);
+		String giaNhap = request.getParameter("giaNhap");
+		BigDecimal giaNhap1 = new BigDecimal(giaNhap);
+		if (sanPham.getGiaNhap().compareTo(giaNhap1) != 0) {
+			sanPham.setGiaNhap(giaNhap1);
+			check++;
+		}
+		//System.out.println(check);
+		//System.out.println(check1);
+		String fileName = saveImage(photo);
+		if(fileName!=null) {
+			sanPham.setAnh(fileName);
+			check++;
+		}
 		String s = "";
 		if(check!=0) {
 			s = updateLoaiSanPham(sanPham, theLoai, hang, nv);
@@ -201,21 +259,12 @@ public class SPController {
 				session1.close();
 			}
 		}
-		model.addAttribute("hinhanh", sanPham.getAnh());
-		model.addAttribute("maLoai", sanPham.getMaLoai());
-		model.addAttribute("ten", sanPham.getTenSP());
+		
 		BigDecimal strippedValue = sanPham.getGia().stripTrailingZeros();
 		sanPham.setGia(strippedValue);
-		model.addAttribute("gia", sanPham.getGia().toPlainString());
-		model.addAttribute("cpu", sanPham.getcPU());
-		model.addAttribute("ram", sanPham.getRam());
-		model.addAttribute("hardware", sanPham.getHardWare());
-		model.addAttribute("card", sanPham.getCard());
-		model.addAttribute("screen", sanPham.getScreen());
-		model.addAttribute("os", sanPham.getOs());
-		model.addAttribute("theLoai", sanPham.getMaTheLoai().getMaTheLoai());
-		model.addAttribute("hangSanXuat", sanPham.getMaHang().getMaHang());
-		model.addAttribute("moTa", sanPham.getMoTa());
+		strippedValue = sanPham.getGiaNhap().stripTrailingZeros();
+		sanPham.setGiaNhap(strippedValue);
+		model.addAttribute("product",sanPham);
 		List<TheLoai> theLoai1 = getALLTheLoai();
 		List<HangSanXuat> hangSanXuat1 = getALLHangSanxuat();
 		model.addAttribute("listTheLoai", theLoai1);
@@ -228,18 +277,69 @@ public class SPController {
 		
 		return "sp/chinh-sua";
 	}
+	@RequestMapping(value="danh-muc-san-pham/chinh-sua.htm", params="btnBack")
+	public String backDMSP() {
+		return "redirect:/home/danh-muc-san-pham.htm";
+	}
+	@RequestMapping(value="danh-muc-san-pham/{sp}.htm", params = "linkDelete") 
+	public String deleteLoaiSanPham(ModelMap model, @PathVariable("sp") String maLoai) {
+		LoaiSanPham sanPham = tim1LoaiSanPham(maLoai);
+		
+		List<ChinhSuaGia> csg = getChinhSuaGia(maLoai);
+		for (ChinhSuaGia c: csg) {
+			Integer i = xoaChinhSuaGia(c);
+		}
+		Session session = factory.openSession();
+		Transaction t = session.beginTransaction();
+		LoaiSanPham sp = (LoaiSanPham) session.merge(sanPham);
+		try {
+			session.delete(sp);
+			t.commit();
+			
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			t.rollback();
+		} finally {
+			session.close();
+		}
+		return "redirect:/home/danh-muc-san-pham.htm";
+	}
+	private List<ChinhSuaGia> getChinhSuaGia(String maLoai) {
+		Session session = factory.getCurrentSession();
+		String hql = "FROM ChinhSuaGia WHERE maLoai.maLoai = :maLoai";
+		Query query = session.createQuery(hql);
+		query.setParameter("maLoai", maLoai);
+		List<ChinhSuaGia> list = query.list();
+		if(list.size() ==0) return null;
+		return list;
+	}
+	private Integer xoaChinhSuaGia(ChinhSuaGia x) {
+		Session session = factory.openSession();
+		Transaction t = session.beginTransaction();
+		ChinhSuaGia y = (ChinhSuaGia) session.merge(x);
+		try {
+			session.delete(y);
+			t.commit();
+		} catch (Exception e) {
+			t.rollback();
+			return 0;
+		} finally {
+			session.close();
+		}
+		return 1;
+	}
 	
 	private String updateLoaiSanPham(LoaiSanPham x,
 			String theLoai,
 			String hangSanXuat, NhanVien nv) {
-			Session session = factory.openSession();
-			Transaction t = session.beginTransaction();
+			
 			TheLoai tl = getTheLoai(theLoai);
 			HangSanXuat hsx = getHangSanxuat(hangSanXuat);
 			
 			if ( tl == null) {
-				System.out.println(tl.getMaTheLoai());
-				
+				//System.out.println(tl.getMaTheLoai());
+				Session session = factory.openSession();
+				Transaction t = session.beginTransaction();
 				int sizeTheLoai = getSizeTheLoai();
 				String maTheLoai = "" + String.valueOf(theLoai.charAt(0)) + 
 				String.valueOf(theLoai.charAt(theLoai.length()-1))
@@ -253,9 +353,14 @@ public class SPController {
 					//session.close();
 					return "Thêm thể loại thất bại";
 					}
+				finally {
+					session.close();
+				}
 			} 
 			if (hsx==null) {
-				System.out.println(hsx.getMaHang());
+				//System.out.println(hsx.getMaHang());
+				Session session = factory.openSession();
+				Transaction t = session.beginTransaction();
 				int sizeHangSanXuat = getSizeHangSanXuat();
 				String maHangSanXuat = "" + String.valueOf(hangSanXuat.charAt(0)) + 
 				String.valueOf(hangSanXuat.charAt(hangSanXuat.length()-1))
@@ -269,7 +374,12 @@ public class SPController {
 					//session.close();
 					return "Thêm hãng sản xuất thất bại";
 				}
+				finally {
+					session.close();
+				}
 			}
+			Session session = factory.openSession();
+			Transaction t = session.beginTransaction();
 			x.setMaTheLoai(tl);
 			x.setMaHang(hsx);
 			LoaiSanPham sanPham = (LoaiSanPham) session.merge(x);
@@ -352,20 +462,9 @@ public class SPController {
 				}
 			}
 			sp = "";
-			//System.out.println(sp);
-			//System.out.println(listSP.get(0).getMaLoai());
 		}
 		
-		
-		if (inputSearch.equals("")) {
-			totalLoaiSanPham = getSoLuongLoaiSanPham();
-			totalPages = (int) Math.ceil((double) totalLoaiSanPham / pageSize);
-			if (totalPages ==0) totalPages = 1;
-			startPage = Math.max(0, page - 1);
-			endPage = Math.min(totalPages - 1, page + 1);
-			listLoaiSanPham = getLoaiSanPham(page,pageSize);
-			model.addAttribute("listLoais", listLoaiSanPham);
-		} else {
+
 			totalLoaiSanPham = searchSLProduct1(inputSearch);
 			totalPages = (int) Math.ceil((double) totalLoaiSanPham / pageSize);
 			if (totalPages ==0) totalPages = 1;
@@ -374,8 +473,11 @@ public class SPController {
 			listLoaiSanPham = this.searchProduct1(page, pageSize, inputSearch);
 			List<LoaiSanPham> listLoaiSanPham1 = getLoaiSanPham(page,pageSize);
 			model.addAttribute("listLoais", listLoaiSanPham1);
+
+		for (LoaiSanPham x:listLoaiSanPham) {
+			BigDecimal strippedValue = x.getGia().stripTrailingZeros();
+			x.setGia(strippedValue);
 		}
-		//System.out.println(listLoaiSanPham.size());
 		List<HangSanXuat> listHang = getHang();
 		List<TheLoai> listTheLoai = getTheLoai();
 		model.addAttribute("listTheLoai", listTheLoai);
@@ -395,14 +497,14 @@ public class SPController {
 	}
 
 
-	@RequestMapping(value="shop",  params = "btnsearch", method = RequestMethod.GET)
+	@RequestMapping(value="shop/search", method = RequestMethod.GET)
 	public String searchProduct(ModelMap model,
 			HttpServletRequest request,
 			@RequestParam(defaultValue = "0") int page
 			) {
 		inputSearch = request.getParameter("searchInput");
 		if (inputSearch.equals("")) {
-			return "redirect:/home/shop.htm";
+			return "redirect:/home/shop/search.htm";
 		}
 		int pageSize = 9;
 		int totalLoaiSanPham = searchSLProduct1(inputSearch);
@@ -415,6 +517,10 @@ public class SPController {
 		List<LoaiSanPham> listLoaiSanPham1 = getLoaiSanPham(page,pageSize);
 		List<HangSanXuat> listHang = getHang();
 		List<TheLoai> listTheLoai = getTheLoai();
+		for (LoaiSanPham x:listLoaiSanPham) {
+			BigDecimal strippedValue = x.getGia().stripTrailingZeros();
+			x.setGia(strippedValue);
+		}
 		model.addAttribute("listTheLoai", listTheLoai);
 		model.addAttribute("listHang", listHang);
 		model.addAttribute("searchInput", inputSearch);
@@ -429,6 +535,144 @@ public class SPController {
 		//System.out.println(totalLoaiSanPham);
 		return "sp/shop";
 	}
+	@RequestMapping(value="shop-single", method = RequestMethod.POST) 
+	public String themSanPhamVaoGH(ModelMap model,
+			HttpSession session,
+			HttpServletRequest request) {
+		String maLoai = request.getParameter("maLoai");
+		int soLuong = Integer.parseInt(request.getParameter("soLuong"));
+		if (session.getAttribute("user") == null) {
+			return "redirect:/dangnhap.htm";
+		}
+		KhachHang nguoi = (KhachHang) session.getAttribute("user");;
+		GioHang gh = null;
+		if(nguoi != null) {
+			gh = getGioHang(nguoi.getEmail()); 
+		}
+		
+		if (gh == null) {
+			gh = new GioHang(0,null,null,null,nguoi,null);
+			Session ss = factory.openSession();
+			Transaction t = ss.beginTransaction();
+			try {
+				ss.save(gh);
+				t.commit();
+			}catch(Exception e) {
+				t.rollback();
+			} finally {
+					ss.close();
+			}
+		}
+		List<SanPham> list = getSanPham(maLoai);
+		if (list != null) {
+			for(int i=0 ; i < soLuong;i++) {
+				SanPham SPThemVaoGH = list.get(i);
+				SPThemVaoGH.setIdGH(gh);
+					//gh.setSanPham(getSanPhamGH(gh.getIdGH()));
+					//System.out.println(gh.getSanPham());
+				Session ss = factory.openSession();
+				Transaction t = ss.beginTransaction();
+				SanPham x = (SanPham) ss.merge(SPThemVaoGH);
+				try {
+					ss.update(x);
+					t.commit();
+					model.addAttribute("message", "Thêm vào giỏ hàng thành công!");
+				}catch(Exception e) {
+					t.rollback();
+					model.addAttribute("message", "Thêm vào giỏ hàng thất bại");
+					break;
+				} finally {
+					ss.close();
+				}
+			}
+		}
+		LoaiSanPham x = tim1LoaiSanPham(maLoai);
+		BigDecimal strippedValue = x.getGia().stripTrailingZeros();
+		x.setGia(strippedValue);
+		model.addAttribute("product",x);
+		return "sp/shop-single";
+	}
+	@RequestMapping(value="shop-single",params="btnBuy", method = RequestMethod.POST )
+	public String muaNgay(ModelMap model,
+			HttpSession session,
+			HttpServletRequest request) {
+		String maLoai = request.getParameter("maLoai");
+		int soLuong = Integer.parseInt(request.getParameter("soLuong"));
+		if (session.getAttribute("user") == null) {
+			return "redirect:/dangnhap.htm";
+		}
+		KhachHang nguoi = (KhachHang) session.getAttribute("user");;
+		GioHang gh = null;
+		if(nguoi != null) {
+			gh = getGioHang(nguoi.getEmail()); 
+		}
+		
+		if (gh == null) {
+			gh = new GioHang(0,null,null,null,nguoi,null);
+			Session ss = factory.openSession();
+			Transaction t = ss.beginTransaction();
+			try {
+				ss.save(gh);
+				t.commit();
+			}catch(Exception e) {
+				t.rollback();
+			} finally {
+					ss.close();
+			}
+		}
+		List<SanPham> list = getSanPham(maLoai);
+		if (list != null) {
+			for(int i=0 ; i < soLuong;i++) {
+				SanPham SPThemVaoGH = list.get(i);
+				SPThemVaoGH.setIdGH(gh);
+					//gh.setSanPham(getSanPhamGH(gh.getIdGH()));
+					//System.out.println(gh.getSanPham());
+				Session ss = factory.openSession();
+				Transaction t = ss.beginTransaction();
+				SanPham x = (SanPham) ss.merge(SPThemVaoGH);
+				try {
+					ss.update(x);
+					t.commit();
+				}catch(Exception e) {
+					t.rollback();
+					break;
+				} finally {
+					ss.close();
+				}
+			}
+		}
+		Session ss = factory.getCurrentSession();
+		String hql = "SELECT DISTINCT maLoai.maLoai FROM SanPham WHERE idGH.idGH = :id AND daBan = 0 ";
+		Query query = ss.createQuery(hql);
+		query.setParameter("id", gh.getIdGH());
+		List<String> list1 = query.list();
+		cart.clear();
+		for(int i =list1.size()-1 ; i>=0 ;i--) {
+			Cart tmp = new Cart();
+			
+			LoaiSanPham sp1 = tim1LoaiSanPham(list1.get(i));
+			BigDecimal strippedValue = sp1.getGia().stripTrailingZeros();
+			sp1.setGia(strippedValue);
+			tmp.setLsp(sp1);
+			tmp.setIdGH(gh.getIdGH());
+			tmp.setSoLuong((int) getSLSanPhamCua1Loai(gh.getIdGH(), list1.get(i)).longValue());
+			int soLuongCon = (getSanPham(list1.get(i)) == null) ? 0: getSanPham(list1.get(i)).size();
+			
+			tmp.setSoLuongMax(tmp.getSoLuong()+soLuongCon);
+			tmp.setCheck(0);
+			cart.add(tmp);
+		}
+		model.addAttribute("lsp",maLoai);
+		model.addAttribute("sl",-1);
+		model.addAttribute("thaotac","chon");
+		return "redirect:/home/gio-hang.htm";
+	}
+	@RequestMapping(value="shop/search/{input}.htm",  params = "linkSearch", method = RequestMethod.GET)
+	public String searchProductLink(ModelMap model,@PathVariable("input") String input) {
+		System.out.println(input);
+		model.addAttribute("searchInput", input);
+		return "redirect:/home/shop/search.htm";
+	}
 	@RequestMapping(value="shop-single", method = RequestMethod.GET)
 	public String show1LoaiSanPham(ModelMap model,
 			HttpServletRequest request,
@@ -437,7 +681,11 @@ public class SPController {
 		LoaiSanPham x = tim1LoaiSanPham(lsp);
 		BigDecimal strippedValue = x.getGia().stripTrailingZeros();
 		x.setGia(strippedValue);
+		//System.out.println(x.getCtDotGiamGia().get(0).getTiLeGiam());
+		//System.out.println(x.getCtDotGiamGia().get(0).getMaDot().getMaDot());
+		//System.out.println(x.getCtDotGiamGia().get(0).getMaLoai().getMaLoai());
 		model.addAttribute("product",x);
+		model.addAttribute("message","");
 		return "sp/shop-single";
 	}
 	private List<TheLoai> getTheLoai() {
@@ -499,6 +747,7 @@ public class SPController {
 		query.setParameter("id", gh.getIdGH());
 		List<String> list = query.list();
 		cart.clear();
+		//cart1.clear();
 		for(int i =list.size()-1 ; i>=0 ;i--) {
 			Cart tmp = new Cart();
 			
@@ -528,8 +777,14 @@ public class SPController {
 							if(cart.get(i).getCheck() == 0) {
 							cart.get(i).setCheck(1);
 							cart1.add(cart.get(i));
-							
-							sum =sum.add(cart.get(i).getLsp().getGia().multiply(new BigDecimal(cart.get(i).getSoLuong())));
+							if (cart.get(i).getLsp().getCtDotGiamGia()== null) {
+								sum =sum.add(cart.get(i).getLsp().getGia().multiply(new BigDecimal(cart.get(i).getSoLuong())));
+							} else {
+								BigDecimal x = cart.get(i).getLsp().getGia().multiply(new BigDecimal(100 -cart.get(i).getLsp().getCtDotGiamGia().get(0).getTiLeGiam()));
+								x = x.divide(new BigDecimal(100));
+								x = x.multiply(new BigDecimal(cart.get(i).getSoLuong()));
+								sum =sum.add(x);
+							}
 							session.setAttribute("sumGH", sum);
 							} 
 							model.addAttribute("SLVP", cart1.size());
@@ -544,7 +799,14 @@ public class SPController {
 							if(cart.get(i).getCheck() == 1) {
 							cart.get(i).setCheck(0);
 							
-							sum =sum.subtract(cart.get(i).getLsp().getGia().multiply(new BigDecimal(cart.get(i).getSoLuong())));
+							if (cart.get(i).getLsp().getCtDotGiamGia()== null) {
+								sum =sum.subtract(cart.get(i).getLsp().getGia().multiply(new BigDecimal(cart.get(i).getSoLuong())));
+							} else {
+								BigDecimal x = cart.get(i).getLsp().getGia().multiply(new BigDecimal(100 -cart.get(i).getLsp().getCtDotGiamGia().get(0).getTiLeGiam()));
+								x = x.divide(new BigDecimal(100));
+								x = x.multiply(new BigDecimal(cart.get(i).getSoLuong()));
+								sum =sum.subtract(x);
+							}
 							session.setAttribute("sumGH", sum);
 							model.addAttribute("sum",sum);
 							break;
@@ -588,7 +850,14 @@ public class SPController {
 				for(int i=0; i < cart.size(); i++) {
 					if(cart.get(i).getLsp().getMaLoai().equals(lsp)) {
 						if(cart.get(i).getCheck() == 1) {
-							sum =sum.subtract(cart.get(i).getLsp().getGia().multiply(new BigDecimal(cart.get(i).getSoLuong())));
+							if (cart.get(i).getLsp().getCtDotGiamGia()== null) {
+								sum =sum.subtract(cart.get(i).getLsp().getGia().multiply(new BigDecimal(cart.get(i).getSoLuong())));
+							} else {
+								BigDecimal x = cart.get(i).getLsp().getGia().multiply(new BigDecimal(100 -cart.get(i).getLsp().getCtDotGiamGia().get(0).getTiLeGiam()));
+								x = x.divide(new BigDecimal(100));
+								x = x.multiply(new BigDecimal(cart.get(i).getSoLuong()));
+								sum =sum.subtract(x);
+							}
 							session.setAttribute("sumGH", sum);
 							}
 						cart.remove(i);
@@ -623,7 +892,14 @@ public class SPController {
 							ss.close();
 						}
 						c.setSoLuong(sl);
-						sum =sum.subtract(c.getLsp().getGia().multiply(new BigDecimal(1)));
+						if (c.getLsp().getCtDotGiamGia()== null) {
+							sum =sum.subtract(c.getLsp().getGia().multiply(new BigDecimal(1)));
+						} else {
+							BigDecimal x = c.getLsp().getGia().multiply(new BigDecimal(100 -c.getLsp().getCtDotGiamGia().get(0).getTiLeGiam()));
+							x = x.divide(new BigDecimal(100));
+							x = x.multiply(new BigDecimal(1));
+							sum =sum.subtract(x);
+						}
 						model.addAttribute("sum",new BigDecimal(0));
 						model.addAttribute("SLVP",cart1.size());
 						model.addAttribute("cart", cart);
@@ -644,7 +920,14 @@ public class SPController {
 							ss.close();
 						}
 						c.setSoLuong(sl);
-						sum =sum.add(c.getLsp().getGia().multiply(new BigDecimal(1)));
+						if (c.getLsp().getCtDotGiamGia()== null) {
+							sum =sum.add(c.getLsp().getGia().multiply(new BigDecimal(1)));
+						} else {
+							BigDecimal x = c.getLsp().getGia().multiply(new BigDecimal(100 -c.getLsp().getCtDotGiamGia().get(0).getTiLeGiam()));
+							x = x.divide(new BigDecimal(100));
+							x = x.multiply(new BigDecimal(1));
+							sum =sum.add(x);
+						}
 						model.addAttribute("sum",new BigDecimal(0));
 						model.addAttribute("SLVP",cart1.size());
 						model.addAttribute("cart", cart);
@@ -670,17 +953,138 @@ public class SPController {
 	}
 	@RequestMapping(value="gio-hang", method=RequestMethod.POST)
 	public String datGH(ModelMap model, HttpSession session) {
+		KhachHang nguoi = (KhachHang) session.getAttribute("user");
 		BigDecimal sum = ((BigDecimal) session.getAttribute("sumGH"));
+		model.addAttribute("nguoi", nguoi);
 		model.addAttribute("stt",1);
 		model.addAttribute("sum",sum);
 		model.addAttribute("SLVP",cart1.size());
 		model.addAttribute("cart", cart1);
 		return "sp/thanh-toan";
 	}
+	@RequestMapping(value="thanh-toan", method=RequestMethod.POST) 
+	public String xacNhanThanhToan(ModelMap model, 
+			HttpSession session,
+			HttpServletRequest request) {
+		KhachHang nguoi = (KhachHang) session.getAttribute("user");
+		String diaChi = request.getParameter("diaChi");
+		if(!nguoi.getDiaChi().equals(diaChi)) {
+			Session ss = factory.openSession();
+			Transaction t = ss.beginTransaction();
+			nguoi.setDiaChi(diaChi);
+			
+			KhachHang x = (KhachHang) ss.merge(nguoi);
+			try {
+				ss.update(x);
+				t.commit();
+			} catch (Exception e) {
+				t.rollback();
+			} finally {
+				ss.close();
+			}
+		}
+		
+		GioHang gh = getGHid_1(nguoi.getEmail());
+		if (gh == null) {
+			LocalDate localDate = LocalDate.now();
+			Date currentDate = Date.valueOf(localDate);
+			gh = new GioHang(1,currentDate,null,null,nguoi,null);
+			Session ss = factory.openSession();
+			Transaction t = ss.beginTransaction();
+			try {
+				ss.save(gh);
+				t.commit();
+			}catch(Exception e) {
+				t.rollback();
+			} finally {
+				ss.close();
+			}
+		}
+		for(int i = 0 ; i< cart1.size() ; i++) {
+			String maLoai = cart1.get(i).getLsp().getMaLoai();
+			for (int j = 0 ; j< cart1.get(i).getSoLuong();j++) {
+				SanPham sp = getSanPhamCua1LoaiGH(maLoai, cart.get(i).getIdGH());
+				sp.setDaBan(1);
+				
+				sp.setIdGH(gh);
+				Session ss = factory.openSession();
+				Transaction t = ss.beginTransaction();
+				SanPham sp1 = (SanPham) ss.merge(sp);
+				try {
+					ss.update(sp);
+					t.commit();
+				}catch(Exception e) {
+					t.rollback();
+				} finally {
+					ss.close();
+				}
+			}
+		}
+		HoaDon hd = new HoaDon(sinhMaSoThue(), gh);
+		Integer check = saveHoaDon(hd);
+		if (check == 1 ) {
+			model.addAttribute("message", "Thanh toán hoá đơn thất bại!");
+		} else {
+			model.addAttribute("message", "Thanh toán hoá đơn thành công!");
+		}
+		
+		return "sp/thanh-toan";
+	}
+	private Integer saveHoaDon(HoaDon x) {
+		Session ss = factory.openSession();
+		Transaction t = ss.beginTransaction();
+		try {
+			ss.save(x);
+			t.commit();
+		}catch(Exception e) {
+			t.rollback();
+			return 1;
+		} finally {
+			ss.close();
+		}
+		GioHang gh = getGHid(x.getIdGH().getIdGH());
+		gh.setHoaDon(x);
+		ss = factory.openSession();
+		t = ss.beginTransaction();
+		GioHang gh1 = (GioHang) ss.merge(gh);
+		try {
+			ss.update(gh1);
+			t.commit();
+		}catch(Exception e) {
+			t.rollback();
+			return 1;
+		} finally {
+			ss.close();
+		}
+		return 0;
+	}
+	private String sinhMaSoThue() {
+		Session session = factory.getCurrentSession();
+		String hql = "FROM HoaDon";
+		Query query = session.createQuery(hql);
+		List<HoaDon> list = query.list();
+		int n = list.size() + 1;
+		String ma = Integer.toString(n);
+		String result ="MST";
+		for (int i=ma.length() ; i < 11;i++ ) {
+			result += "0";
+		}
+		result += ma;
+		return result;
+	}
+	private GioHang getGHid_1(String email) {
+		Session session = factory.getCurrentSession();
+		String hql = "FROM GioHang WHERE email.email = :email  AND trangThai = 1";
+		Query query = session.createQuery(hql);
+		query.setParameter("email", email);
+		List<GioHang> list = query.list();
+		if(list.size() ==0) return null;
+		return list.get(0);
+	}
 	
 	private GioHang getGHid(int idGH) {
 		Session session = factory.getCurrentSession();
-		String hql = "FROM GioHang WHERE idGH.idGH = :idGH  AND trangThai = 0";
+		String hql = "FROM GioHang WHERE idGH.idGH = :idGH";
 		Query query = session.createQuery(hql);
 		query.setParameter("idGH", idGH);
 		List<GioHang> list = query.list();
@@ -734,9 +1138,59 @@ public class SPController {
 		Query query = session.createQuery(hql);
 		int offset = page * pageSize;
 		List<LoaiSanPham> list = query.setFirstResult(offset).setMaxResults(pageSize).list();
+		DotGiamGia dgg = getDotGiamGia();
 		for (LoaiSanPham loaiSanPham : list) {
 		    loaiSanPham.setSanPham(getSanPham(loaiSanPham.getMaLoai()));
+		    if(dgg == null) {
+		    	loaiSanPham.setCtDotGiamGia(null);
+		    }
+		    else {
+		    	loaiSanPham.setCtDotGiamGia(getCTDotGiamGia(dgg.getMaDot(), loaiSanPham.getMaLoai()));
+		    }
 		}
+		return list;
+	}
+	private DotGiamGia getDotGiamGia() {
+		LocalDate localDate = LocalDate.now();
+		Date currentDate = Date.valueOf(localDate);
+		Session session = factory.getCurrentSession();
+		String hql = "FROM DotGiamGia WHERE ngayBatDau <= :ngay AND ngayKetThuc>=:ngay";
+		Query query = session.createQuery(hql);
+		query.setParameter("ngay", currentDate);
+		if(query.list().size() ==0) return null;
+		DotGiamGia x = (DotGiamGia) query.list().get(0);
+		return x;
+	}
+	private List<CTDotGiamGia> getCTDotGiamGia(String maDot, String maLoai) {
+		Session session = factory.getCurrentSession();
+		String hql = "FROM CTDotGiamGia WHERE  maDot.maDot =:maDot AND maLoai.maLoai=:maLoai ";
+		Query query = session.createQuery(hql);
+		query.setParameter("maDot", maDot);
+		query.setParameter("maLoai", maLoai);
+		List<CTDotGiamGia> result = query.list(); 
+		if(query.list().size() ==0) return null;
+		//result.get(0).setTiLeGiam(100 - result.get(0).getTiLeGiam());
+		
+		return result ;
+	}
+	private List<LoaiSanPham> getLoaiSanPhamDMSP(int page, int pageSize) {
+		Session session = factory.getCurrentSession();
+		String hql = "FROM LoaiSanPham";
+		Query query = session.createQuery(hql);
+		int offset = page * pageSize;
+		List<LoaiSanPham> list = query.setFirstResult(offset).setMaxResults(pageSize).list();
+		for (LoaiSanPham loaiSanPham : list) {
+		    loaiSanPham.setSanPham(getSanPhamDMSP(loaiSanPham.getMaLoai()));
+		}
+		return list;
+	}
+	private List<SanPham> getSanPhamDMSP(String s) {
+		Session session = factory.getCurrentSession();
+		String hql = "FROM SanPham WHERE maLoai.maLoai =:maLoai1";
+		Query query = session.createQuery(hql);
+		query.setParameter("maLoai1", s);
+		List<SanPham> list = query.list();
+		if(list.size() ==0) return null;
 		return list;
 	}
 	private List<SanPham> getSanPham(String s) {
@@ -770,7 +1224,9 @@ public class SPController {
 		Session session = factory.getCurrentSession();
 		ArrayList<String> tmp = catChuoi(s);
 		String hql = "FROM LoaiSanPham WHERE maLoai LIKE :product_name"
-				+" OR  tenSP LIKE :product_name1";
+				+" OR  tenSP LIKE :product_name1"
+				+" OR  maTheLoai.tenTL LIKE :product_name"
+				+" OR  maHang.tenHang LIKE :product_name";
 		Query query = session.createQuery(hql);
 		query.setParameter("product_name","%" +tmp.get(0) + "%");
 		query.setParameter("product_name1","%" + tmp.get(1)+ "%" );
@@ -785,7 +1241,9 @@ public class SPController {
 	private int searchSLProduct1( String s) {
 		Session session = factory.getCurrentSession();
 		String hql = "FROM LoaiSanPham WHERE maLoai LIKE :product_name"
-				+" OR  tenSP LIKE :product_name1";
+				+" OR  tenSP LIKE :product_name1"
+				+" OR  maTheLoai.tenTL LIKE :product_name"
+				+" OR  maHang.tenHang LIKE :product_name";
 		ArrayList<String> tmp = catChuoi(s);
 		Query query = session.createQuery(hql);
 		query.setParameter("product_name","%" +tmp.get(0) + "%");
@@ -808,7 +1266,30 @@ public class SPController {
 		query.setParameter("s", s);
 		List<LoaiSanPham> list = query.list();
 		if (list.size() == 0) return null;
-		return list.get(0);
+		LoaiSanPham x = list.get(0);
+		x.setBinhLuan(getBinhLuanLSP(s));
+		x.setSanPham(getSanPham(s));
+		DotGiamGia dgg = getDotGiamGia();
+		
+		if(dgg == null) {
+		    	x.setCtDotGiamGia(null);
+		    }
+		    else {
+		    	x.setCtDotGiamGia(getCTDotGiamGia(dgg.getMaDot(), x.getMaLoai()));
+		    }
+		return x;
+	}
+	private List<BinhLuan> getBinhLuanLSP(String s) {
+		Session session = factory.getCurrentSession();
+		String hql = "FROM BinhLuan WHERE maLoai.maLoai =:s";
+		Query query = session.createQuery(hql);
+		query.setParameter("s", s);
+		List<BinhLuan> list = query.list();
+		for(BinhLuan bl:list) {
+			Hibernate.initialize(bl.getEmail());
+		}
+		if (list.size() == 0) return null;
+		return list;
 	}
 	private ArrayList<String> catChuoi(String s) {
 		int vt = 0;
@@ -900,8 +1381,7 @@ public class SPController {
 	private String saveLoaiSanPham(LoaiSanPham x,
 			String theLoai,
 			String hangSanXuat, NhanVien nv) {
-			Session session = factory.openSession();
-			Transaction t = session.beginTransaction();
+			
 			System.out.println(theLoai);
 			TheLoai tl = getTheLoai(theLoai);
 			HangSanXuat hsx = getHangSanxuat(hangSanXuat);
@@ -915,6 +1395,8 @@ public class SPController {
 				String.valueOf(theLoai.charAt(theLoai.length()-1))
 				+ Integer.toString(sizeTheLoai);
 				tl= new TheLoai(maTheLoai, theLoai);
+				Session session = factory.openSession();
+				Transaction t = session.beginTransaction();
 				try {
 				session.save(tl);
 				t.commit();
@@ -923,6 +1405,9 @@ public class SPController {
 					//session.close();
 					return "Thêm thể loại thất bại";
 					}
+				finally {
+					session.close();
+				}
 			} 
 			if (hsx==null) {
 				int sizeHangSanXuat = getSizeHangSanXuat();
@@ -930,6 +1415,8 @@ public class SPController {
 				String.valueOf(hangSanXuat.charAt(hangSanXuat.length()-1))
 				+ Integer.toString(sizeHangSanXuat);
 				hsx = new HangSanXuat(maHangSanXuat, hangSanXuat);
+				Session session = factory.openSession();
+				Transaction t = session.beginTransaction();
 				try {
 					session.save(hsx);
 					t.commit();
@@ -937,10 +1424,14 @@ public class SPController {
 					t.rollback();
 					//session.close();
 					return "Thêm hãng sản xuất thất bại";
+				}finally {
+					session.close();
 				}
 			}
 			x.setMaTheLoai(tl);
 			x.setMaHang(hsx);
+			Session session = factory.openSession();
+			Transaction t = session.beginTransaction();
 			try {
 				session.save(x);
 				session.save(csg);

@@ -13,28 +13,11 @@
 			http://www.springframework.org/schema/tx/spring-tx.xsd
 			http://www.springframework.org/schema/mvc 
 			http://www.springframework.org/schema/mvc/spring-mvc.xsd">
-<!-- 
-	<bean id="ptithcm" class="ptit.bean.Company">
-		<property name="name"
-			value="PTITHCM Học viện Công Nghệ Bưu Chính Viễn Thông Hồ Chí Minh" />
-		<property name="slogan" value="Học để thay đổi tương lai" />
-		<property name="logo" value="resources/images/Logo_PTIT.jpg"></property>
-	</bean>
 
-	<bean id="ptit" class="ptit.bean.Company">
-		<property name="name"
-			value="PTITHCM Học viện Công Nghệ Bưu Chính Viễn Thông" />
-		<property name="slogan" value="Học để thay đổi tương lai" />
-		<property name="logo" value="resources/images/Logo_PTIT.jpg"></property>
-	</bean> -->
 
 	<bean id="uploadfile" class="ptit.bean.UploadFile">
 		<property name="basePath"
 			value="C:\\Users\\Admin\\Desktop\\eclip-workspace\\LTW\\LTW\\src\\main\\webapp\\resource\\images\" />
 	</bean>
-<!-- 
-	<bean id="attachefile" class="ptit.bean.UploadFile">
-		<property name="basePath"
-			value="C:\\HocVien\\BaiGiang\\Workspace\\Test\\WebContent\\resources\\attacheFile\" />
-	</bean> -->
+
 </beans>
