@@ -214,6 +214,7 @@ public class UserController {
 		return "user/thongtincanhan";
 	}
 	
+	
 	@RequestMapping(value = "/quenmatkhau")
 	public String quenMk() {
 		return "user/quenmatkhau";

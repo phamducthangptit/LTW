@@ -39,15 +39,12 @@
 		<form action="ctncc.htm" method="post">
 			<div class="row justify-content-center">
 				<div class="col-sm-6">
-					<div class="mb-3">
-						<h6 style="color: red;">${ErrorNCC}</h6>
-						<label for="maNCC" class="form-label">Mã nhà cung cấp</label> 
-						<input hidden="hidden" name="id" value="${id }">
-						<input type="text" class="form-control" name="maNCC" required="required" value="${nhaCC.maNCC}" 
-						${ tontaiDDH == 0 ? '' :'readonly'} >
+					<div class="mb-3"> 
+						<input hidden="hidden" name="maNCC" value="${nhaCC.maNCC }">
 					</div>
 
 					<div class="mb-3">
+						<h6 style="color: red;">${ErrorTenNCC}</h6>
 						<label for="tenNCC" class="form-label">Tên nhà cung cấp</label> 
 						<input type="text" class="form-control" name="tenNCC" required="required" value="${nhaCC.tenNCC}" 
 						${ tontaiDDH == 0 ? '' :'readonly'}>

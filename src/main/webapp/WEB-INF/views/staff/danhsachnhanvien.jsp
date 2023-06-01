@@ -61,7 +61,7 @@
             <h3><a href="themnhanvien.htm" style="text-decoration: none; border: 2px solid #343a40;padding: 5px;"><i class="fa fa-user-plus" aria-hidden="true"></i>  Thêm Nhân Viên Mới</a></h3>
             <p>   </p>
             <form class="employee-list" action="staff/danhsachnhanvien.htm" method="POST">
-                <table>
+                <table class="table">
                   <thead>
                     <tr>
                       <th>Mã NV</th>
