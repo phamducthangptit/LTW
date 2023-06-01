@@ -1,5 +1,6 @@
 package ptithcm.controller;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.List;
 import java.util.Random;
@@ -37,7 +38,7 @@ public class UserController {
 
 	@RequestMapping(value = { "/", "/home" })
 	public String index() {
-		return "user/home";
+		return "redirect:/home/index.htm";
 	}
 
 	@RequestMapping("/dangnhap")
@@ -64,7 +65,9 @@ public class UserController {
 				if (khachHang.getTrangThai() != 0) {
 					HttpSession s = request.getSession();
 					s.setAttribute("user", khachHang);
-					return "user/home";
+					BigDecimal sumTongTien = new BigDecimal(0);
+					s.setAttribute("sumGH", sumTongTien);
+					return "redirect:/home/index.htm";
 				} else {
 					model.addAttribute("ErrorLogin", "Tài khoản chưa được kích hoạt!");
 					return "user/login";

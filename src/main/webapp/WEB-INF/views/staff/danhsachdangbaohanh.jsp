@@ -53,69 +53,53 @@
 
     <!-- Start Content Page -->
     <main>
-   
-          <section class = "bg-light">
+        <section class = "bg-light">
+        <form  action="staff/danhsachdangbaohanh.htm" method="POST">
+        <a class="btn btn-success btn-lg px-3 mt-1"href="danhsachdangbaohanh.htm?loaiBtn=troVe"><i class="fa fa-angle-double-left" aria-hidden="true"></i>Về Trang Bảo Hành</a>
         	<div class = "card-body">
-    
             <div class = "container py-5">
-                <h2>Đơn Đặt Hàng</h2>
-               <h6 style="color: red; right: 15px ; text-align: right">${ThongBao}</h6>
-            <h3><a href="taodondathang.htm" class="btn btn-success btn-lg px-3"><i class="fa fa-plus-circle" aria-hidden="true"></i>  Tạo Đơn Đặt Hàng Mới</a></h3>
-            <p>   </p>
-            <form class="employee-list" action="staff/dondathang.htm" method="POST">
-               <table class="table table-light table-striped table-hover bordered-dark"
+                <h2>Danh Sách Sản Phẩm Đang Nhận Bảo Hành</h2>
+            
+              <table class="table table-light table-striped table-hover bordered-dark"
 				style="text-align: center;">
                   <thead>
                     <tr>
-                      <th>Mã DDH</th>
-                      <th>Ngày Đặt</th>
-                      <th>Nhà Cung Cấp</th>
-                      <th>Nhân Viên Đặt</th>
-                    
-                      <th>Phiếu Nhập</th>
-                      <th></th>
+                      <th>Seri</th>
+                      <th>Mã Loại</th>
+                      <th>Tên Sản Phẩm</th>
+                       <th>Nhân Viên Nhận</th>
+                      <th>Ngày Nhận</th>
+                      <th>Trạng Thái Nhận</th>
                       <th></th>
                     </tr>
                   </thead>
                   <tbody>
-                 
-                    <c:forEach var="ddh" items="${DSDDH}">
-                    
+                 <c:if test = "${listBH.size() == 0 }">
+                 <tr><td colspan="7">Hiện Không Có Sản Phẩm Nào Đang Nhận Bảo Hành</td></tr>
+                 </c:if>
+                 <c:if test = "${listSP.size() != 0 }">
+                    <c:forEach var="BH" items="${listBH}">
 					<tr>
-					 
-						<td>${ddh.maDDH }</td>
-						<td>${ddh.ngayDat }</td>
-						<td>${ddh.getMaNCC().maNCC} - ${ddh.getMaNCC().tenNCC}</td>
-						<td>${ddh.maNV.maNV } - ${ddh.maNV.ho } ${ddh.maNV.ten }</td>
-						
-						<c:if test = "${ddh.soPhieuNhap == null}">
-						  <td class="text-center align-middle"><div  id="templatemo_main_nav">
-						  <a class = "nav-link" href="taophieunhap.htm?idDDH=${ddh.maDDH}">Tạo Phiếu Nhập</a>
-						  </div>
-						  </td>
-						  </c:if>
-						  <c:if test = "${ddh.soPhieuNhap != null}">
-					  	<td class="text-center align-middle"><div id="templatemo_main_nav">
-					  	<a class = "nav-link" href="xemphieunhap.htm?idPN=${ddh.soPhieuNhap.soPhieuNhap}">Xem Phiếu Nhập</a>
-					  	</div>
-					  	</td>
-					  	</c:if>
+						<td>${BH.soPhieuBH.seri.seri }</td>
+						<td>${BH.soPhieuBH.seri.maLoai.maLoai }</td>
+						<td>${BH.soPhieuBH.seri.maLoai.tenSP }</td> 
+						<td>${BH.maNVNhan.maNV } - ${BH.maNVNhan.ho } ${BH.maNVNhan.ten }</td>
+						<td>${BH.ngayNhan}</td>
+						<td>${BH.trangThaiNhan }</td>
 					  	
-					  	<td>
-					  	<a class = "nav-link"  href="chitietdondathang.htm?maDDH=${ddh.maDDH}"><i class="fa fa-bars" style = "color : black" aria-hidden="true"></i></a>
-					  	
-					  	</td>
-					  		
-					  	<td><a class = "nav-link" href="detetedondathang.htm?idDDH=${ddh.maDDH}"><i class="fa fa-trash" style = "color : black" aria-hidden="true"></i></a></td>
-					
+					  	 <td>
+					  	 
+					  	 <a class="btn btn-success btn-lg px-3 mt-1"href="danhsachdangbaohanh.htm?seri=${BH.soPhieuBH.seri.seri }&loaiBtn=traMay">Sửa Xong</a>
+					  	 </td>
 					</tr>
-					
 				</c:forEach>
+				</c:if>
                   </tbody>
-                </table>
-   				 </form>
+                </table> 
+   				
               </div>
-             </div>
+              </div>
+               </form>
              </section>
         </main>
 		

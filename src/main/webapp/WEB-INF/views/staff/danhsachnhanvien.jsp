@@ -58,10 +58,15 @@
             <div class = "container py-5">
                 <h2>Danh sách nhân viên</h2>
                 
-            <h3><a href="themnhanvien.htm" style="text-decoration: none; border: 2px solid #343a40;padding: 5px;"><i class="fa fa-user-plus" aria-hidden="true"></i>  Thêm Nhân Viên Mới</a></h3>
+            <h3><a href="themnhanvien.htm" class="btn btn-success btn-lg px-3"><i class="fa fa-user-plus" aria-hidden="true"></i>  Thêm Nhân Viên Mới</a></h3>
             <p>   </p>
             <form class="employee-list" action="staff/danhsachnhanvien.htm" method="POST">
+<<<<<<< HEAD
                 <table class="table">
+=======
+                <table class="table table-light table-striped table-hover bordered-dark"
+				style="text-align: center;">
+>>>>>>> e151fdc52d2f0009d45594b1d15c0ff0098585bb
                   <thead>
                     <tr>
                       <th>Mã NV</th>
@@ -86,15 +91,15 @@
 						<td>${nv.email }</td>
 						<td>${nv.diaChi }</td>
 						<c:if test = "${nv.trangThai == 1}">
-						  <td>Hoạt Động</td>
+						  <td> <a href="trangthainhanvien.htm?idnv=${nv.maNV}&TT=1"><i class="fa fa-toggle-on" style = "color : black" aria-hidden="true"></i></a></td>
 						  </c:if>
 						  <c:if test = "${nv.trangThai == 0}">
-					  	<td>Ngừng Hoạt Động</td>
+					  	<td><a href="trangthainhanvien.htm?idnv=${nv.maNV}&TT=0"><i class="fa fa-toggle-off" style = "color : black" aria-hidden="true"></i></a></td>
 					  	</c:if>
 					  	
 					  	 <td>
 					  	 
-					  	 <a href="suathongtinnhanvien.htm?idnv=${nv.maNV}"><i class="fa fa-pencil-alt" aria-hidden="true"></i></a>
+					  	 <a href="suathongtinnhanvien.htm?idnv=${nv.maNV}"><i class="fa fa-pencil-alt" style = "color : black" aria-hidden="true"></i></a>
 					  	 </td>
 					</tr>
 				</c:forEach>

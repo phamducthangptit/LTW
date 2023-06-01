@@ -48,7 +48,8 @@ public class LoaiSanPham {
 	
 	@Column(name="OS")
 	private String os;
-	
+	@Column(name="GIANHAP")
+	private BigDecimal giaNhap;
 	@ManyToOne
 	@JoinColumn(name="MAHANG")
 	private HangSanXuat maHang;
@@ -78,9 +79,12 @@ public class LoaiSanPham {
 	public LoaiSanPham() {
 	}
 
-	public LoaiSanPham(String maLoai, String tenSP, BigDecimal gia, String anh, String moTa, String cPU, 
-			String ram,
-			String hardWare, String card, String screen, String os, HangSanXuat maHang, TheLoai maTheLoai) {
+
+
+	public LoaiSanPham(String maLoai, String tenSP, BigDecimal gia, String anh, String moTa, String cPU, String ram,
+			String hardWare, String card, String screen, String os, BigDecimal giaNhap, HangSanXuat maHang,
+			TheLoai maTheLoai) {
+
 		this.maLoai = maLoai;
 		this.tenSP = tenSP;
 		this.gia = gia;
@@ -92,9 +96,24 @@ public class LoaiSanPham {
 		this.card = card;
 		this.screen = screen;
 		this.os = os;
+		this.giaNhap = giaNhap;
 		this.maHang = maHang;
 		this.maTheLoai = maTheLoai;
 	}
+
+
+	
+	public BigDecimal getGiaNhap() {
+		return giaNhap;
+	}
+
+
+
+	public void setGiaNhap(BigDecimal giaNhap) {
+		this.giaNhap = giaNhap;
+	}
+
+
 
 	public String getMaLoai() {
 		return maLoai;
