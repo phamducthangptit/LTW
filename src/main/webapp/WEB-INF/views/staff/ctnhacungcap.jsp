@@ -34,6 +34,8 @@
 </head>
 
 <body>
+<%@include file="headerNV.jsp"%>
+<section class="bg-light">
 	<h2 style="text-align: center;">Chi tiết nhà cung cấp</h2>
 		<div class="container mt-4">
 		<form action="ctncc.htm" method="post">
@@ -66,12 +68,14 @@
 					
 					<div class="button-container">
 						<button type="submit" class="btn btn-success mb-4"
-							style="width: 200px;">Lưu thông tin nhà cung cấp</button>
+							style="width: 150px;">Lưu</button>
 					</div>
 
 				</div>
 			</div>
 		</form>
 	</div>
+	</section>
+	<%@include file="footerQL.jsp" %>	
 </body>
 </html>

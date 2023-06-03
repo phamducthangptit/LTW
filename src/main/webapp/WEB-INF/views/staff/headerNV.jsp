@@ -11,7 +11,7 @@
 			<div>
 				<i class="fa fa-envelope mx-2"></i> <a
 					class="navbar-sm-brand text-light text-decoration-none"
-					href="mailto:info@company.com">info@company.com</a> <i
+					href="mailto:banlaptop12ptit@gmail.com">banlaptop12ptit@gmail.com</a> <i
 					class="fa fa-phone mx-2"></i> <a
 					class="navbar-sm-brand text-light text-decoration-none"
 					href="tel:010-020-0340">010-020-0340</a>
@@ -39,7 +39,7 @@
 		class="container d-flex justify-content-between align-items-center">
 
 		<a class="navbar-brand text-success logo h1 align-self-center"
-			href="index.html"> Zay </a>
+			href="homenv.htm"> Shop </a>
 
 		<button class="navbar-toggler border-0" type="button"
 			data-bs-toggle="collapse" data-bs-target="#templatemo_main_nav"
@@ -57,6 +57,11 @@
 					</li>
 					<li class="nav-item"><a class="nav-link" href="dondathang.htm">Nhập Hàng</a>
 					</li>
+<<<<<<< HEAD
+					<li class="nav-item"><a class="nav-link" href="nhanbaohanh.htm">Bảo Hành</a>
+					</li>
+					<li class="nav-item"><a class="nav-link" href="danhsachdotgiamgia.htm">Đợt giảm giá</a>
+=======
 					<li class="nav-item"><a class="nav-link" href="/BanLaptop/home/danh-muc-san-pham.htm">Sản Phẩm</a>
 					</li>
 					<li class="nav-item"><a class="nav-link" href="#">Khuyến Mãi</a>
@@ -64,11 +69,12 @@
 					<li class="nav-item"><a class="nav-link" href="nhanbaohanh.htm">Bảo Hành</a>
 					</li>
 					<li class="nav-item"><a class="nav-link" href="#">Doanh Thu</a>
+>>>>>>> 79c266c968ed5e81fecf78ed974f71a691a560c4
 					</li>
 				</ul>
 			</div>
 			<div class="navbar align-self-center d-flex">
-				<div class="d-lg-none flex-sm-fill mt-3 mb-4 col-7 col-sm-auto pr-3">
+ 				<div class="d-lg-none flex-sm-fill mt-3 mb-4 col-7 col-sm-auto pr-3">
 					<div class="input-group">
 						<input type="text" class="form-control" id="inputMobileSearch"
 							placeholder="Search ...">
@@ -77,6 +83,10 @@
 						</div>
 					</div>
 				</div>
+<<<<<<< HEAD
+				 <a class="nav-icon position-relative text-decoration-none"
+					href="giohang.htm"> <i
+=======
 				<a class="nav-icon d-none d-lg-inline" href="#"
 					data-bs-toggle="modal" data-bs-target="#templatemo_search"> <i
 					class="fa fa-fw fa-search text-dark mr-2"></i>
@@ -84,6 +94,7 @@
 				
 				<a class="nav-icon position-relative text-decoration-none"
 					href="duyetgiohang.htm"> <i
+>>>>>>> 79c266c968ed5e81fecf78ed974f71a691a560c4
 					class="fa fa-fw fa-cart-arrow-down text-dark mr-1"></i> <span
 					class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark"></span>
 				</a>

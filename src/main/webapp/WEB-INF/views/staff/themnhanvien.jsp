@@ -55,7 +55,6 @@
 	</div>
 
 
-<<<<<<< HEAD
 	<!-- Start Content Page -->
 	<main>
 		<section class="bg-light">
@@ -149,7 +148,6 @@
 	</main>
 	<!-- End Contact -->
 	<%@include file="footerQL.jsp"%>
-=======
     <!-- Start Content Page -->
     <main>
        <section class="bg-light">

@@ -32,7 +32,9 @@
 </head>
 
 <body>
-	<div class="container mt-4">
+<%@include file="headerNV.jsp"%>
+	<section class="bg-light">
+	<div class="container">
 		<h2 style="text-align: center;">Tạo đợt giảm giá</h2>
 		<form action="taodotgiamgia.htm" method="POST">
 			<div class="row justify-content-center">
@@ -105,6 +107,7 @@
 			</div>
 		</form>
 	</div>
-
+</section>
+	<%@include file="footerQL.jsp" %>
 </body>
 </html>

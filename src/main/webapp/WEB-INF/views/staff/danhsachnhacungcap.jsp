@@ -58,16 +58,32 @@
 .search-form button:hover {
   background-color: #45a049;
 }
+.button-link {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #4CAF50;
+        color: white;
+        text-decoration: none;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-weight: bold;
+    }
+    .button-link:hover {
+        color: white;
+        box-shadow: 0 0 5px rgba(0, 0, 255, 0.5);
+    }
 </style>
 </head>
 <body>
+	<%@include file="headerNV.jsp"%>
 	<section class="bg-light">
 	<h2 style="text-align: center;">Danh sách nhà cung cấp</h2>
 	<div class="container mt-4">
 		<div class="search-container">
 		  <form class="search-form" action="timkiemncc.htm" method="post">
-		    <input type="text" id="searchInput" name ="idncc" placeholder="Nhập mã...">
+		    <input type="text" id="searchInput" name ="idncc" placeholder="Nhập mã..." required="required">
 		    <button type="submit">Tìm kiếm</button>
+		    <a href="themnhacungcap.htm" class="button-link">Thêm mới</a>
 		  </form>
 		</div>
 		<form action="" method="post">
@@ -115,6 +131,7 @@
 		</form>
 	</div>
 	</section>
+	<%@include file="footerQL.jsp" %>
 </body>
 <script>
 	function confirmDelete(event) {
