@@ -12,13 +12,13 @@
 			<div>
 				<i class="fa fa-envelope mx-2"></i> <a
 					class="navbar-sm-brand text-light text-decoration-none"
-<<<<<<< HEAD
+
 					href="mailto:banlaptop12ptit@gmail.com">banlaptop12ptit@gmail.com</a>
 				<i class="fa fa-phone mx-2"></i> <a
-=======
+
 					href="mailto:info@company.com">info@company.com</a> <i
 					class="fa fa-phone mx-2"></i> <a
->>>>>>> main
+
 					class="navbar-sm-brand text-light text-decoration-none"
 					href="tel:028 3730 6600">028 3730 6600</a>
 			</div>
@@ -58,7 +58,7 @@
 			class="align-self-center collapse navbar-collapse flex-fill  d-lg-flex justify-content-lg-between"
 			id="templatemo_main_nav">
 			<div class="flex-fill">
-<<<<<<< HEAD
+
 				<ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto"
 					style="max-width: 800px;">
 					<li class="nav-item"><a class="nav-link"
@@ -75,7 +75,7 @@
 						href="nhanbaohanh.htm">Bảo Hành</a></li>
 					<li class="nav-item"><a class="nav-link" href="doanhthutheongay.htm">Doanh
 							Thu</a></li>
-=======
+
 				<ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto" style="max-width: 650px;">
 					<li class="nav-item"><a class="nav-link" href="danhsachnhanvien.htm">Nhân Viên</a>
 					</li>
@@ -89,7 +89,7 @@
 					</li>
 					<li class="nav-item"><a class="nav-link" href="#">Doanh Thu</a>
 					</li>
->>>>>>> main
+
 				</ul>
 			</div>
 			<div class="navbar align-self-center d-flex">
@@ -102,14 +102,13 @@
 						</div>
 					</div>
 				</div>
-<<<<<<< HEAD
-=======
+
 				<a class="nav-icon d-none d-lg-inline" href="#"
 					data-bs-toggle="modal" data-bs-target="#templatemo_search"> <i
 					class="fa fa-fw fa-search text-dark mr-2"></i>
 				</a> 
 				
->>>>>>> main
+
 				<a class="nav-icon position-relative text-decoration-none"
 					href="duyetgiohang.htm"> <i
 					class="fa fa-fw fa-cart-arrow-down text-dark mr-1"></i> <span
