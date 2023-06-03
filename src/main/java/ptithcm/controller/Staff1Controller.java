@@ -31,14 +31,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-<<<<<<< HEAD
-
-=======
 import ptithcm.model.BinhLuan;
->>>>>>> main
 import ptithcm.model.CTDotGiamGia;
 import ptithcm.model.DoanhThuTheoNgay;
 import ptithcm.model.DotGiamGia;
+import ptithcm.model.KhachHang;
 import ptithcm.model.LoaiSanPham;
 import ptithcm.model.NhaCungCap;
 import ptithcm.model.NhanVien;

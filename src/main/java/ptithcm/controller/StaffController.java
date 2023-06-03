@@ -881,8 +881,6 @@ public class StaffController {
 		
 		return "staff/chitietGHchuaduyet";
 	}
-<<<<<<< HEAD
-=======
 	@RequestMapping("duyet")
 	public String duyet(Model model , HttpServletRequest request ,HttpSession s) {
 		if ( s.getAttribute("user") == null)
@@ -1147,6 +1145,5 @@ public class StaffController {
 
 			return "redirect:donhangdangnhan.htm";
 		}
->>>>>>> main
 }
 
