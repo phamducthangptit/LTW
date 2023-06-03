@@ -31,17 +31,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import ptithcm.model.CTBaoHanh;
-import ptithcm.model.CTDonDatHang;
+
 import ptithcm.model.CTDotGiamGia;
 import ptithcm.model.DoanhThuTheoNgay;
-import ptithcm.model.DonDatHang;
 import ptithcm.model.DotGiamGia;
-import ptithcm.model.KhachHang;
 import ptithcm.model.LoaiSanPham;
 import ptithcm.model.NhaCungCap;
 import ptithcm.model.NhanVien;
-import ptithcm.model.PhieuNhap;
 import ptithcm.model.SanPham;
 
 @Transactional
