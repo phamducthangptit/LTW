@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Zay Shop eCommerce HTML CSS Template</title>
+<title>Thêm Nhân Viên Mới</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -55,7 +55,6 @@
 	</div>
 
 
-<<<<<<< HEAD
 	<!-- Start Content Page -->
 	<main>
 		<section class="bg-light">
@@ -79,7 +78,7 @@
 													placeholder="Vui Lòng Không Bỏ Trống" required>
 											</div>
 											<div class="form-group col-md-6 mb-3">
-												<label for="selectChucVu">Chức Vụ :</label> <br> <select
+												<label for="selectChucVu">Chức Vụ :</label> <br> <select style="padding: 10px; border: 1px solid #ccc; background-color: #fff; color: #333; cursor: pointer;"
 													type="text" id="CV" name="CV" value="${CV }">
 													<option value="NVBanHang">Nhân Viên Bán Hàng</option>
 													<option value="NVBaoHanh">Nhân Viên Bảo Hành</option>
@@ -149,7 +148,6 @@
 	</main>
 	<!-- End Contact -->
 	<%@include file="footerQL.jsp"%>
-=======
     <!-- Start Content Page -->
     <main>
        <section class="bg-light">

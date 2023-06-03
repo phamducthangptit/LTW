@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Tạo Phiếu Nhập</title>
+<title>Giỏ Hàng Chưa Duyệt</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -52,8 +52,9 @@
 
     <!-- Start Content Page -->
     <main>
-    <a class="btn btn-success btn-lg px-3 mt-1"href="duyetgiohang.htm"><i class="fa fa-angle-double-left" aria-hidden="true"></i>Về Danh Sách Giỏ Hàng</a>
+    
     	<section class="bg-light">
+    	<a class="btn btn-success btn-lg px-3 mt-1"href="duyetgiohang.htm"><i class="fa fa-angle-double-left" aria-hidden="true"></i>Về Danh Sách Giỏ Hàng</a>
        <div class = "container py-5">
        
        <div class = "row">

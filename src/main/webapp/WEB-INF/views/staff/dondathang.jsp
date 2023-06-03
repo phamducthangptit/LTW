@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Zay Shop eCommerce HTML CSS Template</title>
+<title>Đơn Đặt Hàng</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -81,7 +81,11 @@
                     </tr>
                   </thead>
                   <tbody>
-                 
+                 <c:if test = "${DSDDH.size() == 0}">
+                  <tr>
+                  <td colspan = "5">Hiện Chưa Có Đơn Đặt Hàng Nào !</td>
+                  </tr>
+                  </c:if>
                     <c:forEach var="ddh" items="${DSDDH}">
                     
 					<tr>
