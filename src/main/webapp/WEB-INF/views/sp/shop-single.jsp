@@ -4,16 +4,15 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <!DOCTYPE html>
 <html>
-
+	<%@include file="headerKH.jsp"%>
 <head>
-<title>Zay Shop - Product Detail Page</title>
+<title>12Shop - Cửa hàng sản phẩm</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <link rel="apple-touch-icon"
 	href="<c:url value='/resource/assets/img/apple-icon.png'/>">
-<link rel="shortcut icon" type="image/x-icon"
-	href="<c:url value='/resource/assets/img/favicon.ico'/>">
+
 
 <link rel="stylesheet"
 	href="<c:url value='/resource/assets/css/bootstrap.min.css'/>">
@@ -103,7 +102,7 @@ https://templatemo.com/tm-559-zay-shop
 </head>
 <body>
 	<!-- Start Top Nav -->
-	<%@include file="headerKH.jsp"%>
+
 	<!-- Close Header -->
 
 	<!-- Modal -->
