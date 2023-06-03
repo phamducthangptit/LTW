@@ -28,10 +28,10 @@ public class NhaCungCap {
 	@Column(name="EMAIL")
 	private String email;
 	
-	@OneToMany(mappedBy = "maNCC", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "maNCC", fetch = FetchType.EAGER)
 	private List<CungCap> cungCap;
 	
-	@OneToMany(mappedBy = "maNCC", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "maNCC", fetch = FetchType.EAGER)
 	private List<DonDatHang> donDatHang;
 
 	public NhaCungCap() {
@@ -91,6 +91,14 @@ public class NhaCungCap {
 
 	public void setCungCap(List<CungCap> cungCap) {
 		this.cungCap = cungCap;
+	}
+
+	public List<DonDatHang> getDonDatHang() {
+		return donDatHang;
+	}
+
+	public void setDonDatHang(List<DonDatHang> donDatHang) {
+		this.donDatHang = donDatHang;
 	}
 	
 }

@@ -55,9 +55,8 @@ public class GioHang {
 	public GioHang() {
 	}
 
-	public GioHang(int idGH, int trangThai, Date ngayTao, NhanVien maNV, NhanVien maShipper, KhachHang email,
+	public GioHang(int trangThai, Date ngayTao, NhanVien maNV, NhanVien maShipper, KhachHang email,
 			HoaDon hoaDon) {
-		this.idGH = idGH;
 		this.trangThai = trangThai;
 		this.ngayTao = ngayTao;
 		this.maNV = maNV;

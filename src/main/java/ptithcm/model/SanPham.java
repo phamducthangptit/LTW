@@ -15,6 +15,9 @@ public class SanPham {
 	@Column(name="SERI")
 	private String seri;
 	
+	@Column(name="DABAN")
+	private int daBan;
+	
 	@ManyToOne
 	@JoinColumn(name="MALOAI")
 	private LoaiSanPham maLoai;
@@ -37,15 +40,28 @@ public class SanPham {
 	public SanPham() {
 	}
 
-	public SanPham(String seri, LoaiSanPham maLoai, PhieuNhap soPhieuNhap, GioHang idGH, PhieuTra soPhieuTra,
+	
+	public SanPham(String seri, int daBan, LoaiSanPham maLoai, PhieuNhap soPhieuNhap, GioHang idGH, PhieuTra soPhieuTra,
 			PhieuBaoHanh phieuBaoHanh) {
 		this.seri = seri;
+		this.daBan = daBan;
 		this.maLoai = maLoai;
 		this.soPhieuNhap = soPhieuNhap;
 		this.idGH = idGH;
 		this.soPhieuTra = soPhieuTra;
 		this.phieuBaoHanh = phieuBaoHanh;
 	}
+
+
+	public int getDaBan() {
+		return daBan;
+	}
+
+
+	public void setDaBan(int daBan) {
+		this.daBan = daBan;
+	}
+
 
 	public String getSeri() {
 		return seri;
@@ -63,13 +79,17 @@ public class SanPham {
 		this.maLoai = maLoai;
 	}
 
+	
+
 	public PhieuNhap getSoPhieuNhap() {
 		return soPhieuNhap;
 	}
 
+
 	public void setSoPhieuNhap(PhieuNhap soPhieuNhap) {
 		this.soPhieuNhap = soPhieuNhap;
 	}
+
 
 	public GioHang getIdGH() {
 		return idGH;

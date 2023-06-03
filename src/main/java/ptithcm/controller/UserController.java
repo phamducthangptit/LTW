@@ -1,5 +1,6 @@
 package ptithcm.controller;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.List;
 import java.util.Random;
@@ -37,7 +38,7 @@ public class UserController {
 
 	@RequestMapping(value = { "/", "/home" })
 	public String index() {
-		return "user/home";
+		return "redirect:/home/index.htm";
 	}
 
 	@RequestMapping("/dangnhap")
@@ -50,7 +51,7 @@ public class UserController {
 		String username = request.getParameter("username");
 		String pass = request.getParameter("pass");
 
-		String EMAIL_PATTERN = "^[a-zA-Z][\\w-]+@([\\w]+\\.[\\w]+|[\\w]+\\.[\\w]{2,}\\.[\\w]{2,})$";
+		String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 		Session session = factory.getCurrentSession();
 		if (Pattern.matches(EMAIL_PATTERN, username)) { // là email thì là người dùng
 			String hql = "FROM KhachHang KH WHERE KH.email = :email AND KH.pass = :pass";
@@ -64,7 +65,9 @@ public class UserController {
 				if (khachHang.getTrangThai() != 0) {
 					HttpSession s = request.getSession();
 					s.setAttribute("user", khachHang);
-					return "user/home";
+					BigDecimal sumTongTien = new BigDecimal(0);
+					s.setAttribute("sumGH", sumTongTien);
+					return "redirect:/home/index.htm";
 				} else {
 					model.addAttribute("ErrorLogin", "Tài khoản chưa được kích hoạt!");
 					return "user/login";
@@ -85,10 +88,16 @@ public class UserController {
 			NhanVien nhanVien = new NhanVien();
 			if (list.size() != 0) {
 				nhanVien = list.get(0);
-				if (nhanVien.getTrangThai() != 0) {
+				if (nhanVien.getTrangThai() != 0 && nhanVien.getRole().equals("NVGiaoHang"))
+				{
 					HttpSession s = request.getSession();
 					s.setAttribute("user", nhanVien);
-					return "staff/home";
+					return "staff/donhangchuagiao";
+				}
+				else if (nhanVien.getTrangThai() != 0) {
+					HttpSession s = request.getSession();
+					s.setAttribute("user", nhanVien);
+					return "staff/homeNV";
 				} else {
 					model.addAttribute("ErrorLogin", "Nhân viên không thể đăng nhập vào hệ thống!");
 					return "user/login";
@@ -137,7 +146,7 @@ public class UserController {
 			maXacThuc = Integer.toString(s1) + Integer.toString(s2) + Integer.toString(s3) + Integer.toString(s4)
 					+ Integer.toString(s5) + Integer.toString(s6);
 			session.save(khachHang);
-			String from = "pthang2506@gmail.com";
+			String from = "banlaptop12ptit@gmail.com";
 			String subject = "Thư xác nhận đăng kí tài khoản";
 			String body = "Mã xác thực tài khoản của bạn là: " + maXacThuc;
 			sendEmail.send(from, email, subject, body);
@@ -177,7 +186,7 @@ public class UserController {
 		return "user/home";
 	}
 	
-	@RequestMapping(value = "/thongtincanhan")
+	@RequestMapping(value = "/thongtincanhanuser")
 	public String thongTinCaNhan(Model model, HttpSession session) {
 		Object user = session.getAttribute("user");
 		KhachHang kh = new KhachHang();
@@ -214,6 +223,7 @@ public class UserController {
 		return "user/thongtincanhan";
 	}
 	
+	
 	@RequestMapping(value = "/quenmatkhau")
 	public String quenMk() {
 		return "user/quenmatkhau";
@@ -236,7 +246,7 @@ public class UserController {
 			int s6 = random.nextInt(10);
 			maLayMk = Integer.toString(s1) + Integer.toString(s2) + Integer.toString(s3) + Integer.toString(s4)
 					+ Integer.toString(s5) + Integer.toString(s6);
-			String from = "pthang2506@gmail.com";
+			String from = "banlaptop12ptit@gmail.com";
 			String subject = "Thư đặt lại mật khẩu";
 			String body = "Vui lòng nhập mã sau để đặt lại mật khẩu: " + maLayMk;
 			sendEmail.send(from, email, subject, body);

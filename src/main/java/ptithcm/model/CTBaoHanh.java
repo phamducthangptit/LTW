@@ -54,9 +54,9 @@ public class CTBaoHanh {
 	public CTBaoHanh() {
 	}
 
-	public CTBaoHanh(int idCTBH, String trangThaiNhan, String trangThaiTra, Date ngayNhan, Date ngayTra,
+	public CTBaoHanh(String trangThaiNhan, String trangThaiTra, Date ngayNhan, Date ngayTra,
 			NhanVien maNVNhan, NhanVien maNVTra, PhieuBaoHanh soPhieuBH) {
-		this.idCTBH = idCTBH;
+
 		this.trangThaiNhan = trangThaiNhan;
 		this.trangThaiTra = trangThaiTra;
 		this.ngayNhan = ngayNhan;

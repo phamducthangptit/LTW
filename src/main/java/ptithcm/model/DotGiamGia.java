@@ -1,8 +1,6 @@
 package ptithcm.model;
 
-
-
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -13,39 +11,34 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
-import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
-@Table(name="DOT_GIAM_GIA")
+@Table(name = "DOT_GIAM_GIA")
 public class DotGiamGia {
 	@Id
-	@Column(name="MADOT")
+	@Column(name = "MADOT")
 	private String maDot;
-	
-	@Temporal(TemporalType.TIMESTAMP)
-	@DateTimeFormat(pattern="dd/MM/yyyy HH:mm:ss")
-	@Column(name="NGAYBATDAU")
+
+//	@Temporal(TemporalType.TIMESTAMP)
+//	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
+	@Column(name = "NGAYBATDAU")
 	private Date ngayBatDau;
-	
-	@Temporal(TemporalType.TIMESTAMP)
-	@DateTimeFormat(pattern="dd/MM/yyyy HH:mm:ss")
-	@Column(name="NGAYKETTHUC")
+
+//	@Temporal(TemporalType.TIMESTAMP)
+//	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
+	@Column(name = "NGAYKETTHUC")
 	private Date ngayKetThuc;
-	
-	@Column(name="MOTA")
+
+	@Column(name = "MOTA")
 	private String moTa;
-	
+
 	@ManyToOne
-	@JoinColumn(name="MANV")
+	@JoinColumn(name = "MANV")
 	private NhanVien maNV;
-	
+
 	@OneToMany(mappedBy = "maDot", fetch = FetchType.LAZY)
 	private List<CTDotGiamGia> ctDotGiamGia;
 
-	
 	public DotGiamGia() {
 	}
 
@@ -104,6 +97,5 @@ public class DotGiamGia {
 	public void setCtDotGiamGia(List<CTDotGiamGia> ctDotGiamGia) {
 		this.ctDotGiamGia = ctDotGiamGia;
 	}
-	
-	
+
 }

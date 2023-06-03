@@ -175,9 +175,13 @@ https://templatemo.com/tm-559-zay-shop
 							    <label for="productName">Tên sản phẩm:</label>
 							    <input type="text" class="form-control"  name="ten" placeholder="Laptop DELL">
 							  </div>
-							  <div class="col-md-12">
-							    <label for="productPrice">Giá sản phẩm:</label>
-							    <input type="number" class="form-control" name="gia" placeholder="Nhập giá sản phẩm">
+							  <div class="col-md-6">
+							    <label for="productPrice">Giá bán:</label>
+							    <input type="number" class="form-control" name="gia" >
+							  </div>
+							  <div class="col-md-6">
+							    <label for="productPrice">Giá nhập:</label>
+							    <input type="number" class="form-control" name="giaNhap" >
 							  </div>
 							  <div class="col-md-6">
 							    <label for="productCPU">CPU:</label>
@@ -205,19 +209,19 @@ https://templatemo.com/tm-559-zay-shop
 							  </div>
 							  <div class="col-md-6">
 							  	<label for="theLoai" class="form-label">Thể loại:</label>
-							  	<input list="theLoais" name="theLoai" class="form-control">
+							  	<input type="text" list="theLoais" name="theLoai" class="form-control">
 							  	<datalist id="theLoais">
 							      <c:forEach items="${listTheLoai}" var="product">
-							        <option value="${product.tenTL}"></option>
+							        <option value="${product.getMaTheLoai()}">${product.getTenTL()}</option>
 							      </c:forEach>
 							    </datalist>  	
 							  </div>
 							  <div class="col-md-6">
 							  	<label for="moTa" class="form-label">Hãng sản xuất:</label>
-							  	<input list="listHang" name="hangSanXuat" class="form-control" >
+							  	<input type="text" list="listHang" name="hangSanXuat" class="form-control" >
 							  	<datalist id="listHang">
 							      <c:forEach items="${listHang}" var="product">
-							        <option value="${product.tenHang}"></option>
+							        <option value="${product.getMaHang()}">${product.getTenHang()}</option>
 							      </c:forEach>
 							    </datalist>  	
 							  </div>

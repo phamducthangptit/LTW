@@ -26,10 +26,6 @@ public class HoaDon {
 	@Column(name="MASOTHUE")
 	private String maSoThue;
 	
-	@Temporal(TemporalType.TIMESTAMP)
-	@DateTimeFormat(pattern="dd/MM/yyyy HH:mm:ss")
-	@Column(name="NGAYLAPHD")
-	private Date ngayLapHD;
 	
 	@OneToOne
 	@JoinColumn(name="IDGH")
@@ -41,10 +37,11 @@ public class HoaDon {
 	public HoaDon() {
 	}
 
-	public HoaDon(int soHoaDon, String maSoThue, Date ngayLapHD, GioHang idGH) {
-		this.soHoaDon = soHoaDon;
+	public HoaDon( String maSoThue, GioHang idGH) {
+
 		this.maSoThue = maSoThue;
-		this.ngayLapHD = ngayLapHD;
+
+		this.maSoThue = maSoThue;
 		this.idGH = idGH;
 	}
 
@@ -64,13 +61,7 @@ public class HoaDon {
 		this.maSoThue = maSoThue;
 	}
 
-	public Date getNgayLapHD() {
-		return ngayLapHD;
-	}
 
-	public void setNgayLapHD(Date ngayLapHD) {
-		this.ngayLapHD = ngayLapHD;
-	}
 
 	public GioHang getIdGH() {
 		return idGH;

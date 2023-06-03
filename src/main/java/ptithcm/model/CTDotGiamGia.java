@@ -31,8 +31,7 @@ public class CTDotGiamGia {
 	public CTDotGiamGia() {
 	}
 
-	public CTDotGiamGia(int idDotGiam, int tiLeGiam, LoaiSanPham maLoai, DotGiamGia maDot) {
-		this.idDotGiam = idDotGiam;
+	public CTDotGiamGia(int tiLeGiam, LoaiSanPham maLoai, DotGiamGia maDot) {
 		this.tiLeGiam = tiLeGiam;
 		this.maLoai = maLoai;
 		this.maDot = maDot;
