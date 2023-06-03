@@ -30,9 +30,10 @@
 
 -->
 </head>
+
 <body>
-<%@include file="headerNV.jsp"%>
- <!-- Modal -->
+    <%@include file="headerNV.jsp"%>
+    <!-- Modal -->
     <div class="modal fade bg-white" id="templatemo_search" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="w-100 pt-1 mb-5 text-right">
@@ -52,62 +53,57 @@
 
     <!-- Start Content Page -->
     <main>
-    	<section class="bg-light">
-       <div class = "container py-5">
-       
-       <div class = "row">
-       <div class="col-lg-3 mt-9">
-       <div class = "card">
-       <div class = "card-body">
-      
-       <h4>Phiếu Nhập</h4>
-       <ul >
-       	<li class = "pb-3"> Nhân Viên Đặt : <br>${PhieuNhap.maNV.maNV } - ${PhieuNhap.maNV.ho } ${PhieuNhap.maNV.ten }</li>
-       		<li class = "pb-3"> Số Phiếu Nhập : ${PhieuNhap.soPhieuNhap}</li>
-       	<li class = "pb-3"> Mã Đơn : ${PhieuNhap.maDDH.maDDH }</li>
-       	<li class = "pb-3"> Ngày Lập : ${PhieuNhap.ngayLapPN }</li>
-       	<li class = "pb-3"> Nhà Cung Cấp : ${PhieuNhap.maDDH.maNCC.tenNCC}</li>
-       </ul>
-     
-       </div>
-       </div>
-       </div>
-       <div class = "col-lg-9">
-       <table class="table table-light table-striped table-hover bordered-dark"
+        <section class = "bg-light">
+        	<div class = "card-body">
+            <div class = "container py-5">
+                <h2>Danh sách Giỏ Hàng Chờ Duyệt</h2>
+               <br>  <br>  <br>
+               
+                <table class="table table-light table-striped table-hover bordered-dark"
 				style="text-align: center;">
-                    <thead>
-                        <tr>
-                        <th>Hình Ảnh</th>
-                        	<th width="200">Seri Sản Phẩm</th>
-                            <th width="200">Mã Loại Sản Phẩm</th>
-                            <th >Tên Sản Phẩm</th>
-                          </tr>
-                    </thead>
-                    <tbody>
-                    <c:forEach var="sp" items="${PhieuNhap.getSanPham()}">
+                  <thead>
+                    <tr>
+                      <th>ID Giỏ Hàng</th>
+                      <th>Ngày Tạo</th>
+                      <th>Email Khách Hàng</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  <c:if test = "${listGH.size() == 0}">
+                  <tr>
+                  <td colspan = "4">Hiện Không Còn Đơn Hàng Chưa Duyệt !</td>
+                  </tr>
+                  </c:if>
+                  <c:if test = "${listGH.size() != 0}">
+                    <c:forEach var="GH" items="${listGH}">
 					<tr>
-						 <td class="col-md-1">
-                                 <div class="card mb-2 product-wap rounded-0">
-                                 <div class="card rounded-0">
-                                <img class="card-img rounded-0 img-fluid" src="<c:url value ='/resource/images/${sp.maLoai.getAnh()}'/>">
-                                	</div>
-                                	</div>
-                          </td> 
-						<td>${sp.seri }</td>
-						<td>${sp.maLoai.maLoai }</td>
-						<td>${sp.maLoai.tenSP}</td>
+						<td>${GH.idGH }</td>
+						<td>${GH.ngayTao }</td>
+						<td>${GH.email.email }</td>
+					    <td class="text-center align-middle"><div  id="templatemo_main_nav">
+						 <a class = "nav-link" href="chitietGHchuaduyet.htm?idGH=${GH.idGH}">Xem Chi Tiết</a>
+						  </div>
+						</td>
 					</tr>
-					</c:forEach>
-                    </tbody>
-                    
-       </table>
-       </div>
-       </div>
-       
-       </div>
-    </section>
-    </main>
-    <!-- End Contact -->
-    <%@include file="footerQL.jsp" %>
+				</c:forEach>
+				</c:if>
+                  </tbody>
+                </table>
+
+              </div>
+              </div>
+             </section>
+        </main>
+		
+	<%@include file="footerQL.jsp" %>
+    <!-- Start Script -->
+    <script src="assets/js/jquery-1.11.0.min.js"></script>
+    <script src="assets/js/jquery-migrate-1.2.1.min.js"></script>
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/templatemo.js"></script>
+    <script src="assets/js/custom.js"></script>
+    <!-- End Script -->
 </body>
+
 </html>

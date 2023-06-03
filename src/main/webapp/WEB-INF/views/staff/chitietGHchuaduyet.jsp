@@ -52,6 +52,7 @@
 
     <!-- Start Content Page -->
     <main>
+    <a class="btn btn-success btn-lg px-3 mt-1"href="duyetgiohang.htm"><i class="fa fa-angle-double-left" aria-hidden="true"></i>Về Danh Sách Giỏ Hàng</a>
     	<section class="bg-light">
        <div class = "container py-5">
        
@@ -60,16 +61,19 @@
        <div class = "card">
        <div class = "card-body">
       
-       <h4>Tạo Phiếu Nhập</h4>
+       <h4>Chi Tiết Giỏ Hàng</h4>
        <ul >
-       	<li class = "pb-3"> Nhân Viên Đặt : <br>${NhanVien.maNV } - ${NhanVien.ho } ${NhanVien.ten }</li>
-       		<li class = "pb-3"> Số Phiếu Nhập : ${soPhieuNhap}</li>
-       	<li class = "pb-3"> Mã Đơn : ${DDH.maDDH }</li>
-       	<li class = "pb-3"> Ngày Lập : ${NgayNhap}</li>
-       	<li class = "pb-3"> Nhà Cung Cấp : ${DDH.maNCC.tenNCC}</li>
+       	<li class = "pb-3"> Nhân Viên Duyệt : <br>${nhanVien.maNV } - ${nhanVien.ho } ${nhanVien.ten }</li>
+       		<li class = "pb-3"> ID Giỏ Hàng : ${gioHang.idGH}</li>
+       	<li class = "pb-3"> Ngày Tạo : ${gioHang.ngayTao }</li>
+       	<li class = "pb-3"> Email Khách Hàng: ${gioHang.email.email}</li>
        </ul>
-    <a class="btn btn-success btn-lg px-3"href="taophieunhap.htm?idDDH=${DDH.maDDH}&loaiBtn=luu">Lưu Phiếu Nhập</a>
-    <a class="btn btn-success btn-lg px-3"href="taophieunhap.htm?idDDH=${DDH.maDDH}&loaiBtn=huy">Hủy</a>
+       <c:if test = "${gioHang.trangThai == 1}">
+    <a class="btn btn-success btn-lg px-3"href="duyet.htm?idGH=${gioHang.idGH}">Duyệt</a>
+    </c:if>
+    <c:if test = "${gioHang.trangThai ==2}">
+  <h6 style="color: red;">Giỏ Hàng Đã Duyệt</h6>   
+    </c:if>
        </div>
        </div>
        </div>
@@ -78,27 +82,29 @@
 				style="text-align: center;">
                     <thead>
                         <tr>
-                        <th>Hình Ảnh</th>
-                        	<th width="200">Seri Sản Phẩm</th>
+                       		<th>Hình Ảnh</th>
                             <th width="200">Mã Loại Sản Phẩm</th>
                             <th >Tên Sản Phẩm</th>
+                            <th>Số Lượng </th>
                           </tr>
                     </thead>
                     <tbody>
-                    <c:forEach var="sp" items="${listSPNhap}">
+               <c:if test="${not empty listSP}">
+                    <c:forEach var="i"  begin="0" end ="${size}">
 					<tr>
 						 <td class="col-md-1">
-                                 <div class="card mb-2 product-wap rounded-0">
-                                 <div class="card rounded-0">
-                                <img class="card-img rounded-0 img-fluid" src="<c:url value ='/resource/images/${sp.maLoai.getAnh()}'/>">
-                                	</div>
-                                	</div>
-                          </td> 
-						<td>${sp.seri }</td>
-						<td>${sp.maLoai.maLoai }</td>
-						<td>${sp.maLoai.tenSP}</td>
+                            <div class="card mb-2 product-wap rounded-0">
+                              <div class="card rounded-0">
+                                <img class="card-img rounded-0 img-fluid" src="<c:url value ='/resource/images/${listSP.get(i).maLoai.getAnh()}'/>">
+                              </div>
+                            </div>
+                        </td> 
+						<td>${listSP.get(i).maLoai.maLoai} </td>
+						<td>${listSP.get(i).maLoai.tenSP}</td>
+						<td>${listSL.get(i)}</td>
 					</tr>
 					</c:forEach>
+					</c:if>
                     </tbody>
                     
        </table>

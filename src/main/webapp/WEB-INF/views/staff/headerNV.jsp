@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@page import="ptithcm.model.NhanVien"%>
 <%@page import="ptithcm.model.KhachHang"%>
+
 <nav
 	class="navbar navbar-expand-lg bg-dark navbar-light d-none d-lg-block"
 	id="templatemo_nav_top">
@@ -51,14 +52,24 @@
 			class="align-self-center collapse navbar-collapse flex-fill  d-lg-flex justify-content-lg-between"
 			id="templatemo_main_nav">
 			<div class="flex-fill">
-				<ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto">
+				<ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto" style="max-width: 650px;">
 					<li class="nav-item"><a class="nav-link" href="danhsachnhanvien.htm">Nhân Viên</a>
 					</li>
 					<li class="nav-item"><a class="nav-link" href="dondathang.htm">Nhập Hàng</a>
 					</li>
+<<<<<<< HEAD
 					<li class="nav-item"><a class="nav-link" href="nhanbaohanh.htm">Bảo Hành</a>
 					</li>
 					<li class="nav-item"><a class="nav-link" href="danhsachdotgiamgia.htm">Đợt giảm giá</a>
+=======
+					<li class="nav-item"><a class="nav-link" href="/BanLaptop/home/danh-muc-san-pham.htm">Sản Phẩm</a>
+					</li>
+					<li class="nav-item"><a class="nav-link" href="#">Khuyến Mãi</a>
+					</li>
+					<li class="nav-item"><a class="nav-link" href="nhanbaohanh.htm">Bảo Hành</a>
+					</li>
+					<li class="nav-item"><a class="nav-link" href="#">Doanh Thu</a>
+>>>>>>> 79c266c968ed5e81fecf78ed974f71a691a560c4
 					</li>
 				</ul>
 			</div>
@@ -72,8 +83,18 @@
 						</div>
 					</div>
 				</div>
+<<<<<<< HEAD
 				 <a class="nav-icon position-relative text-decoration-none"
 					href="giohang.htm"> <i
+=======
+				<a class="nav-icon d-none d-lg-inline" href="#"
+					data-bs-toggle="modal" data-bs-target="#templatemo_search"> <i
+					class="fa fa-fw fa-search text-dark mr-2"></i>
+				</a> 
+				
+				<a class="nav-icon position-relative text-decoration-none"
+					href="duyetgiohang.htm"> <i
+>>>>>>> 79c266c968ed5e81fecf78ed974f71a691a560c4
 					class="fa fa-fw fa-cart-arrow-down text-dark mr-1"></i> <span
 					class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark"></span>
 				</a>
