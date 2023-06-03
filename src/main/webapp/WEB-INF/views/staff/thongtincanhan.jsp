@@ -8,8 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="apple-touch-icon"
 	href="<c:url value='/resource/assets/img/apple-icon.png'/>">
-<link rel="shortcut icon" type="image/x-icon"
-	href="<c:url value='/resource/assets/img/favicon.ico'/>">
+
 
 <link rel="stylesheet"
 	href="<c:url value='/resource/assets/css/bootstrap.min.css'/>">

@@ -40,7 +40,7 @@
 		class="container d-flex justify-content-between align-items-center">
 
 		<a class="navbar-brand text-success logo h1 align-self-center"
-			href="index.html"> Zay </a>
+			href="homenv.htm"> 12Shop </a>
 
 		<button class="navbar-toggler border-0" type="button"
 			data-bs-toggle="collapse" data-bs-target="#templatemo_main_nav"
@@ -68,9 +68,13 @@
 						href="danhsachdotgiamgia.htm">Khuyến Mãi</a></li>
 					<li class="nav-item"><a class="nav-link"
 						href="nhanbaohanh.htm">Bảo Hành</a></li>
-					<li class="nav-item"><a class="nav-link"
-						href="doanhthutheongay.htm">Doanh Thu</a></li>
-				</ul>
+
+					<li class="nav-item"><a class="nav-link" href="doanhthutheongay.htm">Doanh
+							Thu</a></li>
+			</ul>
+
+
+
 			</div>
 			<div class="navbar align-self-center d-flex">
 				<div class="d-lg-none flex-sm-fill mt-3 mb-4 col-7 col-sm-auto pr-3">

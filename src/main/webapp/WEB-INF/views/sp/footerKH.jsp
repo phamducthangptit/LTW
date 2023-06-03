@@ -16,8 +16,9 @@
                             <a class="text-decoration-none" href="tel:010-020-0340">028 3730 6600</a>
                         </li>
                         <li>
-                            <i class="fa fa-envelope fa-fw"></i>
-                            <a class="text-decoration-none" href="mailto:info@company.com">12Shop@company.com</a>
+                            <i class="fa fa-envelope mx-2"></i> <a
+					class="navbar-sm-brand text-light text-decoration-none"
+					href="mailto:banlaptop12ptit@gmail.com">banlaptop12ptit@gmail.com</a>
                         </li>
                     </ul>
                 </div>
@@ -37,9 +38,9 @@
                         <li><a class="text-decoration-none" href="/BanLaptop/home.htm">Trang chủ</a></li>
                         
                         <li><a class="text-decoration-none" href="/BanLaptop/home/shop.htm">Cửa hàng</a></li>
-                        <li><a class="text-decoration-none" href="/BanLaptop/home/shop.htm">About Us</a></li>
-                        <li><a class="text-decoration-none" href="#">FAQs</a></li>
-                        <li><a class="text-decoration-none" href="#">Contact</a></li>
+                        <li>  <a class="nav-link" href="/BanLaptop/home/about.htm">About</a></li>
+                        <li><a class="nav-link" href="/BanLaptop/home/dang-giao.htm">Đang giao</a></li>
+
                     </ul>
                 </div>
 

@@ -1049,7 +1049,6 @@ public class StaffController {
 			query.setParameter("idGH",Integer.parseInt(request.getParameter("idGH"))  );
 			GioHang gioHang = (GioHang) query.uniqueResult();
 			gioHang.setMaShipper(nhanvien);
-			gioHang.setTrangThai(2);
 			session.save(gioHang);
 
 			return "redirect:donhangdangnhan.htm";
