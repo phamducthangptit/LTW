@@ -75,22 +75,7 @@
 						href="nhanbaohanh.htm">Bảo Hành</a></li>
 					<li class="nav-item"><a class="nav-link" href="doanhthutheongay.htm">Doanh
 							Thu</a></li>
-
-				<ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto" style="max-width: 650px;">
-					<li class="nav-item"><a class="nav-link" href="danhsachnhanvien.htm">Nhân Viên</a>
-					</li>
-					<li class="nav-item"><a class="nav-link" href="dondathang.htm">Nhập Hàng</a>
-					</li>
-					<li class="nav-item"><a class="nav-link" href="/BanLaptop/home/danh-muc-san-pham.htm">Sản Phẩm</a>
-					</li>
-					<li class="nav-item"><a class="nav-link" href="#">Khuyến Mãi</a>
-					</li>
-					<li class="nav-item"><a class="nav-link" href="nhanbaohanh.htm">Bảo Hành</a>
-					</li>
-					<li class="nav-item"><a class="nav-link" href="#">Doanh Thu</a>
-					</li>
-
-				</ul>
+			</ul>
 			</div>
 			<div class="navbar align-self-center d-flex">
 				<div class="d-lg-none flex-sm-fill mt-3 mb-4 col-7 col-sm-auto pr-3">

@@ -1,4 +1,5 @@
-<!-- Start Footer -->
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <footer class="bg-dark" id="tempaltemo_footer" >
 	<div class="container">
 		<div class="row">
@@ -7,7 +8,7 @@
 				<h2 class="h2 text-success border-bottom pb-3 border-light logo">
 					12Shop</h2>
 				<ul class="list-unstyled text-light footer-link-list">
-					<li><i class="fas fa-map-marker-alt fa-fw"></i> 97 Đ. Man Thiện, Hiệp Phú, Thành Phố Thủ Đức</li>
+					<li><i class="fas fa-map-marker-alt fa-fw"></i>97 Man Thiện, Phường Hiệp Phú, Thủ Đức, TP. Hồ Chí Minh</li>
 					<li><i class="fa fa-phone fa-fw"></i> <a
 						class="text-decoration-none" href="tel:028 3730 6600">028 3730 6600</a>
 					</li>
@@ -17,35 +18,6 @@
 				</ul>
 			</div>
 
-<<<<<<< HEAD
-=======
-				<!-- <div class="col-md-4 pt-5">
-					<h2 class="h2 text-light border-bottom pb-3 border-light">Products</h2>
-					<ul class="list-unstyled text-light footer-link-list">
-						<li><a class="text-decoration-none" href="#">Luxury</a></li>
-						<li><a class="text-decoration-none" href="#">Sport Wear</a></li>
-						<li><a class="text-decoration-none" href="#">Men's Shoes</a></li>
-						<li><a class="text-decoration-none" href="#">Women's Shoes</a></li>
-						<li><a class="text-decoration-none" href="#">Popular Dress</a></li>
-						<li><a class="text-decoration-none" href="#">Gym
-								Accessories</a></li>
-						<li><a class="text-decoration-none" href="#">Sport Shoes</a></li>
-					</ul>
-				</div> -->
-
-			<!-- <div class="col-md-4 pt-5">
-				<h2 class="h2 text-light border-bottom pb-3 border-light">Further
-					Info</h2>
-				<ul class="list-unstyled text-light footer-link-list">
-					<li><a class="text-decoration-none" href="danhsachnhanvien.htm">Quản Lý Nhân Viên</a></li>
-					<li><a class="text-decoration-none" href="#">Quản Lý Nhập Hàng</a></li>
-					<li><a class="text-decoration-none" href="#">Shop
-							Locations</a></li>
-					<li><a class="text-decoration-none" href="#">táo</a></li>
-					<li><a class="text-decoration-none" href="#">Contact</a></li>
-				</ul>
-			</div> -->
->>>>>>> main
 
 		</div>
 
