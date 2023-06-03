@@ -30,14 +30,48 @@
 	display: flex;
 	justify-content: center;
 }
+.search-container {
+  text-align: left;
+  padding: 10px;
+}
+
+.search-form {
+  display: inline-block;
+}
+
+.search-form input[type="text"] {
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+}
+
+.search-form button {
+  padding: 10px 20px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.search-form button:hover {
+  background-color: #45a049;
+}
 </style>
 </head>
 <body>
 	<section class="bg-light">
 	<h2 style="text-align: center;">Danh sách nhà cung cấp</h2>
 	<div class="container mt-4">
+		<div class="search-container">
+		  <form class="search-form" action="timkiemncc.htm" method="post">
+		    <input type="text" id="searchInput" name ="idncc" placeholder="Nhập mã...">
+		    <button type="submit">Tìm kiếm</button>
+		  </form>
+		</div>
 		<form action="" method="post">
-			<table class="table table-success table-striped"
+			<table class="table table-light table-striped table-hover bordered-dark"
 				style="text-align: center;">
 				<thead>
 					<tr>

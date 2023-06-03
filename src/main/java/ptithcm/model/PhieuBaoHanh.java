@@ -48,8 +48,7 @@ public class PhieuBaoHanh {
 	public PhieuBaoHanh() {
 	}
 
-	public PhieuBaoHanh(int soPhieuBH, Date ngayBatDau, Date ngayKetThuc, SanPham seri, NhanVien maNV) {
-		this.soPhieuBH = soPhieuBH;
+	public PhieuBaoHanh( Date ngayBatDau, Date ngayKetThuc, SanPham seri, NhanVien maNV) {
 		this.ngayBatDau = ngayBatDau;
 		this.ngayKetThuc = ngayKetThuc;
 		this.seri = seri;

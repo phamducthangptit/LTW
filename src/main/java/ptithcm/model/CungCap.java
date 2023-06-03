@@ -28,8 +28,7 @@ public class CungCap {
 	public CungCap() {
 	}
 
-	public CungCap(int idCC, LoaiSanPham maLoai, NhaCungCap maNCC) {
-		this.idCC = idCC;
+	public CungCap( LoaiSanPham maLoai, NhaCungCap maNCC) {
 		this.maLoai = maLoai;
 		this.maNCC = maNCC;
 	}

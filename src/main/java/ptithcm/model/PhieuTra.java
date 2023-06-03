@@ -43,8 +43,7 @@ public class PhieuTra {
 	private List<SanPham> sanPham;
 	public PhieuTra() {
 	}
-	public PhieuTra(int soPhieuTra, Date ngayTra, HoaDon soHoaDon, NhanVien maNV) {
-		this.soPhieuTra = soPhieuTra;
+	public PhieuTra(Date ngayTra, HoaDon soHoaDon, NhanVien maNV) {
 		this.ngayTra = ngayTra;
 		this.soHoaDon = soHoaDon;
 		this.maNV = maNV;

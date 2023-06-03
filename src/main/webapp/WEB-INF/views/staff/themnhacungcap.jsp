@@ -39,11 +39,6 @@
 		<form action="themnhacungcap.htm" method="post">
 			<div class="row justify-content-center">
 				<div class="col-sm-6">
-					<div class="mb-3">
-						<h6 style="color: red;">${ErrorMaNCC}</h6>
-						<label for="maNCC" class="form-label">Mã nhà cung cấp</label> 
-						<input type="text" class="form-control" name="maNCC" required="required" value="${nhaCC.maNCC}">
-					</div>
 
 					<div class="mb-3">
 					<h6 style="color: red;">${ErrorTenNCC}</h6>

@@ -105,6 +105,7 @@
                 <div class="mb-3">
                     <label for="inputEmail">Email :</label>
                     <input type="email" class="form-control mt-1" id="email" name="email" value="${nv.email }" placeholder="Vui Lòng Không Bỏ Trống" required>
+                     <h6 style="color: red; margin-left: 15px">${ThongBaoEmail }</h6>
                 </div>
                 <div class="mb-3">
                     <label for="inputDiaChi">Địa Chỉ :</label>

@@ -76,6 +76,7 @@
 				style="text-align: center;">
                     <thead>
                         <tr>
+                        	<th>Hình Ảnh</th>
                             <th width="200">Mã Loại Sản Phẩm</th>
                             <th >Tên Sản Phẩm</th>
                             <th width="150">Số lượng</th>
@@ -85,6 +86,13 @@
                     <tbody>
                     <c:forEach var="ct" items="${DDH.getCtDonDatHang()}">
 					<tr>
+						 <td class="col-md-1">
+                           <div class="card mb-2 product-wap rounded-0">
+                               <div class="card rounded-0">
+                                <img class="card-img rounded-0 img-fluid" src="<c:url value ='/resource/images/${ct.maLoai.getAnh()}'/>">
+                               </div>
+                           </div>
+                        </td> 
 						<td>${ct.maLoai.maLoai }</td>
 						<td>${ct.maLoai.tenSP }</td>
 						<td>${ct.soLuong }</td>
@@ -93,7 +101,7 @@
 					</tr>
 					</c:forEach>
 					<tr>
-					<td colspan = "2"></td>
+					<td colspan = "3"></td>
 					<td> Tổng cộng :</td>
 					<td>${Tong} VNĐ</td>
 					</tr>

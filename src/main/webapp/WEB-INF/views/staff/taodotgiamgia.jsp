@@ -17,8 +17,6 @@
 	href="<c:url value='/resource/assets/css/bootstrap.min.css'/>">
 <link rel="stylesheet"
 	href="<c:url value='/resource/assets/css/templatemo.css'/>">
-<link rel="stylesheet"
-	href="<c:url value='/resource/assets/css/custom.css'/>">
 
 <!-- Load fonts style after rendering the layout styles -->
 <link rel="stylesheet"
@@ -36,14 +34,13 @@
 <body>
 	<div class="container mt-4">
 		<h2 style="text-align: center;">Tạo đợt giảm giá</h2>
-		<form action="taodotgiamgia.htm" method="post">
+		<form action="taodotgiamgia.htm" method="POST">
 			<div class="row justify-content-center">
 				<div class="col-sm-6">
 					<div class="mb-3">
-					<input type="text" value="${DGG.maDot }" name ="maDot" hidden="hidden"/>
-						<label for="ngayBD" class="form-label">Ngày bắt đầu</label> <input
-							type="date" class="form-control" name="ngayBD"
-							required="required" value="${DGG.ngayBatDau}">
+						<input type="text" value="${DGG.maDot }" name="maDot" hidden="hidden" /> 
+						<label for="ngayBD" class="form-label">Ngày bắt đầu</label> 
+						<input type="date" class="form-control" name="ngayBD" required="required" value="${DGG.ngayBatDau}">
 					</div>
 
 					<div class="mb-3">
@@ -65,12 +62,10 @@
 					</div>
 					<div class="button-container">
 						<button type="submit" class="btn btn-success mb-4"
-							style="width: 170px;"
-							${DGG.ngayBatDau.toString() == null ? '' : 'hidden'}
+							style="width: 170px;" ${ErrorGG != '' ? '' : 'hidden'}
 							name="taoDGG" value="taoDGG">Tạo đợt giảm giá</button>
 					</div>
-					<div class="mb-3"
-						${DGG.ngayBatDau.toString() == null ? 'hidden' : ''}>
+					<div class="mb-3" ${ErrorGG != '' ? 'hidden' : ''}>
 						<h6 style="color: red;">${ErrorDGG }</h6>
 						<table style="text-align: center;">
 							<thead>
@@ -84,16 +79,14 @@
 								<c:forEach var="i" begin="1" end="${slSP }">
 									<tr class="body">
 										<td>${i }</td>
-										<td>
-											<select name="maLSP" class="form-select" required="required">
-													<c:forEach items="${listLoaiSP}" var="LSP">
-														<option value="${LSP.maLoai}">${LSP.toString()}</option>
-													</c:forEach>
-											</select>
-										</td>
-										<td>
-										<input type="number" class="form-control" name="phamTramGiam"
-											required="required" min="0" max="100" />
+										<td><select name="maLSP" class="form-select"
+											required="required">
+												<c:forEach items="${listLoaiSP}" var="LSP">
+													<option value="${LSP.maLoai}">${LSP.toString()}</option>
+												</c:forEach>
+										</select></td>
+										<td><input type="number" class="form-control"
+											name="phamTramGiam"  min="0" max="100" ${ErrorGG == '' ? 'required' : ''} />
 										</td>
 									</tr>
 
@@ -104,8 +97,7 @@
 					</div>
 					<div class="button-container">
 						<button type="submit" class="btn btn-success mb-4"
-							style="width: 170px;"
-							${DGG.ngayBatDau.toString() == null ? 'hidden' : ''}
+							style="width: 170px;" ${ErrorGG != '' ? 'hidden' : ''}
 							name="luuDGG" value="luuDGG">Lưu đợt giảm giá</button>
 					</div>
 				</div>

@@ -87,37 +87,54 @@
 				style="text-align: center;">
                     <thead>
                         <tr>
+                        <th>Hình Ảnh</th>
                         	<th >Seri</th>
                             <th >Mã Loại</th>
                             <th >Tên Sản Phẩm</th>
                             <th>Thời Gian Bảo Hành</th>
-                            <th></th>
+                            <th>Chi Tiết</th>
+                            <th>Đổi Trả</th>
                           </tr>
                     </thead>
                     <tbody>
                     
                     <c:if test = "${SanPhamTim != null}">
                     <tr>
+                     	<td class="col-md-1">
+                           <div class="card mb-2 product-wap rounded-0">
+                               <div class="card rounded-0">
+                                <img class="card-img rounded-0 img-fluid" src="<c:url value ='/resource/images/${SanPhamTim.maLoai.getAnh()}'/>">
+                               </div>
+                           </div>
+                        </td> 
 						<td>${SanPhamTim.seri }</td>
 						<td>${SanPhamTim.maLoai.maLoai }</td>
 						<td>${SanPhamTim.maLoai.tenSP}</td>
-						<td>${SanPhamTim.phieuBaoHanh.ngayBatDau} đến ${SanPhamTim.phieuBaoHanh.ngayKetThuc}</td>
-						
-						<td>
-						<a class="btn btn-success btn-lg px-3"href="kiemtrabaohanh.htm?seri=${SanPhamTim.seri}">Lịch Sử BH</a>
-						<c:if test ="${HetHan != null}">
+						<td>${SanPhamTim.phieuBaoHanh.ngayBatDau} đến ${SanPhamTim.phieuBaoHanh.ngayKetThuc}
+						<c:if test ="${HetHan.equals('HetHan')}">
 						<br>Hết Hạn Bảo Hành
 						</c:if>
 						</td>
+						<td>
+						<a  href="kiemtrabaohanh.htm?seri=${SanPhamTim.seri}"><i class="fa fa-bars" style = "color : black" aria-hidden="true"></i></a>
+						</td>
+						<c:if test ="${DoiTra.equals('DuocTra')}">
+						<td><button type="submit" class="btn btn-success btn-lg px-3 " name ="traMay" value = "traMay">Trả Hàng</button></td>
+						</c:if>
+						<c:if test ="${DoiTra.equals('DaTra')}">
+						<td>Đã Trả</td>
+						</c:if>
+						<c:if test ="${DoiTra == null}">
+						<td>Hết hạn đổi trả</td>
+						</c:if>
 						<c:if test ="${HetHan == null}">
 						<tr>
-						<td colspan = "4">Trạng Thái Nhận Máy : <input type="text" class="form-control" 
+						<td colspan = "6">Trạng Thái Nhận Máy : <input type="text" class="form-control" 
 						id = "trangThaiNhan" name="trangThaiNhan" 
 						value="${trangThaiNhan }"  placeholder="Ví dụ : Lỗi Win,..." >
-						<br>
 						<h6 style="color: red;">${ThongBao3}</h6>   
 						</td>
-						<td><button type="submit" class="btn btn-success btn-lg px-3 mt-4" name ="nhanMay" value = "nhanMay">Nhận Máy</button></td>
+						<td><button type="submit" class="btn btn-success btn-lg px-3 mt-2" name ="nhanMay" value = "nhanMay">Nhận Máy</button></td>
 						</tr>
 
 						</c:if>

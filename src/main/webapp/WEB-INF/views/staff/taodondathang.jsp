@@ -71,15 +71,12 @@
        	
        	</li>
        	<li class = "pb-3" > Mã Đơn : <input type = "text" style="width: 100px;border :none"id ="maDDH" name = "maDDH" value ="${maDDH }" readonly="readonly"></li>
-       	<li class = "pb-3"> Ngày Đặt : <input type="date" id="ngayDat" name="ngayDat" value="${ngayDat}" placeholder="dd/MM/yyyy" pattern="\d{2}/\d{2}/\d{4}" required></li>
-       	<li class = "pb-3"> Nhà Cung Cấp : <select type="text" id="NCC" name="NCC">
-       		<c:forEach var="NCC" items="${DSNCC}">
-    				<option value="${NCC.maNCC}" ${NCC.maNCC eq NCChientai ? 'selected' : ''}>${NCC.maNCC} - ${NCC.tenNCC}</option>
-			</c:forEach>
+       	<li class = "pb-3"> Ngày Đặt : <input type="date" style="width: 150px;border :none" id="ngayDat" name="ngayDat" value="${ngayDat}" placeholder="dd/MM/yyyy" pattern="\d{2}/\d{2}/\d{4}" readonly="readonly"></li>
+       	<li class = "pb-3"> Nhà Cung Cấp : <input type = "text" style="width: 100px;border :none"id ="NCC" name = "NCC" value ="${NCC.maNCC }" readonly="readonly">
+       	<p>- ${NCC.tenNCC }</li>
 
-       		</select>
-       	</li>
-       	 <button type="submit" class="btn btn-success btn-lg px-3" name ="luuDDH" value = "luuDDH">Lưu Đơn Đặt Hàng</button>
+       	 <button type="submit" class="btn btn-success btn-lg px-3" name ="luuDDH" value = "luuDDH">Lưu Đơn</button>
+ 		<button type="submit" class="btn btn-success btn-lg px-3" name ="huy" value = "huy">Tạo Lại</button>
  
        </ul>
            	 <h6 style="color: red; margin-left: 15px">${ThongBao }</h6>
@@ -87,12 +84,13 @@
        </div>
        </div>
        
-       <div class = "col-lg-9">
+ 	 <div class = "col-lg-9">
       
        <table  class="table table-light table-striped table-hover bordered-dark"
 				style="text-align: center;">
       	 <thead>
                         <tr>
+                        	
                             <th >Sản Phẩm</th>
                             <th >Số lượng</th>
                             <th ></th>
@@ -102,23 +100,14 @@
         		<tbody>
                     
 					<tr>
-						<td><select type="text" id="sanPham" name="sanPham">
-       				<c:forEach var="sp" items="${DSSP}">
-       				 <option value="${sp.maLoai}">${sp.tenSP}</option>
+						<td><select type="text" id="sanPham" name="sanPham" style="padding: 10px; border: 1px solid #ccc; background-color: #fff; color: #333; cursor: pointer;">
+       				<c:forEach var="sp" items="${DSCC}">
+       				 <option value="${sp.maLoai.maLoai}">${sp.maLoai.maLoai} - ${sp.maLoai.tenSP}</option>
        				</c:forEach>
        				</select>
        				</td>
        				
 						<td> <input type="number" size="4" name="soLuong" min="1" max="100" id="soLuong" value="1"   style="text-align: center;"></td>
-						<!-- <td><ul class="list-inline pb-3">
-                            <li class="list-inline-item text-right">
-                            <input type="hidden" name="product-quanity" id="product-quanity" value="1">
-                            </li>
-                            <li class="list-inline-item"><span class="btn btn-success" id="btn-minus">-</span></li>
-                            <li class="list-inline-item"><span class="badge bg-secondary" id="var-value">1</span></li>
-                             <li class="list-inline-item"><span class="btn btn-success" id="btn-plus">+</span></li>
-                             </ul>
-                          </td> -->
 						<td> <button type="submit" class="btn btn-success btn-lg px-3" name ="themDDH" value = "themDDH">Thêm</button></td>
 					</tr>
 		
@@ -132,19 +121,27 @@
 				style="text-align: center;">
     		 <thead>
                         <tr>
+                        <th>Hình Ảnh</th>
                             <th>Sản Phẩm</th>
                             <th>Số lượng</th>
-                            <th></th>
+                            <th width = "50px"></th>
                           </tr>
                     </thead>
                     <tbody>
                     <c:if test="${not empty listSP}">
                     <c:forEach var="i"  begin="0" end ="${doLon}">
 					<tr>
+					 <td class="col-md-1">
+                                 <div class="card mb-2 product-wap rounded-0">
+                                 <div class="card rounded-0">
+                                <img class="card-img rounded-0 img-fluid" src="<c:url value ='/resource/images/${listSP.get(i).getAnh()}'/>">
+                                	</div>
+                                	</div>
+                       </td> 
 						<td>${listSP.get(i).maLoai} - ${listSP.get(i).tenSP}</td>
 						
 						<td>${listSL.get(i)}</td>
-						<td><a href="XoaSPtabledondathang.htm?maLoai=${listSP.get(i).maLoai}"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+						<td width = "50px"><a href="XoaSPtabledondathang.htm?maLoai=${listSP.get(i).maLoai}&maNCC=${NCC.maNCC}&ngayDat=${ngayDat}&maDDH=${maDDH}"><i class="fa fa-trash" style = "color : black" aria-hidden="true"></i></a></td>
 					</tr>
 					</c:forEach>
 					</c:if>
@@ -152,7 +149,7 @@
     </table>
 
        </div>
-       
+        
        </div>
      
        </div>

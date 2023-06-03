@@ -17,8 +17,6 @@
 	href="<c:url value='/resource/assets/css/bootstrap.min.css'/>">
 <link rel="stylesheet"
 	href="<c:url value='/resource/assets/css/templatemo.css'/>">
-<link rel="stylesheet"
-	href="<c:url value='/resource/assets/css/custom.css'/>">
 
 <!-- Load fonts style after rendering the layout styles -->
 <link rel="stylesheet"
@@ -30,14 +28,49 @@
 	display: flex;
 	justify-content: center;
 }
+.search-container {
+  text-align: left;
+  padding: 10px;
+}
+
+.search-form {
+  display: inline-block;
+}
+
+.search-form input[type="text"] {
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+}
+
+.search-form button {
+  padding: 10px 20px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.search-form button:hover {
+  background-color: #45a049;
+}
 </style>
 </head>
 
 <body>
+<section class="bg-light">
 	<h2 style="text-align: center;">Danh sách đợt giảm giá</h2>
 	<div class="container mt-4">
-		<form action="" method="post">
-			<table class="table table-success table-striped"
+		<div class="search-container">
+		  <form class="search-form" action="timkiemdgg.htm" method="post">
+		    <input type="text" id="searchInput" name ="iddgg" placeholder="Nhập mã...">
+		    <button type="submit">Tìm kiếm</button>
+		  </form>
+		</div>
+		<form>
+			<table class="table table-light table-striped table-hover bordered-dark"
 				style="text-align: center;">
 				<thead>
 					<tr>
@@ -63,10 +96,10 @@
 							<td>${DGG.ngayKetThuc }</td>
 							<td>${DGG.moTa }</td>
 							<td>${DGG.maNV.maNV }</td>
-							<td><a href="ctdotgg.htm?id=${DGG.maDot}"> <i
+							<td><a href="ctdotgg.htm?madot=${DGG.maDot}"> <i
 									class="fa fa-pencil-alt"></i>
 							</a></td>
-							<td><a href="deletedotgg.htm?id=${DGG.maDot}"
+							<td><a href="deletedotgg.htm?madot=${DGG.maDot}"
 								onclick="return confirmDelete(event)"> <i
 									class="fa fa-trash"></i>
 							</a></td>
@@ -80,6 +113,7 @@
 			</table>
 		</form>
 	</div>
+	</section>
 </body>
 <script>
 	function confirmDelete(event) {

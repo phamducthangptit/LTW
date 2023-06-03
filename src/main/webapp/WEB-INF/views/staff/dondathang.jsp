@@ -60,7 +60,10 @@
             <div class = "container py-5">
                 <h2>Đơn Đặt Hàng</h2>
                <h6 style="color: red; right: 15px ; text-align: right">${ThongBao}</h6>
-            <h3><a href="taodondathang.htm" class="btn btn-success btn-lg px-3"><i class="fa fa-plus-circle" aria-hidden="true"></i>  Tạo Đơn Đặt Hàng Mới</a></h3>
+            <h3><a href="taoThongTinDDH.htm" class="btn btn-success btn-lg px-3"><i class="fa fa-plus-circle" aria-hidden="true"></i>  Tạo Đơn Đặt Hàng Mới</a>
+             <a href="danhsachnhacungcap.htm" class="btn btn-success btn-lg px-3"><i class="fa fa-building" aria-hidden="true"></i> Danh Sách Nhà Cung Cấp</a>
+            </h3>
+            
             <p>   </p>
             <form class="employee-list" action="staff/dondathang.htm" method="POST">
                <table class="table table-light table-striped table-hover bordered-dark"

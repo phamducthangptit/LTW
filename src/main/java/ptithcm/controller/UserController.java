@@ -88,7 +88,13 @@ public class UserController {
 			NhanVien nhanVien = new NhanVien();
 			if (list.size() != 0) {
 				nhanVien = list.get(0);
-				if (nhanVien.getTrangThai() != 0) {
+				if (nhanVien.getTrangThai() != 0 && nhanVien.getRole().equals("NVGiaoHang"))
+				{
+					HttpSession s = request.getSession();
+					s.setAttribute("user", nhanVien);
+					return "staff/donhangchuagiao";
+				}
+				else if (nhanVien.getTrangThai() != 0) {
 					HttpSession s = request.getSession();
 					s.setAttribute("user", nhanVien);
 					return "staff/homeNV";
@@ -216,6 +222,7 @@ public class UserController {
 		session.update(khachHang);
 		return "user/thongtincanhan";
 	}
+	
 	
 	@RequestMapping(value = "/quenmatkhau")
 	public String quenMk() {

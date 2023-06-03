@@ -79,13 +79,17 @@ public class SanPham {
 		this.maLoai = maLoai;
 	}
 
+	
+
 	public PhieuNhap getSoPhieuNhap() {
 		return soPhieuNhap;
 	}
 
+
 	public void setSoPhieuNhap(PhieuNhap soPhieuNhap) {
 		this.soPhieuNhap = soPhieuNhap;
 	}
+
 
 	public GioHang getIdGH() {
 		return idGH;
