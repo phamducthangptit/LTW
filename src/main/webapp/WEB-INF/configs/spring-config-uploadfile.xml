@@ -19,11 +19,7 @@
 	 	<!-- maxUploadSize=20MB -->
 	 	<property name="maxUploadSize" value="20971520"/>
 	</bean>
-	<!--  
-	<bean id="uploadfile" class="ptit.bean.UploadFile">
-		<property name="basePath"
-			value="C:\Users\Admin\Desktop\eclip-workspace\LTW\LTW\src\main\webapp\resource\images\" />
-	</bean> -->
+	
 </beans>
 
 

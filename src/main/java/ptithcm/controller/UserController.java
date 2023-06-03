@@ -38,7 +38,7 @@ public class UserController {
 
 	@RequestMapping(value = { "/", "/home" })
 	public String index() {
-		return "user/home";
+		return "redirect:/home/index.htm";
 	}
 
 	@RequestMapping("/dangnhap")
@@ -67,7 +67,7 @@ public class UserController {
 					s.setAttribute("user", khachHang);
 					BigDecimal sumTongTien = new BigDecimal(0);
 					s.setAttribute("sumGH", sumTongTien);
-					return "user/home";
+					return "redirect:/home/index.htm";
 				} else {
 					model.addAttribute("ErrorLogin", "Tài khoản chưa được kích hoạt!");
 					return "user/login";
@@ -216,6 +216,7 @@ public class UserController {
 		session.update(khachHang);
 		return "user/thongtincanhan";
 	}
+	
 	
 	@RequestMapping(value = "/quenmatkhau")
 	public String quenMk() {

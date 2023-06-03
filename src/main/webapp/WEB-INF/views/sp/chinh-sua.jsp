@@ -147,11 +147,17 @@ https://templatemo.com/tm-559-zay-shop
             <div class="row">
                 <div class="col-lg-5 mt-5">
                     <div class="card mb-3">
-                        <img class="card-img img-fluid" src="<c:url value ='/resource/images/${hinhanh}'/>" alt="Card image cap" id="product-detail">
+                        <img class="card-img img-fluid" src="<c:url value ='/resource/images/${product.getAnh()}'/>" alt="Card image cap" id="product-detail">
                     </div>
                     <div class = "row">
-           
-							          
+           				<ul class="list-inline">
+                                <li class="list-inline-item">
+                                    <h1 class="h2">Hình ảnh</h1>
+                                </li>
+                                <li class="list-inline-item">
+                                    <input type="file" name="photo" >
+                                </li>
+                            </ul>          
                     </div>
                 </div>
                 <!-- col end -->
@@ -162,43 +168,47 @@ https://templatemo.com/tm-559-zay-shop
                         	<div class="row g-3">
 							  <div class="col-md-4">
 							    <label for="productType">Mã loại sản phẩm:</label>
-							    <input type="text" class="form-control" name="maLoai" readonly="readonly" value="${maLoai}">
+							    <input type="text" class="form-control" name="maLoai" readonly="readonly" value="${product.getMaLoai()}">
 							  </div>
 							  <div class="col-md-8">
 							    <label for="productName">Tên sản phẩm:</label>
-							    <input type="text" class="form-control"  name="ten" value="${ten}">
+							    <input type="text" class="form-control"  name="ten" value="${product.getTenSP()}">
 							  </div>
-							  <div class="col-md-12">
-							    <label for="productPrice">Giá sản phẩm:</label>
-							    <input type="number" class="form-control" name="gia" value="${gia}">
+							  <div class="col-md-6">
+							    <label for="productPrice">Giá bán:</label>
+							    <input type="number" class="form-control" name="gia" value="${product.getGia().toPlainString()}">
+							  </div>
+							  <div class="col-md-6">
+							    <label for="productPrice">Giá nhập:</label>
+							    <input type="number" class="form-control" name="giaNhap"value="${product.getGiaNhap().toPlainString()}" >
 							  </div>
 							  <div class="col-md-6">
 							    <label for="productCPU">CPU:</label>
-							    <input type="text" class="form-control"  name="cpu" value="${cpu}">
+							    <input type="text" class="form-control"  name="cpu" value="${product.getcPU()}">
 							  </div>
 							  <div class="col-md-6">
 							    <label for="productRAM">RAM:</label>
-							    <input type="text" class="form-control" name="ram" value="${ram}">
+							    <input type="text" class="form-control" name="ram" value="${product.getRam()}">
 							  </div>
 							  <div class="col-md-6">
 							    <label for="productHardware">Hardware:</label>
-							    <input type="text" class="form-control"  name="hardware" value="${hardware}">
+							    <input type="text" class="form-control"  name="hardware" value="${product.getHardWare()}">
 							  </div>
 							  <div class="col-md-6">
 							    <label for="productCard">Card màn hình:</label>
-							    <input type="text" class="form-control"  name="card" value="${card}">
+							    <input type="text" class="form-control"  name="card" value="${product.getCard()}">
 							  </div>
 							  <div class="col-md-12">
 							    <label for="productScreen">Màn hình:</label>
-							    <input type="text" class="form-control"  name="screen" value="${screen}">
+							    <input type="text" class="form-control"  name="screen" value="${product.getScreen()}">
 							  </div>
 							  <div class="col-md-12">
 							    <label for="productOS">Hệ điều hành:</label>
-							    <input type="text" class="form-control"  name="os" value="${os}">
+							    <input type="text" class="form-control"  name="os" value="${product.getOs()}">
 							  </div>
 							  <div class="col-md-6">
 							  	<label for="theLoai" class="form-label">Thể loại:</label>
-							  	<input list="theLoais" name="theLoai" class="form-control" value="${theLoai}">
+							  	<input list="theLoais" name="theLoai" class="form-control" value="${product.getMaTheLoai().getMaTheLoai()}">
 							  	<datalist id="theLoais">
 							      <c:forEach items="${listTheLoai}" var="product">
 							        <option value="${product.getMaTheLoai()}">${product.getTenTL()}</option>
@@ -207,7 +217,7 @@ https://templatemo.com/tm-559-zay-shop
 							  </div>
 							  <div class="col-md-6">
 							  	<label for="moTa" class="form-label">Hãng sản xuất:</label>
-							  	<input list="listHang" name="hangSanXuat" class="form-control" value="${hangSanXuat}">
+							  	<input list="listHang" name="hangSanXuat" class="form-control" value="${product.getMaHang().getMaHang()}">
 							  	<datalist id="listHang">
 							      <c:forEach items="${listHang}" var="product">
 							      <option value="${product.getMaHang()}">${product.getTenHang()}</option>
@@ -216,11 +226,11 @@ https://templatemo.com/tm-559-zay-shop
 							  </div>
 								<div class="col-md-12">
 								<label for="moTa" class="form-label">Mô tả:</label>
-	  							<textarea class="form-control" name="moTa" value="${moTa}"></textarea>
+	  							<textarea class="form-control" name="moTa" value="${product.getMoTa()}"></textarea>
 	  							</div>
 	  						<div class="row pb-3" style="margin-top: 10px;">
 	  							<div class="col d-grid">
-							  	<button type="submit" class="btn btn-primary" style="display: none;">Ẩn</button>
+							  	<button type="submit" class="btn btn-success btn-lg" name="btnBack">Quay lại</button>
 							  	</div>
 	  							<div class="col d-grid">
 							  	<button type="submit" class="btn btn-success btn-lg">Lưu thay đổi</button>

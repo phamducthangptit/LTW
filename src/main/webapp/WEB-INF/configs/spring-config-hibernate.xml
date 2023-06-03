@@ -18,7 +18,10 @@
 	<bean id="dataSource" 
 	    	class="org.springframework.jdbc.datasource.DriverManagerDataSource"
 			p:driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
-			p:url="jdbc:sqlserver://localhost\DESKTOP-863A14G\SERVER:1433; Database=BAN_LAPTOP; encrypt=true;trustServerCertificate=true;"
+
+			p:url="jdbc:sqlserver://localhost\MSI:1433; Database=BAN_LAPTOP; encrypt=true;trustServerCertificate=true;"
+
+			
 			p:username="sa"
 			p:password="12345678">
 	</bean>
@@ -29,7 +32,8 @@
 	    <property name="dataSource" ref="dataSource"/>
 	    <property name="hibernateProperties">
 	      <props>        
-	            <prop key="hibernate.dialect">org.hibernate.dialect.SQLServerDialect</prop>          
+	            <prop key="hibernate.dialect">org.hibernate.dialect.SQLServerDialect</prop>
+	                      
 	            <prop key="hibernate.show_sql">false</prop>
 	       </props>
 	    </property>
