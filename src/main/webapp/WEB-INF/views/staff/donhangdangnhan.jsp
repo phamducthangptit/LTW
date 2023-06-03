@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Giỏ Hàng Chưa Giao</title>
+<title>Giỏ Hàng Nhận Giao</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -56,7 +56,7 @@
         <section class = "bg-light">
         	<div class = "card-body">
             <div class = "container py-5">
-                <h2>Danh sách Giỏ Hàng Chưa Giao</h2>
+                <h2>Danh sách Giỏ Hàng Đang Nhận</h2>
                <br>  <br>  <br>
                
                 <table class="table table-light table-striped table-hover bordered-dark"
@@ -84,7 +84,7 @@
 						<td>${GH.email.email }</td>
 						<td>${GH.email.sdt }</td>
 					    <td class="text-center align-middle"><div  id="templatemo_main_nav">
-						 <a class = "nav-link" href="chitietGHchuagiao.htm?idGH=${GH.idGH}">Xem Chi Tiết</a>
+						 <a class = "nav-link" href="chitietGHdangnhan.htm?idGH=${GH.idGH}">Xem Chi Tiết</a>
 						  </div>
 						</td>
 					</tr>

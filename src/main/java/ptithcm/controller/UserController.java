@@ -92,7 +92,7 @@ public class UserController {
 				{
 					HttpSession s = request.getSession();
 					s.setAttribute("user", nhanVien);
-					return "staff/donhangchuagiao";
+					return "redirect:donhangchuagiao.htm";
 				}
 				else if (nhanVien.getTrangThai() != 0) {
 					HttpSession s = request.getSession();
