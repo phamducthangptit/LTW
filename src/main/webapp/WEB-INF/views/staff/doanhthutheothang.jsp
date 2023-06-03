@@ -11,7 +11,7 @@
 <link rel="apple-touch-icon"
 	href="<c:url value='/resource/assets/img/apple-icon.png'/>">
 <link rel="shortcut icon" type="image/x-icon"
-	href="<c:url value='/resource/assets/img/favicon.ico'/>">
+	href="<c:url value='/resource/assets/img/logo.png'/>">
 
 <link rel="stylesheet"
 	href="<c:url value='/resource/assets/css/bootstrap.min.css'/>">
@@ -62,6 +62,7 @@
 </head>
 
 <body>
+<%@include file ="headerNV.jsp" %>
 	<section class="bg-light">
 	
 		<h2 style="text-align: center;" ${thang == null ? '' : 'hidden' }>Doanh thu tháng</h2>
@@ -160,5 +161,6 @@
 			</form>
 		</div>
 	</section>
+	<%@include file = "footerQL.jsp" %>
 </body>
 </html>

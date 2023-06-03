@@ -11,7 +11,7 @@
 <link rel="apple-touch-icon"
 	href="<c:url value='/resource/assets/img/apple-icon.png'/>">
 <link rel="shortcut icon" type="image/x-icon"
-	href="<c:url value='/resource/assets/img/favicon.ico'/>">
+	href="<c:url value='/resource/assets/img/logo.png'/>">
 
 <link rel="stylesheet"
 	href="<c:url value='/resource/assets/css/bootstrap.min.css'/>">
@@ -57,10 +57,25 @@
 .search-form button:hover {
 	background-color: #45a049;
 }
+.button-link {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #4CAF50;
+        color: white;
+        text-decoration: none;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-weight: bold;
+    }
+    .button-link:hover {
+        color: white;
+        box-shadow: 0 0 5px rgba(0, 0, 255, 0.5);
+    }
 </style>
 </head>
 
 <body>
+<%@include file="headerNV.jsp" %>
 	<section class="bg-light">
 		<h2 style="text-align: center;" ${ngayTK == null ? '' : 'hidden' }>Doanh thu theo ngày</h2>
 		<div class="container mt-4">
@@ -69,7 +84,9 @@
 					method="post">
 					<input type="date" id="ngayTK" name="ngayTK" value="${ngayTK }" required="required">
 					<button type="submit">In doanh thu</button>
+					<a href="doanhthutheothang.htm" class="button-link">Doanh thu theo tháng</a>
 					<button type="submit" ${XF == 0 ? 'hidden':''} name="XuatExcel" value="XuatExcel">Xuất file Excel</button>
+					
 				</form>
 			</div>
 			<form>
@@ -118,5 +135,6 @@
 			</form>
 		</div>
 	</section>
+	<%@include file="footerQL.jsp" %>
 </body>
 </html>
