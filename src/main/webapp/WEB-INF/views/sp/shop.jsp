@@ -133,7 +133,7 @@ https://templatemo.com/tm-559-zay-shop
                                     
                                 </ul>
                                 <c:if test="${product.getCtDotGiamGia() == null}">
-                                	<p class="text-center mb-0">${product.getGia().toPlainString()}</p>
+                                	<p class="text-center mb-0">${product.getGia().toPlainString()} VND</p>
                                 </c:if>
                                 <c:if test="${product.getCtDotGiamGia() != null}">
                                 <c:set var="giam" value ="${100-product.getCtDotGiamGia().get(0).getTiLeGiam()}"/>

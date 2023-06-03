@@ -105,7 +105,9 @@ https://templatemo.com/tm-559-zay-shop
                                 <td class="col-md-2">
                                  <div class="card mb-2 product-wap rounded-0">
                                  <div class="card rounded-0">
+                                 <a href="/BanLaptop/home/shop-single.htm?lsp=${product.getLsp().getMaLoai()}">
                                 <img class="card-img rounded-0 img-fluid" src="<c:url value ='/resource/images/${product.getLsp().getAnh()}'/>">
+                                </a>
                                 	</div>
                                 	</div>
                                 </td>  

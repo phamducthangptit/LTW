@@ -62,11 +62,18 @@ public class SPController {
 	String inputSearch = "";
 	
 	@RequestMapping(value={ "/", "/index" },method = RequestMethod.GET)
-	public String showHome(ModelMap model) {
+	public String showHome(ModelMap model, HttpSession session) {
+		KhachHang nguoi = (KhachHang) session.getAttribute("user");;
+		GioHang gh = null;
+		if(nguoi != null) {
+			gh = getGioHang(nguoi.getEmail()); 
+		}
 		List<LoaiSanPham> list1 = getLoaiSanPham_HOME();
 		sort(list1);
 		ArrayList<LoaiSanPham> list2 = new ArrayList<>();
+		ArrayList<LoaiSanPham> list3 = new ArrayList<>();
 		int n = list1.size() >= 5 ? 5:list1.size();
+		int m = list1.size() >= 3 ? 3:list1.size();
 		Hibernate.initialize(list1.get(0).getMaTheLoai());
 		Hibernate.initialize(list1.get(0).getMaHang());
 		for(int i=1 ; i < n; i ++ ) {
@@ -74,8 +81,20 @@ public class SPController {
 			Hibernate.initialize(list1.get(i).getMaHang());
 			list2.add(list1.get(i));
 		}
+		for(int i=0 ; i < m; i ++ ) {
+			Hibernate.initialize(list1.get(i).getMaTheLoai());
+			Hibernate.initialize(list1.get(i).getMaHang());
+			list1.get(i).setBinhLuan(getBinhLuanLSP(list1.get(i).getMaLoai()));
+			list3.add(list1.get(i));
+		}
+		if (gh == null) {
+			model.addAttribute("SLsanPham", "0");
+		} else {
+			model.addAttribute("SLsanPham", getSLSanPhamCuaGH(gh.getIdGH()));
+		}
 		model.addAttribute("listProducts", list2);
 		model.addAttribute("product1",list1.get(0));
+		model.addAttribute("listLoaiSanPham", list3);
 		return "sp/home";
 	}
 	private void sort(List<LoaiSanPham> list) {
@@ -112,6 +131,10 @@ public class SPController {
 		List<SanPham> list = query.list();
 		if(list.size() ==0) return null;
 		return list;
+	}
+	@RequestMapping(value="about",method = RequestMethod.GET)
+	public String showAbout() {
+		return "sp/about";
 	}
 	@RequestMapping(value="danh-muc-san-pham", method = RequestMethod.GET)
 	public String showDanhMucSanPham(ModelMap model,
@@ -681,12 +704,10 @@ public class SPController {
 		LoaiSanPham x = tim1LoaiSanPham(lsp);
 		BigDecimal strippedValue = x.getGia().stripTrailingZeros();
 		x.setGia(strippedValue);
-		//System.out.println(x.getCtDotGiamGia().get(0).getTiLeGiam());
-		//System.out.println(x.getCtDotGiamGia().get(0).getMaDot().getMaDot());
-		//System.out.println(x.getCtDotGiamGia().get(0).getMaLoai().getMaLoai());
 		model.addAttribute("product",x);
 		model.addAttribute("message","");
 		return "sp/shop-single";
+		
 	}
 	private List<TheLoai> getTheLoai() {
 		Session session = factory.getCurrentSession();
@@ -747,7 +768,7 @@ public class SPController {
 		query.setParameter("id", gh.getIdGH());
 		List<String> list = query.list();
 		cart.clear();
-		//cart1.clear();
+		cart1.clear();
 		for(int i =list.size()-1 ; i>=0 ;i--) {
 			Cart tmp = new Cart();
 			
@@ -1020,57 +1041,65 @@ public class SPController {
 				}
 			}
 		}
-		HoaDon hd = new HoaDon(sinhMaSoThue(), gh);
-		Integer check = saveHoaDon(hd);
-		if (check == 1 ) {
-			model.addAttribute("message", "Thanh toán hoá đơn thất bại!");
-		} else {
-			model.addAttribute("message", "Thanh toán hoá đơn thành công!");
+		
+		
+		return "redirect:/home/dang-giao.htm";
+	}
+	
+	@RequestMapping(value="dang-giao", method=RequestMethod.GET) 
+	public String showDangGiao(ModelMap model, 
+			HttpSession session,
+			HttpServletRequest request) {
+		KhachHang nguoi = (KhachHang) session.getAttribute("user");
+		List<GioHang> gh = getGHid_DangGiao(nguoi.getEmail());
+		if (gh == null) {
+			return "sp/dang-giao";
 		}
 		
-		return "sp/thanh-toan";
-	}
-	private Integer saveHoaDon(HoaDon x) {
-		Session ss = factory.openSession();
-		Transaction t = ss.beginTransaction();
-		try {
-			ss.save(x);
-			t.commit();
-		}catch(Exception e) {
-			t.rollback();
-			return 1;
-		} finally {
-			ss.close();
+		ArrayList<Cart> cartDangGiao = new ArrayList<>();
+		for(int i =gh.size()-1 ; i>=0 ;i--) {
+			List<String> listMaLoai = getMaLoai_DangGiao(gh.get(i).getIdGH());
+			for (int j =listMaLoai.size()-1 ; j>=0 ;j--) {
+				Cart tmp = new Cart();
+				LoaiSanPham sp1 = tim1LoaiSanPham(listMaLoai.get(j));
+				BigDecimal strippedValue = sp1.getGia().stripTrailingZeros();
+				sp1.setGia(strippedValue);
+				tmp.setLsp(sp1);
+				tmp.setIdGH(gh.get(i).getIdGH());
+				tmp.setSoLuong((int) getSLSanPhamCua1Loai_DangGiao(gh.get(i).getIdGH(), listMaLoai.get(j)).longValue());
+				tmp.setSoLuongMax(0);
+				tmp.setCheck(gh.get(i).getTrangThai());
+				cartDangGiao.add(tmp);
+			}
 		}
-		GioHang gh = getGHid(x.getIdGH().getIdGH());
-		gh.setHoaDon(x);
-		ss = factory.openSession();
-		t = ss.beginTransaction();
-		GioHang gh1 = (GioHang) ss.merge(gh);
-		try {
-			ss.update(gh1);
-			t.commit();
-		}catch(Exception e) {
-			t.rollback();
-			return 1;
-		} finally {
-			ss.close();
-		}
-		return 0;
+		model.addAttribute("cart",cartDangGiao);
+		return "sp/dang-giao";
 	}
-	private String sinhMaSoThue() {
+	private Long getSLSanPhamCua1Loai_DangGiao(int idGH, String maLoai) {
 		Session session = factory.getCurrentSession();
-		String hql = "FROM HoaDon";
+		String hql = "SELECT COUNT(seri) FROM SanPham WHERE  idGH.idGH = :id AND maLoai.maLoai = :maLoai AND daBan = 1";
 		Query query = session.createQuery(hql);
-		List<HoaDon> list = query.list();
-		int n = list.size() + 1;
-		String ma = Integer.toString(n);
-		String result ="MST";
-		for (int i=ma.length() ; i < 11;i++ ) {
-			result += "0";
-		}
-		result += ma;
-		return result;
+		query.setParameter("id", idGH);
+		query.setParameter("maLoai", maLoai);
+		Long count = (Long) query.uniqueResult();
+		return count;
+	}
+	private List<String> getMaLoai_DangGiao(int idGH){
+		Session ss = factory.getCurrentSession();
+		String hql = "SELECT DISTINCT maLoai.maLoai FROM SanPham WHERE idGH.idGH = :id AND daBan = 1 ";
+		Query query = ss.createQuery(hql);
+		query.setParameter("id", idGH);
+		List<String> list = query.list();
+		return list;
+	}
+	private List<GioHang> getGHid_DangGiao(String email) {
+		Session session = factory.getCurrentSession();
+		String hql = "FROM GioHang WHERE email.email = :email  AND (trangThai = 1 OR trangThai = 2 OR trangThai = 3)";
+		Query query = session.createQuery(hql);
+		query.setParameter("email", email);
+		List<GioHang> list = query.list();
+		if(list.size() ==0) return null;
+		return list;
 	}
 	private GioHang getGHid_1(String email) {
 		Session session = factory.getCurrentSession();

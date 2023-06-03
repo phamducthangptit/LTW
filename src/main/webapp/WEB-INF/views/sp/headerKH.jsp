@@ -7,9 +7,9 @@
                 <div>
                     <i class="fa fa-envelope mx-2"></i>
                     <a class="navbar-sm-brand text-light text-decoration-none"
-                        href="mailto:info@company.com">info@company.com</a>
+                        href="mailto:info@company.com">12Shop@company.com</a>
                     <i class="fa fa-phone mx-2"></i>
-                    <a class="navbar-sm-brand text-light text-decoration-none" href="tel:010-020-0340">010-020-0340</a>
+                    <a class="navbar-sm-brand text-light text-decoration-none" href="tel:010-020-0340">028 3730 6600</a>
                 </div>
                 <div>
                     <a class="text-light" href="https://fb.com/templatemo" target="_blank" rel="sponsored"><i
@@ -32,7 +32,7 @@
         <div class="container d-flex justify-content-between align-items-center">
 
             <a class="navbar-brand text-success logo h1 align-self-center" href="/BanLaptop/home.htm">
-                Shop
+                12Shop
             </a>
 
             <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse"
@@ -49,10 +49,11 @@
                             <a class="nav-link" href="/BanLaptop/home/index.htm">Trang chủ</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="about.htm">About</a>
+                        	<a class="nav-link" href="/BanLaptop/home/shop.htm">Cửa hàng</a>
+                            
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/BanLaptop/home/shop.htm">Cửa hàng</a>
+                            <a class="nav-link" href="/BanLaptop/home/about.htm">About</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="contact.html">Contact</a>
