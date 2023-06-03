@@ -2,7 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@page import="ptithcm.model.NhanVien"%>
 <%@page import="ptithcm.model.KhachHang"%>
-
+<link rel="shortcut icon" type="image/x-icon"
+	href="<c:url value='/resource/assets/img/logo.png'/>">
 <nav
 	class="navbar navbar-expand-lg bg-dark navbar-light d-none d-lg-block"
 	id="templatemo_nav_top">
@@ -11,10 +12,10 @@
 			<div>
 				<i class="fa fa-envelope mx-2"></i> <a
 					class="navbar-sm-brand text-light text-decoration-none"
-					href="mailto:info@company.com">info@company.com</a> <i
+					href="mailto:banlaptop12ptit@gmail.com">banlaptop12ptit@gmail.com</a> <i
 					class="fa fa-phone mx-2"></i> <a
 					class="navbar-sm-brand text-light text-decoration-none"
-					href="tel:010-020-0340">010-020-0340</a>
+						href="tel:028 3730 6600">028 3730 6600</a>
 			</div>
 			<div>
 				<a class="text-light" href="https://fb.com/templatemo"
@@ -39,7 +40,7 @@
 		class="container d-flex justify-content-between align-items-center">
 
 		<a class="navbar-brand text-success logo h1 align-self-center"
-			href="#"> Zay </a>
+				href="#"> 12Shop </a>
 
 		<button class="navbar-toggler border-0" type="button"
 			data-bs-toggle="collapse" data-bs-target="#templatemo_main_nav"
