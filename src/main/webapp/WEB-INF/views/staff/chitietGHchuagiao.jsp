@@ -27,7 +27,6 @@
 <link rel="stylesheet"
 	href="<c:url value='/resource/assets/css/fontawesome.min.css'/>">
 <!--
-
 -->
 </head>
 <body>

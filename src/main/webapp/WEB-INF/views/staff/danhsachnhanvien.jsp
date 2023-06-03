@@ -26,13 +26,12 @@
 	href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
 <link rel="stylesheet"
 	href="<c:url value='/resource/assets/css/fontawesome.min.css'/>">
-<!--
 
--->
+<%@include file="headerNV.jsp"%>
 </head>
 
 <body>
-    <%@include file="headerNV.jsp"%>
+    
     <!-- Modal -->
     <div class="modal fade bg-white" id="templatemo_search" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">

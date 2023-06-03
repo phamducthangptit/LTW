@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Zay Shop eCommerce HTML CSS Template</title>
+<title>Trang chủ</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -33,10 +33,10 @@ TemplateMo 559 Zay Shop
 https://templatemo.com/tm-559-zay-shop
 
 -->
+<%@include file="headerNV.jsp"%>
 </head>
 
 <body>
-	<%@include file="headerNV.jsp"%>
 	<!-- Modal -->
 	<div class="modal fade bg-white" id="templatemo_search" tabindex="-1"
 		role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
