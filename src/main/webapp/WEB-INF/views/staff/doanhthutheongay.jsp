@@ -72,10 +72,11 @@
         box-shadow: 0 0 5px rgba(0, 0, 255, 0.5);
     }
 </style>
+<%@include file="headerNV.jsp" %>
 </head>
 
 <body>
-<%@include file="headerNV.jsp" %>
+
 	<section class="bg-light">
 		<h2 style="text-align: center;" ${ngayTK == null ? '' : 'hidden' }>Doanh thu theo ngày</h2>
 		<div class="container mt-4">

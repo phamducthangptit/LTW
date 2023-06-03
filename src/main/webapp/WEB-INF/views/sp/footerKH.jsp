@@ -1,7 +1,5 @@
  <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
-    
-    
  <footer class="bg-dark" id="tempaltemo_footer">
         <div class="container">
             <div class="row">

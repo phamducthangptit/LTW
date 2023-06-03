@@ -29,9 +29,10 @@
 <!--
 
 -->
+<%@include file="headerNV.jsp"%>
 </head>
 <body>
-<%@include file="headerNV.jsp"%>
+
  <!-- Modal -->
     <div class="modal fade bg-white" id="templatemo_search" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
