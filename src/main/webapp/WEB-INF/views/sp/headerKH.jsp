@@ -1,6 +1,7 @@
- <%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="utf-8"%>
- 
+ <%@page import="ptithcm.model.NhanVien"%>
+<%@page import="ptithcm.model.KhachHang"%>
+ <%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
  <nav class="navbar navbar-expand-lg bg-dark navbar-light d-none d-lg-block" id="templatemo_nav_top">
         <div class="container text-light">
             <div class="w-100 d-flex justify-content-between">
@@ -77,9 +78,41 @@
                         <span
                             class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">${SLsanPham}</span>
                     </a>
-                    <a class="nav-icon position-relative text-decoration-none" href="/BanLaptop/dangnhap.htm">
-                        <i class="fa fa-fw fa-user text-dark mr-3"></i>
-                    </a>
+				<%
+					String hr = "";
+					Object ob = session.getAttribute("user");
+					KhachHang kh = new KhachHang();
+					NhanVien nv = new NhanVien();
+					String emailTmp = "non";
+					try{
+						kh = (KhachHang) ob;
+						hr = "thongtincanhanuser.htm";
+						emailTmp = kh.getEmail();
+					}
+					catch (Exception ex){
+						nv = (NhanVien) ob;
+						hr = "thongtincanhannv.htm";
+					}
+					if (ob == null) {
+						hr = "dangnhap.htm";
+					}
+				%>
+				<a class="nav-icon position-relative text-decoration-none"
+					href="<%=request.getContextPath()%>/<%=hr%>"> <i class="fa fa-fw fa-user text-dark mr-3"></i>
+					<span
+					class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark"></span>
+				</a>
+				<%
+				if (kh != null) {
+				%>
+				<a class="nav-icon position-relative text-decoration-none"
+					href="<%=request.getContextPath()%>/dangxuat.htm"> <i
+					class="fa fa-fw fa-sign-out-alt text-dark mr-3"></i> <span
+					class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark"></span>
+				</a>
+				<%
+				}
+				%>
                 </div>
             </div>
 
