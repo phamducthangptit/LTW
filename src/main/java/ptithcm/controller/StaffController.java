@@ -1,21 +1,15 @@
 package ptithcm.controller;
 
-<<<<<<< HEAD
-=======
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
->>>>>>> 802fac6346a19e2308fb0f43ca4516cc2150591c
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-<<<<<<< HEAD
 import java.util.Map;
-=======
->>>>>>> 802fac6346a19e2308fb0f43ca4516cc2150591c
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -31,12 +25,9 @@ import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-<<<<<<< HEAD
 import org.hibernate.SharedSessionContract;
 import org.hibernate.Transaction;
-=======
 import org.hibernate.type.StandardBasicTypes;
->>>>>>> 802fac6346a19e2308fb0f43ca4516cc2150591c
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -49,11 +40,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import ptithcm.model.CTBaoHanh;
 import ptithcm.model.CTDonDatHang;
 import ptithcm.model.CTDotGiamGia;
-<<<<<<< HEAD
 import ptithcm.model.CungCap;
-=======
 import ptithcm.model.DoanhThuTheoNgay;
->>>>>>> 802fac6346a19e2308fb0f43ca4516cc2150591c
 import ptithcm.model.DonDatHang;
 import ptithcm.model.DotGiamGia;
 import ptithcm.model.GioHang;
