@@ -2,7 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@page import="ptithcm.model.NhanVien"%>
 <%@page import="ptithcm.model.KhachHang"%>
-
+<link rel="shortcut icon" type="image/x-icon"
+	href="<c:url value='/resource/assets/img/logo.png'/>">
 <nav
 	class="navbar navbar-expand-lg bg-dark navbar-light d-none d-lg-block"
 	id="templatemo_nav_top">
@@ -11,10 +12,10 @@
 			<div>
 				<i class="fa fa-envelope mx-2"></i> <a
 					class="navbar-sm-brand text-light text-decoration-none"
-					href="mailto:banlaptop12ptit@gmail.com">banlaptop12ptit@gmail.com</a> <i
-					class="fa fa-phone mx-2"></i> <a
+					href="mailto:banlaptop12ptit@gmail.com">banlaptop12ptit@gmail.com</a>
+				<i class="fa fa-phone mx-2"></i> <a
 					class="navbar-sm-brand text-light text-decoration-none"
-					href="tel:010-020-0340">010-020-0340</a>
+					href="tel:028 3730 6600">028 3730 6600</a>
 			</div>
 			<div>
 				<a class="text-light" href="https://fb.com/templatemo"
@@ -52,29 +53,26 @@
 			class="align-self-center collapse navbar-collapse flex-fill  d-lg-flex justify-content-lg-between"
 			id="templatemo_main_nav">
 			<div class="flex-fill">
-				<ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto" style="max-width: 650px;">
-					<li class="nav-item"><a class="nav-link" href="danhsachnhanvien.htm">Nhân Viên</a>
-					</li>
-					<li class="nav-item"><a class="nav-link" href="dondathang.htm">Nhập Hàng</a>
-					</li>
-<<<<<<< HEAD
-					<li class="nav-item"><a class="nav-link" href="nhanbaohanh.htm">Bảo Hành</a>
-					</li>
-					<li class="nav-item"><a class="nav-link" href="danhsachdotgiamgia.htm">Đợt giảm giá</a>
-=======
-					<li class="nav-item"><a class="nav-link" href="/BanLaptop/home/danh-muc-san-pham.htm">Sản Phẩm</a>
-					</li>
-					<li class="nav-item"><a class="nav-link" href="#">Khuyến Mãi</a>
-					</li>
-					<li class="nav-item"><a class="nav-link" href="nhanbaohanh.htm">Bảo Hành</a>
-					</li>
-					<li class="nav-item"><a class="nav-link" href="#">Doanh Thu</a>
->>>>>>> 79c266c968ed5e81fecf78ed974f71a691a560c4
-					</li>
+				<ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto"
+					style="max-width: 800px;">
+					<li class="nav-item"><a class="nav-link"
+						href="danhsachnhanvien.htm">Nhân Viên</a></li>
+					<li class="nav-item"><a class="nav-link" href="dondathang.htm">Nhập
+							Hàng</a></li>
+<!-- 					<li class="nav-item"><a class="nav-link"
+						href="danhsachdotgiamgia.htm">Đợt giảm giá</a> -->
+					<li class="nav-item"><a class="nav-link"
+						href="/BanLaptop/home/danh-muc-san-pham.htm">Sản Phẩm</a></li>
+					<li class="nav-item"><a class="nav-link" href="danhsachdotgiamgia.htm">Khuyến
+							Mãi</a></li>
+					<li class="nav-item"><a class="nav-link"
+						href="nhanbaohanh.htm">Bảo Hành</a></li>
+					<li class="nav-item"><a class="nav-link" href="doanhthutheongay.htm">Doanh
+							Thu</a></li>
 				</ul>
 			</div>
 			<div class="navbar align-self-center d-flex">
- 				<div class="d-lg-none flex-sm-fill mt-3 mb-4 col-7 col-sm-auto pr-3">
+				<div class="d-lg-none flex-sm-fill mt-3 mb-4 col-7 col-sm-auto pr-3">
 					<div class="input-group">
 						<input type="text" class="form-control" id="inputMobileSearch"
 							placeholder="Search ...">
@@ -83,18 +81,8 @@
 						</div>
 					</div>
 				</div>
-<<<<<<< HEAD
-				 <a class="nav-icon position-relative text-decoration-none"
-					href="giohang.htm"> <i
-=======
-				<a class="nav-icon d-none d-lg-inline" href="#"
-					data-bs-toggle="modal" data-bs-target="#templatemo_search"> <i
-					class="fa fa-fw fa-search text-dark mr-2"></i>
-				</a> 
-				
 				<a class="nav-icon position-relative text-decoration-none"
 					href="duyetgiohang.htm"> <i
->>>>>>> 79c266c968ed5e81fecf78ed974f71a691a560c4
 					class="fa fa-fw fa-cart-arrow-down text-dark mr-1"></i> <span
 					class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark"></span>
 				</a>
@@ -103,14 +91,14 @@
 				Object ob = session.getAttribute("user");
 				KhachHang kh = new KhachHang();
 				NhanVien nv = new NhanVien();
-				try{
+				try {
 					kh = (KhachHang) ob;
 					hr = "thongtincanhanuser.htm";
-				} catch (Exception ex){
+				} catch (Exception ex) {
 					nv = (NhanVien) ob;
 					hr = "thongtincanhannv.htm";
 				}
-			
+
 				if (kh == null) {
 					hr = "dangnhap.htm";
 				}
@@ -131,6 +119,7 @@
 				<%
 				}
 				%>
+
 			</div>
 		</div>
 

@@ -1,6 +1,5 @@
 package ptithcm.model;
 
-import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,10 +9,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
-import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name="HOA_DON")
@@ -38,13 +33,9 @@ public class HoaDon {
 	}
 
 	public HoaDon( String maSoThue, GioHang idGH) {
-<<<<<<< HEAD
 
 		this.maSoThue = maSoThue;
 
-=======
-		this.maSoThue = maSoThue;
->>>>>>> 802fac6346a19e2308fb0f43ca4516cc2150591c
 		this.idGH = idGH;
 	}
 
