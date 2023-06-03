@@ -68,9 +68,13 @@
 						href="danhsachdotgiamgia.htm">Khuyến Mãi</a></li>
 					<li class="nav-item"><a class="nav-link"
 						href="nhanbaohanh.htm">Bảo Hành</a></li>
-					<li class="nav-item"><a class="nav-link"
-						href="doanhthutheongay.htm">Doanh Thu</a></li>
-				</ul>
+
+					<li class="nav-item"><a class="nav-link" href="doanhthutheongay.htm">Doanh
+							Thu</a></li>
+			</ul>
+
+
+
 			</div>
 			<div class="navbar align-self-center d-flex">
 				<div class="d-lg-none flex-sm-fill mt-3 mb-4 col-7 col-sm-auto pr-3">

@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<!-- Start Footer -->
+
 <footer class="bg-dark" id="tempaltemo_footer" >
 	<div class="container">
 		<div class="row">
@@ -9,7 +9,7 @@
 				<h2 class="h2 text-success border-bottom pb-3 border-light logo">
 					12Shop</h2>
 				<ul class="list-unstyled text-light footer-link-list">
-					<li><i class="fas fa-map-marker-alt fa-fw"></i> 97 Đ. Man Thiện, Hiệp Phú, Thành Phố Thủ Đức</li>
+					<li><i class="fas fa-map-marker-alt fa-fw"></i>97 Man Thiện, Phường Hiệp Phú, Thủ Đức, TP. Hồ Chí Minh</li>
 					<li><i class="fa fa-phone fa-fw"></i> <a
 						class="text-decoration-none" href="tel:028 3730 6600">028 3730 6600</a>
 					</li>
