@@ -1,5 +1,7 @@
 package ptithcm.controller;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.text.DecimalFormat;
@@ -14,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 
+import org.apache.commons.compress.utils.IOUtils;
 import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -1352,7 +1355,40 @@ public class SPController {
 		//System.out.println(baseUploadFile.getBasePath());
 		return "sp/themsp";
 	}
-	
+	@RequestMapping(value="add",params="btnAnh", method = RequestMethod.POST) 
+	public String themAnhSanPham(ModelMap model,
+				HttpSession session,
+			  @RequestParam("photo") MultipartFile photo,
+			  	HttpServletRequest request
+	 ) {
+		String maLoai = request.getParameter("maLoai");
+		if (getMaLoai(maLoai)) {
+			model.addAttribute("message", "Mã loại bị trùng");
+			return "sp/themsp";
+		}
+		NhanVien nv = (NhanVien) session.getAttribute("user");
+		String tenSP = request.getParameter("ten");
+		String gia = request.getParameter("gia");
+		String giaNhap = request.getParameter("giaNhap");
+		String cpu = request.getParameter("cpu");
+		String ram = request.getParameter("ram");
+		String hardware = request.getParameter("hardware");
+		String card = request.getParameter("card");
+		String screen = request.getParameter("screen");
+		String os = request.getParameter("os");
+		String moTa = request.getParameter("moTa");
+		String theLoai = request.getParameter("theLoai");
+		String hang = request.getParameter("hangSanXuat");
+//		BigDecimal gia1 = new BigDecimal(gia);
+//		BigDecimal gia2 = new BigDecimal(giaNhap);
+		
+		System.out.println(photo.getName());
+		System.out.println(photo.getContentType());
+		
+		
+		//model.addAttribute("hinhanh", fileName);
+	  return "sp/themsp";
+	}
 	
 	@RequestMapping(value="add", method = RequestMethod.POST) public String
 	  themSanPham(ModelMap model,

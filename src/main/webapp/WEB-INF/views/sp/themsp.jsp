@@ -51,19 +51,20 @@ https://templatemo.com/tm-559-zay-shop
             <div class="row">
                 <div class="col-lg-5 mt-5">
                     <div class="card mb-3">
-                        <img class="card-img img-fluid" src="<c:url value ='/resource/images/${hinhanh}'/>" alt="Card image cap" id="product-detail">
+                        <img  id="imagePreview" class="card-img img-fluid" src="<c:url value ='/resource/images/${hinhanh}'/>" alt="Card image cap" id="product-detail">
                     </div>
-                    <div class = "row">
-                    	<ul class="list-inline">
-                                <li class="list-inline-item">
-                                    <h1 class="h2">Hình ảnh</h1>
-                                </li>
-                                <li class="list-inline-item">
-                                    <input type="file" name="photo" >
-                                </li>
-                            </ul>
-							          
-                    </div>
+
+	                    <div class = "row">
+	                    	<ul class="list-inline">
+	                                <li class="list-inline-item">
+	                                    <h1 class="h2">Hình ảnh</h1>
+	                                </li>
+	                                <li class="list-inline-item">
+	                                    <input type="file" name="photo" id="imageFile" onchange="previewImage(this)" required="required" >
+	                                </li>
+	                            </ul>	          
+	                    </div>
+
                 </div>
                 <!-- col end -->
                 <div class="col-lg-7 mt-5">
@@ -73,47 +74,47 @@ https://templatemo.com/tm-559-zay-shop
                         	<div class="row g-3">
 							  <div class="col-md-4">
 							    <label for="productType">Mã loại sản phẩm:</label>
-							    <input type="text" class="form-control" name="maLoai" placeholder="Vostro 15 3520" required="required">
+							    <input type="text" class="form-control" name="maLoai" placeholder="Vostro 15 3520" >
 							  </div>
 							  <div class="col-md-8">
 							    <label for="productName">Tên sản phẩm:</label>
-							    <input type="text" class="form-control"  name="ten" placeholder="Laptop DELL" required="required">
+							    <input type="text" class="form-control"  name="ten" placeholder="Laptop DELL" >
 							  </div>
 							  <div class="col-md-6">
 							    <label for="productPrice">Giá bán:</label>
-							    <input type="number" class="form-control" name="gia" required="required">
+							    <input type="number" class="form-control" name="gia" >
 							  </div>
 							  <div class="col-md-6">
 							    <label for="productPrice">Giá nhập:</label>
-							    <input type="number" class="form-control" name="giaNhap"  required="required">
+							    <input type="number" class="form-control" name="giaNhap"  >
 							  </div>
 							  <div class="col-md-6">
 							    <label for="productCPU">CPU:</label>
-							    <input type="text" class="form-control"  name="cpu" placeholder="Nhập thông tin CPU" required="required">
+							    <input type="text" class="form-control"  name="cpu" placeholder="Nhập thông tin CPU" >
 							  </div>
 							  <div class="col-md-6">
 							    <label for="productRAM">RAM:</label>
-							    <input type="text" class="form-control" name="ram" placeholder="Nhập thông tin RAM" required="required">
+							    <input type="text" class="form-control" name="ram" placeholder="Nhập thông tin RAM" >
 							  </div>
 							  <div class="col-md-6">
 							    <label for="productHardware">Hardware:</label>
-							    <input type="text" class="form-control"  name="hardware" placeholder="Nhập thông tin phần cứng" required="required">
+							    <input type="text" class="form-control"  name="hardware" placeholder="Nhập thông tin phần cứng" >
 							  </div>
 							  <div class="col-md-6">
 							    <label for="productCard">Card màn hình:</label>
-							    <input type="text" class="form-control"  name="card" placeholder="Nhập thông tin card màn hình" required="required">
+							    <input type="text" class="form-control"  name="card" placeholder="Nhập thông tin card màn hình" >
 							  </div>
 							  <div class="col-md-12">
 							    <label for="productScreen">Màn hình:</label>
-							    <input type="text" class="form-control"  name="screen" placeholder="Nhập thông tin màn hình" required="required">
+							    <input type="text" class="form-control"  name="screen" placeholder="Nhập thông tin màn hình" >
 							  </div>
 							  <div class="col-md-12">
 							    <label for="productOS">Hệ điều hành:</label>
-							    <input type="text" class="form-control"  name="os" placeholder="Nhập thông tin hệ điều hành" required="required">
+							    <input type="text" class="form-control"  name="os" placeholder="Nhập thông tin hệ điều hành" >
 							  </div>
 							  <div class="col-md-6">
 							  	<label for="theLoai" class="form-label">Thể loại:</label>
-							  	<input type="text" list="theLoais" name="theLoai" class="form-control" required="required">
+							  	<input type="text" list="theLoais" name="theLoai" class="form-control" >
 							  	<datalist id="theLoais">
 							      <c:forEach items="${listTheLoai}" var="product">
 							        <option value="${product.getMaTheLoai()}">${product.getTenTL()}</option>
@@ -122,7 +123,7 @@ https://templatemo.com/tm-559-zay-shop
 							  </div>
 							  <div class="col-md-6">
 							  	<label for="moTa" class="form-label">Hãng sản xuất:</label>
-							  	<input type="text" list="listHang" name="hangSanXuat" class="form-control" required="required">
+							  	<input type="text" list="listHang" name="hangSanXuat" class="form-control" >
 							  	<datalist id="listHang">
 							      <c:forEach items="${listHang}" var="product">
 							        <option value="${product.getMaHang()}">${product.getTenHang()}</option>
@@ -160,7 +161,15 @@ https://templatemo.com/tm-559-zay-shop
 
     <%@include file="../staff/footerQL.jsp"%>
     <!-- End Footer -->
-
+<script type="text/javascript">
+function previewImage(input) {
+    var reader = new FileReader();
+    reader.onload = function(e) {
+        document.getElementById('imagePreview').setAttribute('src', e.target.result);
+    };
+    reader.readAsDataURL(input.files[0]);
+}
+</script>
     <!-- Start Script -->
     <script src="assets/js/jquery-1.11.0.min.js"></script>
     <script src="assets/js/jquery-migrate-1.2.1.min.js"></script>
