@@ -56,25 +56,10 @@
 .search-form button:hover {
   background-color: #45a049;
 }
-.button-link {
-        display: inline-block;
-        padding: 10px 20px;
-        background-color: #4CAF50;
-        color: white;
-        text-decoration: none;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        font-weight: bold;
-    }
-    .button-link:hover {
-        color: white;
-        box-shadow: 0 0 5px rgba(0, 0, 255, 0.5);
-    }
 </style>
 </head>
 
 <body>
-<%@include file="headerNV.jsp"%>
 <section class="bg-light">
 	<h2 style="text-align: center;">Danh sách đợt giảm giá</h2>
 	<div class="container mt-4">
@@ -82,7 +67,6 @@
 		  <form class="search-form" action="timkiemdgg.htm" method="post">
 		    <input type="text" id="searchInput" name ="iddgg" placeholder="Nhập mã...">
 		    <button type="submit">Tìm kiếm</button>
-		    <a href="taodotgiamgia.htm" class="button-link">Thêm mới</a>
 		  </form>
 		</div>
 		<form>
@@ -130,7 +114,6 @@
 		</form>
 	</div>
 	</section>
-	<%@include file="footerQL.jsp" %>
 </body>
 <script>
 	function confirmDelete(event) {

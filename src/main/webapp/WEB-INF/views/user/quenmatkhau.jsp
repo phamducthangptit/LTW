@@ -32,7 +32,7 @@
 </style>
 </head>
 <body>
-	<%@include file="../sp/headerKH.jsp"%>
+	<%@include file="header.jsp"%>
 	<div class="container mt-4">
 		<form action="quenmatkhau.htm" method="post">
 			<div class="row justify-content-center">
@@ -67,6 +67,6 @@
 			</div>
 		</form>
 	</div>
-	<%@include file="../sp/footerKH.jsp"%>
+	<%@include file="footer.jsp"%>
 </body>
 </html>

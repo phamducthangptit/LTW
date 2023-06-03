@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Zay Shop eCommerce HTML CSS Template</title>
+<title>Nhận Bảo Hành</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -139,17 +139,6 @@
 
 						</c:if>
 						
-						<%-- <c:if test = "${SanPhamTim.phieuBaoHanh.ctBaoHanh.ngayNhan == null $$ NgayHienTai<=SanPhamTim.phieuBaoHanh.ngayKetThuc}">
-						<td>
-						<a class="btn btn-success btn-lg px-3"href="nhanbaohanh.htm?seriSP=${SanPhamTim.seri}&loaiBtn=nhan">Nhận Bảo Hành</a>
-						</td>
-						</c:if>
-						<c:if test ="${SanPhamTim.phieuBaoHanh.ngayKetThuc < NgayHienTai}">
-						<td>Hết Hạn Bảo Hành</td>
-						</c:if>
-						<c:if test = "${SanPhamTim.phieuBaoHanh.ctBaoHanh.ngayNhan != null $$ NgayHienTai<=SanPhamTim.phieuBaoHanh.ngayKetThuc}">
-						<a class="btn btn-success btn-lg px-3"href="nhanbaohanh.htm?seriSP=${SanPhamTim.seri}&loaiBtn=nhan">Trả Máy</a>
-						</c:if> --%>
 						
 						
 					</tr>

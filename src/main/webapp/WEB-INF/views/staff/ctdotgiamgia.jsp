@@ -32,9 +32,7 @@
 </head>
 
 <body>
-<%@include file="headerNV.jsp"%>
-	<section class="bg-light">
-	<div class="container">
+	<div class="container mt-4">
 		<h2 style="text-align: center;">Chi tiết đợt giảm giá</h2>
 		<form action="ctdotgg.htm" method="post">
 			<div class="row justify-content-center">
@@ -98,7 +96,6 @@
 			</div>
 		</form>
 	</div>
-</section>
-	<%@include file="footerQL.jsp" %>
+
 </body>
 </html>

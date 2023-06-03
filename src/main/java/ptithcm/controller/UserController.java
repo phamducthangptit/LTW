@@ -88,10 +88,16 @@ public class UserController {
 			NhanVien nhanVien = new NhanVien();
 			if (list.size() != 0) {
 				nhanVien = list.get(0);
-				if (nhanVien.getTrangThai() != 0) {
+				if (nhanVien.getTrangThai() != 0 && nhanVien.getRole().equals("NVGiaoHang"))
+				{
 					HttpSession s = request.getSession();
 					s.setAttribute("user", nhanVien);
-					return "redirect:/homenv.htm";
+					return "redirect:donhangchuagiao.htm";
+				}
+				else if (nhanVien.getTrangThai() != 0) {
+					HttpSession s = request.getSession();
+					s.setAttribute("user", nhanVien);
+					return "staff/homeNV";
 				} else {
 					model.addAttribute("ErrorLogin", "Nhân viên không thể đăng nhập vào hệ thống!");
 					return "user/login";
@@ -177,7 +183,7 @@ public class UserController {
 	public String dangXuat(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		session.invalidate(); // ngat phien lam viec
-		return "redirect:/home/index.htm";
+		return "user/home";
 	}
 	
 	@RequestMapping(value = "/thongtincanhanuser")
@@ -202,12 +208,14 @@ public class UserController {
 		Date ngaySinh = Date.valueOf(ns);
 		String diaChi = request.getParameter("diaChi");
 		String sdt = request.getParameter("sdt");
+		String pass = request.getParameter("pass");
 		
 		khachHang.setHo(ho);
 		khachHang.setTen(ten);
 		khachHang.setNgaySinh(ngaySinh);
 		khachHang.setDiaChi(diaChi);
 		khachHang.setSdt(sdt);
+		khachHang.setPass(pass);
 
 		model.addAttribute("khachHang", khachHang);
 		Session session = factory.getCurrentSession();
@@ -215,41 +223,6 @@ public class UserController {
 		return "user/thongtincanhan";
 	}
 	
-	@RequestMapping(value = "/doimatkhauuser")
-	public String showFormDoiMkUser() {
-		return "user/doimatkhau";
-	}
-	
-	@RequestMapping(value = "/doimatkhauuser", method = RequestMethod.POST)
-	public String doiMkUser(HttpServletRequest request, Model model) {
-		HttpSession s = request.getSession();
-
-		Object user = s.getAttribute("user");
-		KhachHang khachHang = new KhachHang();
-		khachHang = (KhachHang) user;
-		
-		String mkCu = request.getParameter("mkCu");
-		String mkMoi1 = request.getParameter("mkMoi1");
-		String mkMoi2 = request.getParameter("mkMoi2");
-		if(!khachHang.getPass().equals(mkCu)) {
-			model.addAttribute("ErrorMkCu", "Mật khẩu cũ bạn nhập chưa chính xác!");
-			return "user/doimatkhau";
-		} else {
-			if(!mkMoi1.equals(mkMoi2)) {
-				model.addAttribute("ErrorMkMoi", "Mật khẩu mới bạn nhập chưa khớp nhau!");
-				return "user/doimatkhau";
-			} else {
-				Session session = factory.getCurrentSession();
-				String hql = "UPDATE KhachHang KH SET KH.pass = :pass WHERE KH.email = :email";
-				Query query = session.createQuery(hql);
-				query.setParameter("pass", mkMoi1);
-				query.setParameter("email", khachHang.getEmail());
-				query.executeUpdate();
-			}
-		}
-		
-		return "redirect:/thongtincanhanuser.htm";
-	}
 	
 	@RequestMapping(value = "/quenmatkhau")
 	public String quenMk() {
@@ -299,5 +272,9 @@ public class UserController {
 			query.executeUpdate();
 		}
 		return "user/login";
+	}
+	@RequestMapping("/giohang")
+	public String gioHang() {
+		return "user/giohang";
 	}
 }
