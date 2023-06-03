@@ -11,8 +11,7 @@
 
 <link rel="apple-touch-icon"
 	href="<c:url value='/resource/assets/img/apple-icon.png'/>">
-<link rel="shortcut icon" type="image/x-icon"
-	href="<c:url value='/resource/assets/img/favicon.ico'/>">
+
 
 <link rel="stylesheet"
 	href="<c:url value='/resource/assets/css/bootstrap.min.css'/>">
@@ -28,9 +27,10 @@
 	href="<c:url value='/resource/assets/css/fontawesome.min.css'/>">
 <!--
 -->
+<%@include file="headerShipper.jsp"%>
 </head>
 <body>
-<%@include file="headerShipper.jsp"%>
+
  <!-- Modal -->
     <div class="modal fade bg-white" id="templatemo_search" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">

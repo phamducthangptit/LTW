@@ -11,8 +11,6 @@
 
 <link rel="apple-touch-icon"
 	href="<c:url value='/resource/assets/img/apple-icon.png'/>">
-<link rel="shortcut icon" type="image/x-icon"
-	href="<c:url value='/resource/assets/img/favicon.ico'/>">
 
 <link rel="stylesheet"
 	href="<c:url value='/resource/assets/css/bootstrap.min.css'/>">
