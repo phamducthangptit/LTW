@@ -82,6 +82,7 @@
 				style="text-align: center;">
                     <thead>
                         <tr>
+                       		<th>Hình Ảnh</th>
                             <th width="200">Mã Loại Sản Phẩm</th>
                             <th >Tên Sản Phẩm</th>
                             <th>Số Lượng </th>
@@ -91,6 +92,13 @@
                <c:if test="${not empty listSP}">
                     <c:forEach var="i"  begin="0" end ="${size}">
 					<tr>
+						 <td class="col-md-1">
+                            <div class="card mb-2 product-wap rounded-0">
+                              <div class="card rounded-0">
+                                <img class="card-img rounded-0 img-fluid" src="<c:url value ='/resource/images/${listSP.get(i).maLoai.getAnh()}'/>">
+                              </div>
+                            </div>
+                        </td> 
 						<td>${listSP.get(i).maLoai.maLoai} </td>
 						<td>${listSP.get(i).maLoai.tenSP}</td>
 						<td>${listSL.get(i)}</td>

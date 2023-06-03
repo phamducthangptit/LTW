@@ -57,8 +57,8 @@
         	<div class = "card-body">
             <div class = "container py-5">
                 <h2>Danh sách Giỏ Hàng Chờ Duyệt</h2>
-                <a class="btn btn-success btn-lg px-3 mt-1"href="duyetgiohang.htm"><i class="fa fa-shopping-cart" aria-hidden="true"></i>-Đơn Hàng Đã Duyệt</a>
-        		<p> </p>
+               <br>  <br>  <br>
+               
                 <table class="table table-light table-striped table-hover bordered-dark"
 				style="text-align: center;">
                   <thead>
@@ -70,6 +70,12 @@
                     </tr>
                   </thead>
                   <tbody>
+                  <c:if test = "${listGH.size() == 0}">
+                  <tr>
+                  <td colspan = "4">Hiện Không Còn Đơn Hàng Chưa Duyệt !</td>
+                  </tr>
+                  </c:if>
+                  <c:if test = "${listGH.size() != 0}">
                     <c:forEach var="GH" items="${listGH}">
 					<tr>
 						<td>${GH.idGH }</td>
@@ -81,6 +87,7 @@
 						</td>
 					</tr>
 				</c:forEach>
+				</c:if>
                   </tbody>
                 </table>
 

@@ -41,10 +41,10 @@ public class HoaDon {
 	public HoaDon() {
 	}
 
-	public HoaDon(int soHoaDon, String maSoThue, Date ngayLapHD, GioHang idGH) {
-		this.soHoaDon = soHoaDon;
+	public HoaDon( String maSoThue, GioHang idGH) {
+
 		this.maSoThue = maSoThue;
-		this.ngayLapHD = ngayLapHD;
+
 		this.idGH = idGH;
 	}
 

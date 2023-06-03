@@ -20,11 +20,13 @@ import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.SharedSessionContract;
 import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.PatternMatchUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -33,9 +35,11 @@ import net.sf.ehcache.search.expression.And;
 import ptithcm.model.CTBaoHanh;
 import ptithcm.model.CTDonDatHang;
 import ptithcm.model.CTDotGiamGia;
+import ptithcm.model.CungCap;
 import ptithcm.model.DonDatHang;
 import ptithcm.model.DotGiamGia;
 import ptithcm.model.GioHang;
+import ptithcm.model.HoaDon;
 import ptithcm.model.LoaiSanPham;
 import ptithcm.model.NhaCungCap;
 import ptithcm.model.NhanVien;
@@ -280,7 +284,13 @@ public class StaffController {
 	}
 	
 	@RequestMapping(value = "danhsachnhanvien")
-	public String danhsachnhanvien(ModelMap model) {
+	public String danhsachnhanvien(ModelMap model,HttpSession s) {
+		
+		
+		if ( s.getAttribute("user") == null)
+		{
+			return "redirect:dangnhap.htm";
+		}
 		org.hibernate.Session session = factory.getCurrentSession();
 		String hql =  "FROM NhanVien";
 		Query query = session.createQuery(hql);
@@ -292,6 +302,11 @@ public class StaffController {
 	@RequestMapping(value = "trangthainhanvien")
 	public String trangthainhanvien(ModelMap model , HttpServletRequest request)
 	{
+		HttpSession s = request.getSession();
+		if ( s.getAttribute("user") == null)
+		{
+			return "redirect:dangnhap.htm";
+		}
 		Session session = factory.getCurrentSession();
 		String hql =  "FROM NhanVien where maNV = :maNV";
 		Query query = session.createQuery(hql);
@@ -312,8 +327,13 @@ public class StaffController {
 	}
 	
 	@RequestMapping("themnhanvien")
-	public String Showthemnhanvien(Model model)
+	public String Showthemnhanvien(Model model , HttpServletRequest request)
 	{
+		HttpSession s = request.getSession();
+		if ( s.getAttribute("user") == null)
+		{
+			return "redirect:dangnhap.htm";
+		}
 		Session session = factory.getCurrentSession();
 		String hql =  "FROM NhanVien";
 		Query query = session.createQuery(hql);
@@ -327,6 +347,11 @@ public class StaffController {
 	@RequestMapping(value = "/themnhanvien", method = RequestMethod.POST)
 	public String themnhanvien(HttpServletRequest request, Model model)
 	{
+		HttpSession s = request.getSession();
+		if ( s.getAttribute("user") == null)
+		{
+			return "redirect:dangnhap.htm";
+		}
 		String maNV = request.getParameter("Id");
 		  String ho = request.getParameter("Ho"); 
 		  String ten = request.getParameter("Ten"); String chucVu = request.getParameter("CV");
@@ -371,6 +396,11 @@ public class StaffController {
 	@RequestMapping("suathongtinnhanvien")
 	public String Showsuathongtinnhanvien(Model model, HttpServletRequest request)
 	{
+		HttpSession s = request.getSession();
+		if ( s.getAttribute("user") == null)
+		{
+			return "redirect:dangnhap.htm";
+		}
 		Session session = factory.getCurrentSession();
 		String hql = "FROM NhanVien WHERE maNV = :maNV";
 	    Query query = session.createQuery(hql);
@@ -382,6 +412,11 @@ public class StaffController {
 	@RequestMapping(value = "suathongtinnhanvien",  method = RequestMethod.POST)
 	public String suathongtinnhanvien(HttpServletRequest request, Model model)
 	{
+		HttpSession s = request.getSession();
+		if ( s.getAttribute("user") == null)
+		{
+			return "redirect:dangnhap.htm";
+		}
 		Session session = factory.getCurrentSession();
 		String hql = "FROM NhanVien WHERE maNV = :maNV";
 	    Query query = session.createQuery(hql);
@@ -424,7 +459,12 @@ public class StaffController {
 	 * return sb.toString(); }
 	 */
 	@RequestMapping(value = "dondathang")
-	public String dondathang(ModelMap model) {
+	public String dondathang(ModelMap model,HttpSession s) {
+		
+		if ( s.getAttribute("user") == null)
+		{
+			return "redirect:dangnhap.htm";
+		}
 		Session session = factory.getCurrentSession();
 		String hql =  "FROM DonDatHang";
 		Query query = session.createQuery(hql);
@@ -443,6 +483,43 @@ public class StaffController {
 	@RequestMapping(value = "taodondathang")
 	public String showtaodondathang(ModelMap model,HttpServletRequest request) {
 		HttpSession s = request.getSession();
+		if ( s.getAttribute("user") == null)
+		{
+			return "redirect:dangnhap.htm";
+		}
+		String nCCsl =request.getParameter("NCC");
+		
+		Object user = s.getAttribute("user");
+		NhanVien nhanvien = new NhanVien();
+		nhanvien = (NhanVien) user;
+		Session session = factory.getCurrentSession();
+		String hql =  "FROM NhaCungCap where maNCC = :NCC";
+		Query query = session.createQuery(hql);
+		query.setParameter("NCC", nCCsl);
+		NhaCungCap NCC =	(NhaCungCap) query.uniqueResult(); 
+		hql = "FROM CungCap where maNCC.maNCC = :NCC";
+		query = session.createQuery(hql);
+		query.setParameter("NCC",nCCsl);
+		List<CungCap> list2 =	query.list(); 
+		
+		hql = "from DonDatHang";
+		query= session.createQuery(hql);
+		List<DonDatHang> ddh =	query.list(); 
+		String maDon = "DDH" + String.format("%03d", (ddh.size()+1));
+		model.addAttribute("NCC", NCC);
+		model.addAttribute("DSCC", list2);
+		model.addAttribute("nhanVien",nhanvien);
+		model.addAttribute("maDDH",maDon);
+		model.addAttribute("ngayDat",request.getParameter("ngayDat"));
+		return "staff/taodondathang";
+	}
+	@RequestMapping(value = "taoThongTinDDH")
+	public String taoThongTinDDH(ModelMap model,HttpServletRequest request) {
+		HttpSession s = request.getSession();
+		if ( s.getAttribute("user") == null)
+		{
+			return "redirect:dangnhap.htm";
+		}
 		Object user = s.getAttribute("user");
 		NhanVien nhanvien = new NhanVien();
 		nhanvien = (NhanVien) user;
@@ -462,12 +539,20 @@ public class StaffController {
 		model.addAttribute("DSSP", list2);
 		model.addAttribute("nhanVien",nhanvien);
 		model.addAttribute("maDDH",maDon);
-		return "staff/taodondathang";
+		Calendar calendar = Calendar.getInstance();
+		Date currentDate = new Date(calendar.getTime().getTime());
+		model.addAttribute("ngayDat",currentDate);
+		return "staff/taoThongTinDDH";
 	}
 
 	@RequestMapping("chitietdondathang")
 	public String showchitietdondathang(Model model, HttpServletRequest request)
 	{
+		HttpSession s = request.getSession();
+		if ( s.getAttribute("user") == null)
+		{
+			return "redirect:dangnhap.htm";
+		}
 		Session session = factory.getCurrentSession();
 		String hql = "FROM DonDatHang WHERE maDDH = :maDDH";
 	    Query query = session.createQuery(hql);
@@ -486,7 +571,11 @@ public class StaffController {
 	@RequestMapping("detetedondathang")
 		public String dondatHangDeleted(Model model, HttpServletRequest request)
 		{
-		
+			HttpSession s = request.getSession();
+			if ( s.getAttribute("user") == null)
+			{
+				return "redirect:dangnhap.htm";
+			}
 			Session session = factory.getCurrentSession();
 			String hql = "FROM DonDatHang WHERE maDDH = :maDDH";
 		    Query query = session.createQuery(hql);
@@ -494,10 +583,17 @@ public class StaffController {
 		    DonDatHang donDat = (DonDatHang) query.uniqueResult();
 		    if (donDat.getSoPhieuNhap() == null)
 		    {
-		    	String hql1 = "DELETE FROM DonDatHang WHERE maDDH = :maDDH";
-		    	Query query1 = session.createQuery(hql1);
-		    	query1.setParameter("maDDH", request.getParameter("idDDH"));
-		    	int rowsAffected = query1.executeUpdate();
+		    	hql = "From CTDonDatHang where maDDH.maDDH = :maDDH";
+		    	query = session.createQuery(hql);
+		    	query.setParameter("maDDH", request.getParameter("idDDH"));
+		    	List<CTDonDatHang> ctDon = query.list();
+		    	for (CTDonDatHang ctDonDatHang : ctDon)
+		    	{
+		    		session.delete(ctDonDatHang);
+		    	}
+				
+				session.delete(donDat);
+				 
 		    	model.addAttribute("ThongBao","Xóa đơn đặt hàng thành công !");
 		    	
 		    }
@@ -517,20 +613,26 @@ public class StaffController {
 	 
 	@RequestMapping("taotabledondathang")
 	public String taotabledondathang(Model model, HttpServletRequest request ,@RequestParam(value = "themDDH", required = false) String themDDH,
-			@RequestParam(value = "luuDDH", required = false) String luuDDH)
+			@RequestParam(value = "luuDDH", required = false) String luuDDH,
+			@RequestParam(value = "huy", required = false) String huy)
 	{
 		HttpSession s = request.getSession();
+		if ( s.getAttribute("user") == null)
+		{
+			return "redirect:dangnhap.htm";
+		}
 		Object user = s.getAttribute("user");
 		NhanVien nhanvien = new NhanVien();
 		nhanvien = (NhanVien) user;
 		Session session = factory.getCurrentSession();
+		if (huy != null)
+		{
+			listSL.clear();
+			listSP.clear();
+			return "redirect:taoThongTinDDH.htm";
+		}
 		if (themDDH != null)
 		{
-			if (!NCChientai.equals(request.getParameter("NCC")) ||  !ngayHienTai.equals(request.getParameter("ngayDat")))
-			{
-				listSL.clear();
-				listSL.clear();
-			}
 			String hql = "FROM LoaiSanPham WHERE maLoai = :maLoai";
 			int index =-1;
 			
@@ -597,20 +699,19 @@ public class StaffController {
 			
 			
 		}
-		String hql =  "FROM NhaCungCap";
-		Query query = session.createQuery(hql);
-		List<NhanVien> DSNCC =	query.list(); 
-		hql = "FROM LoaiSanPham";
-		Query query2 = session.createQuery(hql);
-		List<LoaiSanPham> list2 =	query2.list(); 
-		model.addAttribute("DSNCC", DSNCC);
-		model.addAttribute("DSSP", list2);
-	    NCChientai = request.getParameter("NCC");
-	    ngayHienTai =request.getParameter("ngayDat");
+		String hql = "FROM NhaCungCap WHERE maNCC = :NCC";
+		Query query= session.createQuery(hql);
+		query.setParameter("NCC", request.getParameter("NCC"));
+		NhaCungCap nhaCungCap = (NhaCungCap) query.uniqueResult();
+		hql = "FROM CungCap where maNCC.maNCC = :NCC";
+		query = session.createQuery(hql);
+		query.setParameter("NCC",request.getParameter("NCC"));
+		List<CungCap> list2 =	query.list(); 
+		model.addAttribute("DSCC",list2);
 		model.addAttribute("listSP",listSP);
 		model.addAttribute("listSL",listSL);
 		model.addAttribute("doLon",listSL.size()-1);
-		model.addAttribute("NCChientai",request.getParameter("NCC"));
+		model.addAttribute("NCC",nhaCungCap);
 		model.addAttribute("ngayDat",request.getParameter("ngayDat"));
 		model.addAttribute("maDDH",request.getParameter("maDDH"));
 		model.addAttribute("nhanVien",nhanvien);
@@ -621,6 +722,12 @@ public class StaffController {
 	public String XoaSPtabledondathang(Model model, HttpServletRequest request)
 	{
 		HttpSession s = request.getSession();
+		if ( s.getAttribute("user") == null)
+		{
+			return "redirect:dangnhap.htm";
+		}
+		Session session = factory.getCurrentSession();
+		
 		Object user = s.getAttribute("user");
 		NhanVien nhanvien = new NhanVien();
 		nhanvien = (NhanVien) user;
@@ -634,20 +741,22 @@ public class StaffController {
 		}
 		listSP.remove(index);
 		listSL.remove(index);
-		Session session = factory.getCurrentSession();
-		String hql =  "FROM NhaCungCap";
-		Query query = session.createQuery(hql);
-		List<NhanVien> DSNCC =	query.list(); 
-		hql = "FROM LoaiSanPham";
-		Query query2 = session.createQuery(hql);
-		List<LoaiSanPham> list2 =	query2.list(); 
-		model.addAttribute("DSNCC", DSNCC);
-		model.addAttribute("DSSP", list2);
+		String hql = "FROM NhaCungCap WHERE maNCC = :NCC";
+		Query query= session.createQuery(hql);
+		query.setParameter("NCC", request.getParameter("maNCC"));
+		NhaCungCap nhaCungCap = (NhaCungCap) query.uniqueResult();
+		
+		hql = "FROM CungCap where maNCC.maNCC = :NCC";
+		query = session.createQuery(hql);
+		query.setParameter("NCC",request.getParameter("maNCC"));
+		List<CungCap> list2 =query.list(); 
+		
+		model.addAttribute("DSCC",list2);
 		model.addAttribute("listSP",listSP);
 		model.addAttribute("listSL",listSL);
 		model.addAttribute("doLon",listSL.size()-1);
-		model.addAttribute("NCChientai",NCChientai);
-		model.addAttribute("ngayDat",ngayHienTai);
+		model.addAttribute("NCC",nhaCungCap);
+		model.addAttribute("ngayDat",request.getParameter("ngayDat"));
 		model.addAttribute("maDDH",request.getParameter("maDDH"));
 		model.addAttribute("nhanVien",nhanvien);
 		return "staff/taodondathang";
@@ -657,7 +766,11 @@ public class StaffController {
 	@RequestMapping("xemphieunhap")
 	public String xemPhieuNhap(Model model, HttpServletRequest request)
 	{
-	
+		HttpSession s = request.getSession();
+		if ( s.getAttribute("user") == null)
+		{
+			return "redirect:dangnhap.htm";
+		}
 		Session session = factory.getCurrentSession();
 		String hql = "FROM PhieuNhap WHERE soPhieuNhap = :soPhieuNhap";
 	    Query query = session.createQuery(hql);
@@ -687,6 +800,10 @@ public class StaffController {
 				HttpSession s
 				)
 		{
+			if ( s.getAttribute("user") == null)
+			{
+				return "redirect:dangnhap.htm";
+			}
 			NhanVien nhanvien = (NhanVien) s.getAttribute("user");
 			Session session = factory.getCurrentSession();
 			String hql = "From DonDatHang where maDDH = :maDDH";
@@ -713,7 +830,9 @@ public class StaffController {
 				session.save(phieuNhap);
 				for (SanPham sp : listSPNhap)
 				{
+				
 					sp.setSoPhieuNhap(phieuNhap);
+				
 					session.save(sp);
 					//SanPham sp1 = (SanPham) session1.merge(sp);
 				}
@@ -754,6 +873,10 @@ public class StaffController {
 				@RequestParam(value = "nhanMay", required = false) String nhanMay,
 				@RequestParam(value = "traMay", required = false) String traMay)
 		{
+			if ( s.getAttribute("user") == null)
+			{
+				return "redirect:dangnhap.htm";
+			}
 			NhanVien nhanvien = (NhanVien) s.getAttribute("user");
 			Session session = factory.getCurrentSession();
 			String hql ;
@@ -775,19 +898,20 @@ public class StaffController {
 				else 
 				{
 					 
-				        calendar.setTime(spNhan.get(0).getIdGH().getNgayTao());
+				        calendar.setTime(spNhan.get(0).getPhieuBaoHanh().getNgayBatDau());
 				        calendar.add(Calendar.DAY_OF_MONTH, 30);
 				        Date dayreturns = new Date(calendar.getTime().getTime());
 					model.addAttribute("SanPhamTim",spNhan.get(0));
 					model.addAttribute("seri",request.getParameter("seri"));
 					 model.addAttribute("NgayHientai",currentDate);
 					 model.addAttribute("ThongBao"," ");
+					 System.out.println(dayreturns);
 					if(currentDate.compareTo(spNhan.get(0).getPhieuBaoHanh().getNgayKetThuc()) > 0 )
 					{
 						model.addAttribute("HetHan","HetHan");
 					}
-					 if (spNhan.get(0).getIdGH().getNgayTao().compareTo(currentDate) <= 0 && currentDate.compareTo(dayreturns) <= 0)
-					 {
+					 if (spNhan.get(0).getPhieuBaoHanh().getNgayBatDau().compareTo(currentDate) <= 0 && currentDate.compareTo(dayreturns) <= 0 &&spNhan.get(0).getSoPhieuTra() == null)
+					 { 
 						 model.addAttribute("DoiTra", "DuocTra");
 					 }
 				}
@@ -840,8 +964,9 @@ public class StaffController {
 				spNhan.setDaBan(2);
 				PhieuTra pt = new PhieuTra(currentDate,spNhan.getIdGH().getHoaDon(),nhanvien);
 				session.save(pt);
+				
 				spNhan.setSoPhieuTra(pt);
-				session.update(spNhan);
+				session.save(spNhan);
 				model.addAttribute("SanPhamTim",spNhan);
 				model.addAttribute("seri",request.getParameter("seri"));
 				 model.addAttribute("NgayHientai",currentDate);
@@ -860,6 +985,10 @@ public class StaffController {
 			@RequestParam(defaultValue = "") String loaiBtn,
 			HttpSession s)
 	{
+		if ( s.getAttribute("user") == null)
+		{
+			return "redirect:dangnhap.htm";
+		}
 		NhanVien nhanvien = (NhanVien) s.getAttribute("user");
 		Session session = factory.getCurrentSession();
 		String hql ;
@@ -893,6 +1022,10 @@ public class StaffController {
 			@RequestParam(defaultValue = "") String loaiBtn,
 			HttpSession s)
 	{
+		if ( s.getAttribute("user") == null)
+		{
+			return "redirect:dangnhap.htm";
+		}
 		Session session = factory.getCurrentSession();
 		String hql ;
 		Query query ;
@@ -906,8 +1039,13 @@ public class StaffController {
 	}
 	
 	@RequestMapping("duyetgiohang")
-	public String danhSachGioHangChuaDuyet(Model model)
+	public String danhSachGioHangChuaDuyet(Model model,HttpSession s)
 	{
+		
+		if ( s.getAttribute("user") == null)
+		{
+			return "redirect:dangnhap.htm";
+		}
 		Session session = factory.getCurrentSession();
 		String hql ;
 		Query query ;
@@ -920,6 +1058,10 @@ public class StaffController {
 	@RequestMapping("chitietGHchuaduyet")
 	public String chiTietGioHangChuaDuyet(Model model,HttpServletRequest request ,HttpSession s)
 	{
+		if ( s.getAttribute("user") == null)
+		{
+			return "redirect:dangnhap.htm";
+		}
 		NhanVien nhanvien = (NhanVien) s.getAttribute("user");
 		Session session = factory.getCurrentSession();
 		String hql;
@@ -928,7 +1070,12 @@ public class StaffController {
 		query = session.createQuery(hql);
 		query.setParameter("idGH", Integer.parseInt(request.getParameter("idGH")) );
 		List<SanPham> listSPduyet = query.list();
-		
+		for (SanPham sPham : listSPduyet)
+		{
+			PhieuBaoHanh bHanh = new PhieuBaoHanh(null,null,sPham,nhanvien);
+			
+			session.save(bHanh);
+		}
 		List<SanPham> listSPtemp = new ArrayList<>();
 		List<Integer> listSLtemp = new ArrayList<>();
 
@@ -972,6 +1119,10 @@ public class StaffController {
 	}
 	@RequestMapping("duyet")
 	public String duyet(Model model , HttpServletRequest request ,HttpSession s) {
+		if ( s.getAttribute("user") == null)
+		{
+			return "redirect:dangnhap.htm";
+		}
 		NhanVien nhanvien = (NhanVien) s.getAttribute("user");
 		Session session = factory.getCurrentSession();
 		String hql  = "FROM GioHang Where idGH = :idGH";
@@ -987,151 +1138,70 @@ public class StaffController {
 		List<SanPham> listSPduyet = query.list();
 		for (SanPham sPham : listSPduyet)
 		{
+			hql = "From PhieuBaoHanh WHERE seri.seri = :seri";
+			query = session.createQuery(hql);
+			query.setParameter("seri" ,sPham.getSeri() );
+			PhieuBaoHanh bHanh  = (PhieuBaoHanh) query.uniqueResult();
 			Calendar calendar = Calendar.getInstance();
 			Date currentDate = new Date(calendar.getTime().getTime());
-			calendar.add(Calendar.DAY_OF_YEAR, 2);
-			Date dateBH = new Date(calendar.getTime().getTime());
-			PhieuBaoHanh bHanh = new PhieuBaoHanh(currentDate,dateBH,sPham,nhanvien);
+			calendar.setTime(currentDate);
+			calendar.add(Calendar.YEAR, 2);
+			java.util.Date futureDate = calendar.getTime();
+	        Date dateBH = new Date(futureDate.getTime());
+			bHanh.setNgayBatDau(currentDate);
+			bHanh.setNgayKetThuc(dateBH);
+			bHanh.getSeri().setPhieuBaoHanh(bHanh);
 			session.save(bHanh);
 			sPham.setPhieuBaoHanh(bHanh);
-			session.save(sPham);
+			session.update(sPham);
 		}
+		HoaDon hd = new HoaDon(sinhMaSoThue(), gioHang);
+		Integer check = saveHoaDon(hd,gioHang);
+
 		return "redirect:duyetgiohang.htm";
 	}
-//	@RequestMapping("taophieunhap")
-//	public String taoPhieuNhap(Model model , HttpServletRequest request,
-//			@RequestParam(defaultValue = "") String loaiBtn,
-//			HttpSession s)
-//			
-//	{
-//		
-//		
-//		NhanVien nhanvien = (NhanVien) s.getAttribute("user");
-//
-//		
-//		DonDatHang donDatHang =getDDHtest(request.getParameter("idDDH"));
-//		
-//		int soPhieuNhap = getSiseListSPN() +1;
-//		Calendar calendar = Calendar.getInstance();
-//		Date currentDate = new Date(calendar.getTime().getTime());
-//		 
-//		int sizeSP = getSiseListSP();
-//		
-//		PhieuNhap phieuNhap = new PhieuNhap();
-//		phieuNhap.setNgayLapPN(currentDate);
-//		phieuNhap.setMaDDH(donDatHang);
-//		phieuNhap.setMaNV(nhanvien);
-//		
-//		if (loaiBtn.equals("luu"))
-//		{
-//			int test = SaveTest(phieuNhap);
-//			System.out.println(test);
-//			
-//			return "redirect:dondathang.htm";
-//		}
-//		
-//		
-//		if (loaiBtn.equals("huy"))
-//		{
-//			listSPNhap.clear();
-//			return "redirect:dondathang.htm";
-//		}
-//		
-//		for (CTDonDatHang ct : donDatHang.getCtDonDatHang())
-//		{
-//			for (int i= 0 ;i< ct.getSoLuong();i++)
-//			{
-//				sizeSP++;
-//				String temp = Integer.toString(sizeSP);
-//				 
-//				String seri = temp + TaoSeri(ct.getMaLoai().getTenSP());
-//				SanPham newSP = new SanPham(seri,ct.getMaLoai(),null,null,null,null);
-//				listSPNhap.add(newSP);
-//			}
-//		}
-//		System.out.println(listSPNhap.size());
-//			model.addAttribute("soPhieuNhap" ,soPhieuNhap);
-//			 model.addAttribute("DDH",donDatHang);
-//			 model.addAttribute("NgayNhap",currentDate);
-//			 model.addAttribute("listSPNhap",listSPNhap);
-//			 model.addAttribute("NhanVien", nhanvien);
-//			 return "staff/taophieunhap";
-//		
-//	}	
-//	private DonDatHang getDDHtest(String maDHH) {
-//		Session session = factory.getCurrentSession();
-//		String hql = "From DonDatHang where maDDH = :maDDH";
-//		Query query = session.createQuery(hql);
-//		 query.setParameter("maDDH", maDHH );
-//		DonDatHang donDatHang =(DonDatHang) query.list().get(0);
-//		return donDatHang;
-//	}
-//	private int getSiseListSP() {
-//		Session session = factory.getCurrentSession();
-//		String hql = "From SanPham";
-//		Query  query = session.createQuery(hql);
-//		List<SanPham> listPN = query.list(); 
-//		return listPN.size();
-//	}
-//	private int getSiseListSPN() {
-//		Session session = factory.getCurrentSession();
-//		String hql = "From PhieuNhap";
-//		Query  query = session.createQuery(hql);
-//		List<PhieuNhap> listPN = query.list(); 
-//		return listPN.size();
-//	}
-//	private int SaveTest(PhieuNhap pn) {
-//		Session session1 = factory.openSession();
-//		Transaction t = session1.beginTransaction();
-//		try {
-//			session1.save(pn);
-//			t.commit();	
-//		}
-//		catch (Exception e) {
-//			t.rollback();
-//			System.out.println("try 1" + e.getMessage());
-//			return 1;
-//			
-//		}finally {		
-//			session1.close();
-//			}
-//		int test = saveSP(pn);
-//		System.out.println(test);
-//		return 0;
-//		
-//	}
-//	private int saveSP(PhieuNhap pn) {
-//		
-//		for (SanPham sp : listSPNhap)
-//		{
-//			Session session1 = factory.openSession();
-//			Transaction t = session1.beginTransaction();
-//		try {
-//			
-//				sp.setSoPhieuNhap(pn);
-//				System.out.println(sp);
-//				//SanPham sp1 = (SanPham) session1.merge(sp);
-//				session1.save(sp);
-//				t.commit();
-//			
-//			//listSPNhap.clear();
-//			
-//			
-//		}
-//		catch (Exception e) {
-//			t.rollback();
-//			System.out.println(e.getMessage());
-//			return 1;
-//		}
-//		
-//		finally {
-//			
-//			session1.close();
-//		}
-//		}
-//		
-//		return 0;
-//	}
+	private Integer saveHoaDon(HoaDon x, GioHang gh) {
+			Session ss = factory.openSession();
+			Transaction t = ss.beginTransaction();
+			try {
+				ss.save(x);
+				t.commit();
+			}catch(Exception e) {
+				t.rollback();
+				return 1;
+			} finally {
+				ss.close();
+			}
+			gh.setHoaDon(x);
+			ss = factory.openSession();
+			t = ss.beginTransaction();
+			GioHang gh1 = (GioHang) ss.merge(gh);
+			try {
+				ss.update(gh1);
+				t.commit();
+			}catch(Exception e) {
+				t.rollback();
+				return 1;
+			} finally {
+				ss.close();
+			}
+			return 0;
+		}
+		private String sinhMaSoThue() {
+			Session session = factory.getCurrentSession();
+			String hql = "FROM HoaDon";
+			Query query = session.createQuery(hql);
+			List<HoaDon> list = query.list();
+			int n = list.size() + 1;
+			String ma = Integer.toString(n);
+			String result ="MST";
+			for (int i=ma.length() ; i < 11;i++ ) {
+				result += "0";
+			}
+			result += ma;
+			return result;
+		}
+
 }
 
 

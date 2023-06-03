@@ -78,6 +78,7 @@
 				style="text-align: center;">
                     <thead>
                         <tr>
+                        <th>Hình Ảnh</th>
                         	<th width="200">Seri Sản Phẩm</th>
                             <th width="200">Mã Loại Sản Phẩm</th>
                             <th >Tên Sản Phẩm</th>
@@ -86,6 +87,13 @@
                     <tbody>
                     <c:forEach var="sp" items="${listSPNhap}">
 					<tr>
+						 <td class="col-md-1">
+                                 <div class="card mb-2 product-wap rounded-0">
+                                 <div class="card rounded-0">
+                                <img class="card-img rounded-0 img-fluid" src="<c:url value ='/resource/images/${sp.maLoai.getAnh()}'/>">
+                                	</div>
+                                	</div>
+                          </td> 
 						<td>${sp.seri }</td>
 						<td>${sp.maLoai.maLoai }</td>
 						<td>${sp.maLoai.tenSP}</td>
