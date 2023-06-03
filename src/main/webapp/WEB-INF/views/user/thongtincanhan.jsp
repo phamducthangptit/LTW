@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
@@ -32,7 +32,7 @@
 </style>
 </head>
 <body>
-	<%@include file="header.jsp"%>
+	<%@include file="../sp/headerKH.jsp"%>
 	<div class="container mt-4">
 		<form action="luuthongtinuser.htm" method="post">
 			<div class="row justify-content-center">
@@ -75,9 +75,7 @@
 					</div>
 
 					<div class="mb-3">
-						<label for="pass" class="form-label">Mật khẩu</label> <input
-							type="password" class="form-control" name="pass"
-							value="${khachHang.pass}" required="required">
+					<a href="doimatkhauuser.htm">Đổi mật khẩu</a>
 					</div>
 					<div class="button-container">
 						<button type="submit" class="btn btn-success mb-4"
@@ -88,6 +86,6 @@
 			</div>
 		</form>
 	</div>
-	<%@include file="footer.jsp"%>
+	<%@include file="../sp/footerKH.jsp"%>
 </body>
 </html>

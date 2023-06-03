@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <!-- Start Footer -->
 <footer class="bg-dark" id="tempaltemo_footer" >
 	<div class="container">
@@ -17,6 +19,10 @@
 				</ul>
 			</div>
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> main
 		</div>
 
 		<div class="row text-light mb-4">

@@ -59,10 +59,11 @@
 	background-color: #45a049;
 }
 </style>
+<%@include file ="headerNV.jsp" %>
 </head>
 
 <body>
-<%@include file ="headerNV.jsp" %>
+
 	<section class="bg-light">
 	
 		<h2 style="text-align: center;" ${thang == null ? '' : 'hidden' }>Doanh thu tháng</h2>

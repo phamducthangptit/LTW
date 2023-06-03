@@ -31,7 +31,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+<<<<<<< HEAD
 
+=======
+import ptithcm.model.BinhLuan;
+>>>>>>> main
 import ptithcm.model.CTDotGiamGia;
 import ptithcm.model.DoanhThuTheoNgay;
 import ptithcm.model.DotGiamGia;
@@ -646,5 +650,42 @@ public class Staff1Controller {
 		}
 		return "staff/doanhthutheothang";
 	}
+	// xu li phan binh luan
+	
+		@RequestMapping(value = "/home/chinhsuabinhluan", method = RequestMethod.GET)
+		public String showChinhSuaBL(Model model,
+				@RequestParam("id") String id, @RequestParam("maLoai") String maLoai) {
+			model.addAttribute("idBL", id);
+			return "redirect:/home/shop-single.htm?lsp=" + maLoai;
+		}
+		
+		@RequestMapping(value = "/home/updatebinhluan", method = RequestMethod.POST)
+		public String updateBinhLuan(HttpServletRequest request, Model model) {
+			String noiDung = request.getParameter("binhLuan");
+			String id = request.getParameter("id");
+			String maLoai = request.getParameter("maLoai");
+			Session session = factory.getCurrentSession();
+			BinhLuan binhLuan = (BinhLuan)session.get(BinhLuan.class, Integer.parseInt(id));
+			binhLuan.setMoTa(noiDung.trim());
+			session.merge(binhLuan);
+			model.addAttribute("idBL", 0); // để readonly bình luận
+			return "redirect:/home/shop-single.htm?lsp=" + maLoai;
+		}
+		
+		@RequestMapping(value = "/home/thembinhluan", method = RequestMethod.POST)
+		public String themBinhLuan(HttpServletRequest request) {
+			Session session = factory.getCurrentSession();
+			String maLoai = request.getParameter("maLoai");
+			LoaiSanPham loaiSP = (LoaiSanPham) session.get(LoaiSanPham.class, maLoai);
+			String khachHangEmail = request.getParameter("email");
+			KhachHang khachHang = (KhachHang) session.get(KhachHang.class, khachHangEmail);
+			String noiDung = request.getParameter("binhLuan");
+			Date ngayBL = new Date(System.currentTimeMillis()) ;
+			String diem = request.getParameter("star");
+			BinhLuan binhLuan = new BinhLuan(Integer.parseInt(diem), noiDung, ngayBL, khachHang, loaiSP);
+			session.save(binhLuan);
+			return "redirect:/home/shop-single.htm?lsp=" + maLoai;
+		}
+		
 
 }

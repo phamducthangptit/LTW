@@ -1,15 +1,17 @@
- <%@ page language="java" contentType="text/html; charset=utf-8"
+ <%@page import="ptithcm.model.NhanVien"%>
+<%@page import="ptithcm.model.KhachHang"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
- 
+    
  <nav class="navbar navbar-expand-lg bg-dark navbar-light d-none d-lg-block" id="templatemo_nav_top">
         <div class="container text-light">
             <div class="w-100 d-flex justify-content-between">
                 <div>
                     <i class="fa fa-envelope mx-2"></i>
                     <a class="navbar-sm-brand text-light text-decoration-none"
-                        href="mailto:info@company.com">12Shop@company.com</a>
+                        href="mailto:info@company.com">info@company.com</a>
                     <i class="fa fa-phone mx-2"></i>
-                    <a class="navbar-sm-brand text-light text-decoration-none" href="tel:010-020-0340">028 3730 6600</a>
+                    <a class="navbar-sm-brand text-light text-decoration-none" href="tel:010-020-0340">010-020-0340</a>
                 </div>
                 <div>
                     <a class="text-light" href="https://fb.com/templatemo" target="_blank" rel="sponsored"><i
@@ -32,7 +34,7 @@
         <div class="container d-flex justify-content-between align-items-center">
 
             <a class="navbar-brand text-success logo h1 align-self-center" href="/BanLaptop/home.htm">
-                12Shop
+                Shop
             </a>
 
             <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse"
@@ -49,11 +51,10 @@
                             <a class="nav-link" href="/BanLaptop/home/index.htm">Trang chủ</a>
                         </li>
                         <li class="nav-item">
-                        	<a class="nav-link" href="/BanLaptop/home/shop.htm">Cửa hàng</a>
-                            
+                            <a class="nav-link" href="about.htm">About</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/BanLaptop/home/about.htm">About</a>
+                            <a class="nav-link" href="/BanLaptop/home/shop.htm">Cửa hàng</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="contact.html">Contact</a>
@@ -78,9 +79,41 @@
                         <span
                             class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">${SLsanPham}</span>
                     </a>
-                    <a class="nav-icon position-relative text-decoration-none" href="/BanLaptop/dangnhap.htm">
-                        <i class="fa fa-fw fa-user text-dark mr-3"></i>
-                    </a>
+				<%
+					String hr = "";
+					Object ob = session.getAttribute("user");
+					KhachHang kh = new KhachHang();
+					NhanVien nv = new NhanVien();
+					String emailTmp = "non";
+					try{
+						kh = (KhachHang) ob;
+						hr = "thongtincanhanuser.htm";
+						emailTmp = kh.getEmail();
+					}
+					catch (Exception ex){
+						nv = (NhanVien) ob;
+						hr = "thongtincanhannv.htm";
+					}
+					if (ob == null) {
+						hr = "dangnhap.htm";
+					}
+				%>
+				<a class="nav-icon position-relative text-decoration-none"
+					href="<%=request.getContextPath()%>/<%=hr%>"> <i class="fa fa-fw fa-user text-dark mr-3"></i>
+					<span
+					class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark"></span>
+				</a>
+				<%
+				if (kh != null) {
+				%>
+				<a class="nav-icon position-relative text-decoration-none"
+					href="<%=request.getContextPath()%>/dangxuat.htm"> <i
+					class="fa fa-fw fa-sign-out-alt text-dark mr-3"></i> <span
+					class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark"></span>
+				</a>
+				<%
+				}
+				%>
                 </div>
             </div>
 

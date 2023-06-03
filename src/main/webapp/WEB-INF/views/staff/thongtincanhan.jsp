@@ -30,9 +30,9 @@
 	justify-content: center;
 }
 </style>
+<%@include file="headerNV.jsp"%>
 </head>
 <body>
-	<%-- <%@include file="header.jsp"%> --%>
 	<div class="container mt-4">
 		<form action="luuthongtinnv.htm" method="post">
 			<div class="row justify-content-center">
