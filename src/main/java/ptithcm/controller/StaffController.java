@@ -382,6 +382,7 @@ public class StaffController {
 			@RequestParam(value = "luuDDH", required = false) String luuDDH,
 			@RequestParam(value = "huy", required = false) String huy)
 	{
+		
 		HttpSession s = request.getSession();
 		if ( s.getAttribute("user") == null)
 		{
@@ -424,7 +425,7 @@ public class StaffController {
 			    Integer SL = Integer.parseInt(request.getParameter("soLuong"));
 			    listSL.add(SL);
 			}
-			
+			themDDH = null;
 		}
 		else 
 		{
@@ -566,6 +567,7 @@ public class StaffController {
 				HttpSession s
 				)
 		{
+			listSPNhap.clear();
 			if ( s.getAttribute("user") == null)
 			{
 				return "redirect:dangnhap.htm";
