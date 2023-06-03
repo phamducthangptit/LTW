@@ -38,7 +38,13 @@ public class HoaDon {
 	}
 
 	public HoaDon( String maSoThue, GioHang idGH) {
+<<<<<<< HEAD
+
 		this.maSoThue = maSoThue;
+
+=======
+		this.maSoThue = maSoThue;
+>>>>>>> 802fac6346a19e2308fb0f43ca4516cc2150591c
 		this.idGH = idGH;
 	}
 

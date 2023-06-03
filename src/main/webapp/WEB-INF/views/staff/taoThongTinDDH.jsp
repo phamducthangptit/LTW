@@ -54,7 +54,8 @@
     <main>
    		
     	<section class="bg-light">
-    	<form  action="taotabledondathang.htm" method="POST">
+    	<form  action="taodondathang.htm" method="POST">
+    	<a class="btn btn-success btn-lg px-3 mt-1"href="dondathang.htm"><i class="fa fa-angle-double-left" aria-hidden="true"></i>Về Đơn Đặt Hàng</a>
        <div class = "container py-5">
        
        <div class = "row">
@@ -72,25 +73,29 @@
        	</li>
        	<li class = "pb-3" > Mã Đơn : <input type = "text" style="width: 100px;border :none"id ="maDDH" name = "maDDH" value ="${maDDH }" readonly="readonly"></li>
        	<li class = "pb-3"> Ngày Đặt : <input type="date" style="width: 150px;border :none" id="ngayDat" name="ngayDat" value="${ngayDat}" placeholder="dd/MM/yyyy" pattern="\d{2}/\d{2}/\d{4}" readonly="readonly"></li>
-       	<li class = "pb-3"> Nhà Cung Cấp : <input type = "text" style="width: 100px;border :none"id ="NCC" name = "NCC" value ="${NCC.maNCC }" readonly="readonly">
-       	<p>- ${NCC.tenNCC }</li>
+       	<li class = "pb-3"> Nhà Cung Cấp : <select type="text" id="NCC" name="NCC" style="padding: 10px; border: 1px solid #ccc; background-color: #fff; color: #333; cursor: pointer;">
+       		
+       		<c:forEach var="NCC" items="${DSNCC}">
+    				<option value="${NCC.maNCC}">${NCC.maNCC} - ${NCC.tenNCC}</option>
+			</c:forEach>
 
-       	 <button type="submit" class="btn btn-success btn-lg px-3" name ="luuDDH" value = "luuDDH">Lưu Đơn</button>
- 		<button type="submit" class="btn btn-success btn-lg px-3" name ="huy" value = "huy">Tạo Lại</button>
+       		</select>
+       		
+       	</li>
+
+       	 <button type="submit" class="btn btn-success btn-lg px-3">Tạo Đơn Đặt Hàng</button>
  
        </ul>
-           	 <h6 style="color: red; margin-left: 15px">${ThongBao }</h6>
        </div>
        </div>
        </div>
-       
- 	 <div class = "col-lg-9">
+       <%-- 
+       <div class = "col-lg-9">
       
        <table  class="table table-light table-striped table-hover bordered-dark"
 				style="text-align: center;">
       	 <thead>
                         <tr>
-                        	
                             <th >Sản Phẩm</th>
                             <th >Số lượng</th>
                             <th ></th>
@@ -100,9 +105,9 @@
         		<tbody>
                     
 					<tr>
-						<td><select type="text" id="sanPham" name="sanPham" style="padding: 10px; border: 1px solid #ccc; background-color: #fff; color: #333; cursor: pointer;">
-       				<c:forEach var="sp" items="${DSCC}">
-       				 <option value="${sp.maLoai.maLoai}">${sp.maLoai.maLoai} - ${sp.maLoai.tenSP}</option>
+						<td><select type="text" id="sanPham" name="sanPham">
+       				<c:forEach var="sp" items="${DSSP}">
+       				 <option value="${sp.maLoai}">${sp.maLoai} - ${sp.tenSP}</option>
        				</c:forEach>
        				</select>
        				</td>
@@ -121,38 +126,30 @@
 				style="text-align: center;">
     		 <thead>
                         <tr>
-                        <th>Hình Ảnh</th>
                             <th>Sản Phẩm</th>
                             <th>Số lượng</th>
-                            <th width = "50px"></th>
+                            <th></th>
                           </tr>
                     </thead>
                     <tbody>
                     <c:if test="${not empty listSP}">
                     <c:forEach var="i"  begin="0" end ="${doLon}">
 					<tr>
-					 <td class="col-md-1">
-                                 <div class="card mb-2 product-wap rounded-0">
-                                 <div class="card rounded-0">
-                                <img class="card-img rounded-0 img-fluid" src="<c:url value ='/resource/images/${listSP.get(i).getAnh()}'/>">
-                                	</div>
-                                	</div>
-                       </td> 
 						<td>${listSP.get(i).maLoai} - ${listSP.get(i).tenSP}</td>
 						
 						<td>${listSL.get(i)}</td>
-						<td width = "50px"><a href="XoaSPtabledondathang.htm?maLoai=${listSP.get(i).maLoai}&maNCC=${NCC.maNCC}&ngayDat=${ngayDat}&maDDH=${maDDH}"><i class="fa fa-trash" style = "color : black" aria-hidden="true"></i></a></td>
+						<td><a href="XoaSPtabledondathang.htm?maLoai=${listSP.get(i).maLoai}"><i class="fa fa-trash" style = "color : black" aria-hidden="true"></i></a></td>
 					</tr>
 					</c:forEach>
 					</c:if>
                     </tbody> 
-    </table>
+    </table> --%>
 
        </div>
-        
+       
        </div>
      
-       </div>
+     <!--   </div> -->
           </form>
     </section>
 

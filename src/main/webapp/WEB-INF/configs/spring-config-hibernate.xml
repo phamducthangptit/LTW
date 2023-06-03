@@ -23,7 +23,7 @@
 
 			
 			p:username="sa"
-			p:password="123456">
+			p:password="12345678">
 	</bean>
 	
 	<!-- Cấu hình Hibernate -->
