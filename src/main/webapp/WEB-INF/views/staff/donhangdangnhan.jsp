@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Đơn Đặt Hàng</title>
+<title>Giỏ Hàng Nhận Giao</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -32,7 +32,7 @@
 </head>
 
 <body>
-    <%@include file="headerNV.jsp"%>
+    <%@include file="headerShipper.jsp"%>
     <!-- Modal -->
     <div class="modal fade bg-white" id="templatemo_search" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
@@ -53,76 +53,48 @@
 
     <!-- Start Content Page -->
     <main>
-   
-          <section class = "bg-light">
+        <section class = "bg-light">
         	<div class = "card-body">
-    
             <div class = "container py-5">
-                <h2>Đơn Đặt Hàng</h2>
-               <h6 style="color: red; right: 15px ; text-align: right">${ThongBao}</h6>
-            <h3><a href="taoThongTinDDH.htm" class="btn btn-success btn-lg px-3"><i class="fa fa-plus-circle" aria-hidden="true"></i>  Tạo Đơn Đặt Hàng Mới</a>
-             <a href="danhsachnhacungcap.htm" class="btn btn-success btn-lg px-3"><i class="fa fa-building" aria-hidden="true"></i> Danh Sách Nhà Cung Cấp</a>
-            </h3>
-            
-            <p>   </p>
-            <form class="employee-list" action="staff/dondathang.htm" method="POST">
-               <table class="table table-light table-striped table-hover bordered-dark"
+                <h2>Danh sách Giỏ Hàng Đang Nhận</h2>
+               <br>  <br>  <br>
+               
+                <table class="table table-light table-striped table-hover bordered-dark"
 				style="text-align: center;">
                   <thead>
                     <tr>
-                      <th>Mã DDH</th>
-                      <th>Ngày Đặt</th>
-                      <th>Nhà Cung Cấp</th>
-                      <th>Nhân Viên Đặt</th>
-                    
-                      <th>Phiếu Nhập</th>
-                      <th></th>
+                      <th>ID Giỏ Hàng</th>
+                      <th>Ngày Tạo</th>
+                      <th>Email Khách Hàng</th>
+                      <th>SĐT Khách Hàng</th>
                       <th></th>
                     </tr>
                   </thead>
                   <tbody>
-                 <c:if test = "${DSDDH.size() == 0}">
+                  <c:if test = "${listGH.size() == 0}">
                   <tr>
-                  <td colspan = "5">Hiện Chưa Có Đơn Đặt Hàng Nào !</td>
+                  <td colspan = "5">Hiện Không Còn Đơn Hàng !</td>
                   </tr>
                   </c:if>
-                    <c:forEach var="ddh" items="${DSDDH}">
-                    
+                  <c:if test = "${listGH.size() != 0}">
+                    <c:forEach var="GH" items="${listGH}">
 					<tr>
-					 
-						<td>${ddh.maDDH }</td>
-						<td>${ddh.ngayDat }</td>
-						<td>${ddh.getMaNCC().maNCC} - ${ddh.getMaNCC().tenNCC}</td>
-						<td>${ddh.maNV.maNV } - ${ddh.maNV.ho } ${ddh.maNV.ten }</td>
-						
-						<c:if test = "${ddh.soPhieuNhap == null}">
-						  <td class="text-center align-middle"><div  id="templatemo_main_nav">
-						  <a class = "nav-link" href="taophieunhap.htm?idDDH=${ddh.maDDH}">Tạo Phiếu Nhập</a>
+						<td>${GH.idGH }</td>
+						<td>${GH.ngayTao }</td>
+						<td>${GH.email.email }</td>
+						<td>${GH.email.sdt }</td>
+					    <td class="text-center align-middle"><div  id="templatemo_main_nav">
+						 <a class = "nav-link" href="chitietGHdangnhan.htm?idGH=${GH.idGH}">Xem Chi Tiết</a>
 						  </div>
-						  </td>
-						  </c:if>
-						  <c:if test = "${ddh.soPhieuNhap != null}">
-					  	<td class="text-center align-middle"><div id="templatemo_main_nav">
-					  	<a class = "nav-link" href="xemphieunhap.htm?idPN=${ddh.soPhieuNhap.soPhieuNhap}">Xem Phiếu Nhập</a>
-					  	</div>
-					  	</td>
-					  	</c:if>
-					  	
-					  	<td>
-					  	<a class = "nav-link"  href="chitietdondathang.htm?maDDH=${ddh.maDDH}"><i class="fa fa-bars" style = "color : black" aria-hidden="true"></i></a>
-					  	
-					  	</td>
-					  		
-					  	<td><a class = "nav-link" href="detetedondathang.htm?idDDH=${ddh.maDDH}"><i class="fa fa-trash" style = "color : black" aria-hidden="true"></i></a></td>
-					
+						</td>
 					</tr>
-					
 				</c:forEach>
+				</c:if>
                   </tbody>
                 </table>
-   				 </form>
+
               </div>
-             </div>
+              </div>
              </section>
         </main>
 		

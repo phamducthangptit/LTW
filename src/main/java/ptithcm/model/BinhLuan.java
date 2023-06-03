@@ -45,7 +45,8 @@ public class BinhLuan {
 	public BinhLuan() {
 	}
 
-	public BinhLuan(int diem, String moTa, Date ngay, KhachHang email, LoaiSanPham maLoai) {
+	public BinhLuan(int idBL, int diem, String moTa, Date ngay, KhachHang email, LoaiSanPham maLoai) {
+		this.idBL = idBL;
 		this.diem = diem;
 		this.moTa = moTa;
 		this.ngay = ngay;

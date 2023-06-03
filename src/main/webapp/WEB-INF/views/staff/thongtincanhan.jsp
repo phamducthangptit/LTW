@@ -32,9 +32,8 @@
 </style>
 </head>
 <body>
-	<%@include file="headerNV.jsp"%>
-	<section class="bg-light">
-	<div class="container">
+	<%-- <%@include file="header.jsp"%> --%>
+	<div class="container mt-4">
 		<form action="luuthongtinnv.htm" method="post">
 			<div class="row justify-content-center">
 				<div class="col-sm-6">
@@ -78,7 +77,9 @@
 							value="${nhanVien.email}">
 					</div>
 					<div class="mb-3">
-					<a href="doimatkhaunv.htm">Đổi mật khẩu</a>
+						<label for="pass" class="form-label">Mật khẩu</label> <input
+							type="password" class="form-control" name="pass"
+							value="${nhanVien.password}" required="required">
 					</div>
 					<div class="button-container">
 						<button type="submit" class="btn btn-success mb-4"
@@ -89,7 +90,6 @@
 			</div>
 		</form>
 	</div>
-	</section>
-	<%@include file="footerQL.jsp"%> 
+	<%-- <%@include file="footer.jsp"%> --%>
 </body>
 </html>

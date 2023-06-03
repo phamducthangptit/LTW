@@ -34,8 +34,6 @@
 </head>
 
 <body>
-<%@include file="headerNV.jsp"%>
-<section class="bg-light">
 	<h2 style="text-align: center;">Thêm nhà cung cấp</h2>
 		<div class="container mt-4">
 		<form action="themnhacungcap.htm" method="post">
@@ -71,7 +69,5 @@
 			</div>
 		</form>
 	</div>
-</section>
-<%@include file="footerQL.jsp" %>	
 </body>
 </html>

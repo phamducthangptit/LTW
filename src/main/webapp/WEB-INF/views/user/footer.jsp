@@ -1,5 +1,5 @@
 <!-- Start Footer -->
-<footer class="bg-dark" id="tempaltemo_footer" >
+<footer class="bg-dark" id="tempaltemo_footer">
 	<div class="container">
 		<div class="row">
 
@@ -18,32 +18,32 @@
 				</ul>
 			</div>
 
-				<!-- <div class="col-md-4 pt-5">
-					<h2 class="h2 text-light border-bottom pb-3 border-light">Products</h2>
-					<ul class="list-unstyled text-light footer-link-list">
-						<li><a class="text-decoration-none" href="#">Luxury</a></li>
-						<li><a class="text-decoration-none" href="#">Sport Wear</a></li>
-						<li><a class="text-decoration-none" href="#">Men's Shoes</a></li>
-						<li><a class="text-decoration-none" href="#">Women's Shoes</a></li>
-						<li><a class="text-decoration-none" href="#">Popular Dress</a></li>
-						<li><a class="text-decoration-none" href="#">Gym
-								Accessories</a></li>
-						<li><a class="text-decoration-none" href="#">Sport Shoes</a></li>
-					</ul>
-				</div> -->
+			<div class="col-md-4 pt-5">
+				<h2 class="h2 text-light border-bottom pb-3 border-light">Products</h2>
+				<ul class="list-unstyled text-light footer-link-list">
+					<li><a class="text-decoration-none" href="#">Luxury</a></li>
+					<li><a class="text-decoration-none" href="#">Sport Wear</a></li>
+					<li><a class="text-decoration-none" href="#">Men's Shoes</a></li>
+					<li><a class="text-decoration-none" href="#">Women's Shoes</a></li>
+					<li><a class="text-decoration-none" href="#">Popular Dress</a></li>
+					<li><a class="text-decoration-none" href="#">Gym
+							Accessories</a></li>
+					<li><a class="text-decoration-none" href="#">Sport Shoes</a></li>
+				</ul>
+			</div>
 
-			<!-- <div class="col-md-4 pt-5">
+			<div class="col-md-4 pt-5">
 				<h2 class="h2 text-light border-bottom pb-3 border-light">Further
 					Info</h2>
 				<ul class="list-unstyled text-light footer-link-list">
-					<li><a class="text-decoration-none" href="danhsachnhanvien.htm">Quản Lý Nhân Viên</a></li>
-					<li><a class="text-decoration-none" href="#">Quản Lý Nhập Hàng</a></li>
+					<li><a class="text-decoration-none" href="#">Home</a></li>
+					<li><a class="text-decoration-none" href="#">About Us</a></li>
 					<li><a class="text-decoration-none" href="#">Shop
 							Locations</a></li>
-					<li><a class="text-decoration-none" href="#">táo</a></li>
+					<li><a class="text-decoration-none" href="#">FAQs</a></li>
 					<li><a class="text-decoration-none" href="#">Contact</a></li>
 				</ul>
-			</div> -->
+			</div>
 
 		</div>
 
@@ -79,14 +79,14 @@
 					</li>
 				</ul>
 			</div>
-			<!-- <div class="col-auto">
+			<div class="col-auto">
 				<label class="sr-only" for="subscribeEmail">Email address</label>
 				<div class="input-group mb-2">
 					<input type="text" class="form-control bg-dark border-light"
 						id="subscribeEmail" placeholder="Email address">
 					<div class="input-group-text btn-success text-light">Subscribe</div>
 				</div>
-			</div> -->
+			</div>
 		</div>
 	</div>
 
@@ -95,8 +95,8 @@
 			<div class="row pt-2">
 				<div class="col-12">
 					<p class="text-left text-light">
-						Copyright &copy; 2023 12shop | Designed by <a
-							rel="sponsored" href="https://templatemo.com" target="_blank">12SHOP</a>
+						Copyright &copy; 2021 Company Name | Designed by <a
+							rel="sponsored" href="https://templatemo.com" target="_blank">TemplateMo</a>
 					</p>
 				</div>
 			</div>

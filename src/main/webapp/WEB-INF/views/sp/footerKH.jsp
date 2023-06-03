@@ -1,5 +1,6 @@
- <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+ <%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
+    
     
  <footer class="bg-dark" id="tempaltemo_footer">
         <div class="container">
@@ -36,8 +37,9 @@
                     <h2 class="h2 text-light border-bottom pb-3 border-light">Thông tin</h2>
                     <ul class="list-unstyled text-light footer-link-list">
                         <li><a class="text-decoration-none" href="/BanLaptop/home.htm">Trang chủ</a></li>
-                        <li><a class="text-decoration-none" href="#">About Us</a></li>
+                        
                         <li><a class="text-decoration-none" href="/BanLaptop/home/shop.htm">Cửa hàng</a></li>
+                        <li><a class="text-decoration-none" href="/BanLaptop/home/shop.htm">About Us</a></li>
                         <li><a class="text-decoration-none" href="#">FAQs</a></li>
                         <li><a class="text-decoration-none" href="#">Contact</a></li>
                     </ul>

@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Kiểm Tra Bảo Hành</title>
+<title>Giỏ Hàng Chưa Giao</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -31,7 +31,7 @@
 -->
 </head>
 <body>
-<%@include file="headerNV.jsp"%>
+<%@include file="headerShipper.jsp"%>
  <!-- Modal -->
     <div class="modal fade bg-white" id="templatemo_search" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
@@ -52,9 +52,9 @@
 
     <!-- Start Content Page -->
     <main>
+    
     	<section class="bg-light">
-    	<form  action="staff/danhsachdangbaohanh.htm" method="POST">
-        <a class="btn btn-success btn-lg px-3 mt-1"href="danhsachdangbaohanh.htm?loaiBtn=troVe"><i class="fa fa-angle-double-left" aria-hidden="true"></i>Về Trang Bảo Hành</a>
+    	<a class="btn btn-success btn-lg px-3 mt-1"href="donhangchuagiao.htm"><i class="fa fa-angle-double-left" aria-hidden="true"></i>Về Danh Sách Giỏ Hàng</a>
        <div class = "container py-5">
        
        <div class = "row">
@@ -62,14 +62,18 @@
        <div class = "card">
        <div class = "card-body">
       
-       <h4>Lịch Sử Bảo Hành</h4>
+       <h4>Chi Tiết Giỏ Hàng</h4>
        <ul >
-       	<li class = "pb-3">Seri : ${SP.seri}</li>
-       		<li class = "pb-3"> Loại Sản Phẩm : ${SP.maLoai.maLoai}</li>
-       	<li class = "pb-3"> Tên Sản Phẩm : ${SP.maLoai.tenSP}</li>
-       	<li class = "pb-3">Số Phiếu Bảo Hành ${SP.phieuBaoHanh.soPhieuBH}</li>
-       	<li class = "pb-3"> Nhân Viên Lập Phiếu : ${SP.phieuBaoHanh.maNV.maNV} - ${SP.phieuBaoHanh.maNV.ho} ${SP.phieuBaoHanh.maNV.ten}</li>
+   
+       		<li class = "pb-3"> ID Giỏ Hàng : ${gioHang.idGH}</li>
+       	<li class = "pb-3"> Ngày Tạo : ${gioHang.ngayTao }</li>
+       	<li class = "pb-3"> Email Khách Hàng: ${gioHang.email.email}</li>
+       	 <li class = "pb-3"> SĐT Khách Hàng: ${gioHang.email.sdt}</li>
        </ul>
+  
+    <a class="btn btn-success btn-lg px-3"href="nhangiaohang.htm?idGH=${gioHang.idGH}">Nhận Giao</a>
+   
+
        </div>
        </div>
        </div>
@@ -78,37 +82,29 @@
 				style="text-align: center;">
                     <thead>
                         <tr>
-                        	<th >Nhân Viên Nhận</th>
-                            <th >Ngày Nhận</th>
-                             <th >Trạng Thái Nhận</th>
-                              <th >Nhân Viên Trả</th>
-                              <th >Ngày Trả</th>
-                             <th >Trạng Thái Trả</th>
+                       		<th>Hình Ảnh</th>
+                            <th width="200">Mã Loại Sản Phẩm</th>
+                            <th >Tên Sản Phẩm</th>
+                            <th>Số Lượng </th>
                           </tr>
                     </thead>
                     <tbody>
-                     <c:if test = "${SP.phieuBaoHanh.ctBaoHanh.size() == 0}">
-                    <tr><td colspan = "6">Chưa có chi tiết bảo hành !</td></tr>
-                     
-                     </c:if>
-                   <c:if test = "${SP.phieuBaoHanh.ctBaoHanh.size() != 0}">
-                    <c:forEach var="ct" items="${SP.phieuBaoHanh.ctBaoHanh}">
+               <c:if test="${not empty listSP}">
+                    <c:forEach var="i"  begin="0" end ="${size}">
 					<tr>
-						<td>${ct.maNVNhan.maNV} - ${ct.maNVNhan.ho} ${ct.maNVNhan.ten}</td>
-						<td>${ct.ngayNhan}</td>
-						<td>${ct.trangThaiNhan}</td>
-						<c:if test = "${ct.maNVTra == null}">
-						<td colspan = "3">Chưa trả máy</td>
-						</c:if>
-						<c:if test = "${ct.maNVNhan != null}">
-						<td>${ct.maNVTra.maNV} - ${ct.maNVTra.ho} ${ct.maNVTra.ten}</td>
-						<td>${ct.ngayTra}</td>
-						<td>${ct.trangThaiTra}</td>
-						</c:if>
+						 <td class="col-md-1">
+                            <div class="card mb-2 product-wap rounded-0">
+                              <div class="card rounded-0">
+                                <img class="card-img rounded-0 img-fluid" src="<c:url value ='/resource/images/${listSP.get(i).maLoai.getAnh()}'/>">
+                              </div>
+                            </div>
+                        </td> 
+						<td>${listSP.get(i).maLoai.maLoai} </td>
+						<td>${listSP.get(i).maLoai.tenSP}</td>
+						<td>${listSL.get(i)}</td>
 					</tr>
 					</c:forEach>
 					</c:if>
-					
                     </tbody>
                     
        </table>
@@ -116,7 +112,6 @@
        </div>
        
        </div>
-       </form>
     </section>
     </main>
     <!-- End Contact -->

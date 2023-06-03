@@ -1,5 +1,5 @@
- <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%> 
 <!DOCTYPE html>
@@ -133,7 +133,7 @@ https://templatemo.com/tm-559-zay-shop
                                     
                                 </ul>
                                 <c:if test="${product.getCtDotGiamGia() == null}">
-                                	<p class="text-center mb-0">${product.getGia().toPlainString()}</p>
+                                	<p class="text-center mb-0">${product.getGia().toPlainString()} VND</p>
                                 </c:if>
                                 <c:if test="${product.getCtDotGiamGia() != null}">
                                 <c:set var="giam" value ="${100-product.getCtDotGiamGia().get(0).getTiLeGiam()}"/>

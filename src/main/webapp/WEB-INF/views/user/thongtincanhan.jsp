@@ -32,7 +32,7 @@
 </style>
 </head>
 <body>
-	<%@include file="../sp/headerKH.jsp"%>
+	<%@include file="header.jsp"%>
 	<div class="container mt-4">
 		<form action="luuthongtinuser.htm" method="post">
 			<div class="row justify-content-center">
@@ -75,7 +75,9 @@
 					</div>
 
 					<div class="mb-3">
-					<a href="doimatkhauuser.htm">Đổi mật khẩu</a>
+						<label for="pass" class="form-label">Mật khẩu</label> <input
+							type="password" class="form-control" name="pass"
+							value="${khachHang.pass}" required="required">
 					</div>
 					<div class="button-container">
 						<button type="submit" class="btn btn-success mb-4"
@@ -86,6 +88,6 @@
 			</div>
 		</form>
 	</div>
-	<%@include file="../sp/footerKH.jsp"%>
+	<%@include file="footer.jsp"%>
 </body>
 </html>
