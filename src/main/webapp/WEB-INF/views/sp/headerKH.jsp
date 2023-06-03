@@ -2,16 +2,18 @@
 <%@page import="ptithcm.model.KhachHang"%>
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
-    
+ <link rel="shortcut icon" type="image/x-icon"
+	href="<c:url value='/resource/assets/img/logo.png'/>">   
  <nav class="navbar navbar-expand-lg bg-dark navbar-light d-none d-lg-block" id="templatemo_nav_top">
         <div class="container text-light">
             <div class="w-100 d-flex justify-content-between">
                 <div>
-                    <i class="fa fa-envelope mx-2"></i>
-                    <a class="navbar-sm-brand text-light text-decoration-none"
-                        href="mailto:info@company.com">info@company.com</a>
-                    <i class="fa fa-phone mx-2"></i>
-                    <a class="navbar-sm-brand text-light text-decoration-none" href="tel:010-020-0340">010-020-0340</a>
+                    <i class="fa fa-envelope mx-2"></i> <a
+					class="navbar-sm-brand text-light text-decoration-none"
+					href="mailto:banlaptop12ptit@gmail.com">banlaptop12ptit@gmail.com</a>
+				<i class="fa fa-phone mx-2"></i> <a
+					class="navbar-sm-brand text-light text-decoration-none"
+					href="tel:028 3730 6600">028 3730 6600</a>
                 </div>
                 <div>
                     <a class="text-light" href="https://fb.com/templatemo" target="_blank" rel="sponsored"><i
@@ -34,7 +36,7 @@
         <div class="container d-flex justify-content-between align-items-center">
 
             <a class="navbar-brand text-success logo h1 align-self-center" href="/BanLaptop/home.htm">
-                Shop
+                12Shop
             </a>
 
             <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse"
@@ -51,13 +53,14 @@
                             <a class="nav-link" href="/BanLaptop/home/index.htm">Trang chủ</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="about.htm">About</a>
+                         <a class="nav-link" href="/BanLaptop/home/shop.htm">Cửa hàng</a>
+                            
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/BanLaptop/home/shop.htm">Cửa hàng</a>
+                           <a class="nav-link" href="/BanLaptop/home/about.htm">About</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="contact.html">Contact</a>
+                            <a class="nav-link" href="/BanLaptop/home/dang-giao.htm">Đang giao</a>
                         </li>
                     </ul>
                 </div>

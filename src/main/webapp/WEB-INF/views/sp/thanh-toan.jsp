@@ -7,14 +7,13 @@
 <html>
 
 <head>
-    <title>Zay Shop - Product Detail Page</title>
+    <title>12Shop - Thanh toán</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="apple-touch-icon"
 	href="<c:url value='/resource/assets/img/apple-icon.png'/>">
-    <link rel="shortcut icon" type="image/x-icon"
-	href="<c:url value='/resource/assets/img/favicon.ico'/>">
+
 
    <link rel="stylesheet"
 	href="<c:url value='/resource/assets/css/bootstrap.min.css'/>">
@@ -33,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="<c:url value='/resource/assets/css/slick.min.css'/>">
     <link rel="stylesheet" type="text/css" href="<c:url value ='/resource/assets/css/slick-theme.css'/>">
     <base href="${pageContext.servletContext.contextPath}/">
-    
+     <%@include file="headerKH.jsp"%>
 <!--
     
 TemplateMo 559 Zay Shop
@@ -44,7 +43,7 @@ https://templatemo.com/tm-559-zay-shop
 </head>
 
 <body>
-     <%@include file="headerKH.jsp"%>
+    
 
     <!-- Open Content -->
     <section class="bg-light">
