@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import net.sf.ehcache.search.expression.And;
 import ptithcm.model.CTBaoHanh;
 import ptithcm.model.CTDonDatHang;
 import ptithcm.model.CungCap;
@@ -53,10 +54,12 @@ public class StaffController {
 	public String danhsachnhanvien(ModelMap model,HttpSession s) {
 		
 		
-		if ( s.getAttribute("user") == null)
+		if ( s.getAttribute("user") == null )
 		{
 			return "redirect:dangnhap.htm";
 		}
+		NhanVien nhanvien = (NhanVien) s.getAttribute("user");
+		
 		org.hibernate.Session session = factory.getCurrentSession();
 		String hql =  "FROM NhanVien";
 		Query query = session.createQuery(hql);
@@ -126,21 +129,38 @@ public class StaffController {
 		  String Bdate= request.getParameter("birthdate");
 		  Date ngaySinh = Date.valueOf(Bdate); 
 		  String diaChi =request.getParameter("diaChi");
-		 
-	
+		  Calendar calendar = Calendar.getInstance();
+		  Date currentDate = new Date(calendar.getTime().getTime());
+		  calendar.add(Calendar.YEAR, -18);
+		  Date eighteenYearsAgo = new Date(calendar.getTime().getTime());
+		  boolean isOverEighteen = ngaySinh.after(eighteenYearsAgo) ;
+		  
 		Session session = factory.getCurrentSession();
 		
 		String hql = "FROM NhanVien WHERE email = :email";
 		Query query = session.createQuery(hql);
 		query.setParameter("email", email);
 
-		if (query.list().size() == 0) {
+		if (query.list().size() == 0 && isOverEighteen != true ) {
 			
 			 NhanVien nhanVien = new NhanVien(maNV, ho, ten, ngaySinh, SDT,email,"12345678",diaChi,1,chucVu);
 			 
 
 			session.save(nhanVien); 
 			model.addAttribute("Error", "Thêm nhân viên mới thành công!");
+			return "staff/themnhanvien";
+		}
+		else if (isOverEighteen == true)
+		{
+			model.addAttribute("email", email);
+			model.addAttribute("maNV", maNV); 
+			model.addAttribute("Ho", ho);
+			model.addAttribute("Ten", ten); 
+			model.addAttribute("ErrorBD", "Ngày sinh không hợp lệ ! Tuổi nhân viên phải đủ 18 trở lên");
+			model.addAttribute("SDT", SDT); 
+			model.addAttribute("diaChi", diaChi);
+			model.addAttribute("CV", chucVu);
+			 
 			return "staff/themnhanvien";
 		}
 		else {
@@ -183,6 +203,11 @@ public class StaffController {
 		{
 			return "redirect:dangnhap.htm";
 		}
+		 Calendar calendar = Calendar.getInstance();
+		  Date currentDate = new Date(calendar.getTime().getTime());
+		  calendar.add(Calendar.YEAR, -18);
+		  Date eighteenYearsAgo = new Date(calendar.getTime().getTime());
+		  boolean isOverEighteen = Date.valueOf(request.getParameter("birthdate")).after(eighteenYearsAgo) ;
 		Session session = factory.getCurrentSession();
 		String hql = "FROM NhanVien WHERE maNV = :maNV";
 	    Query query = session.createQuery(hql);
@@ -197,6 +222,12 @@ public class StaffController {
 	    if (!nvTemp.getMaNV().equals(listNhanVien.get(0).getMaNV()))
 	    {
 	    	model.addAttribute("ThongBaoEmail","Email này đã được sử dụng vui lòng nhập email khác !");
+	    	model.addAttribute("nv", nhanVien);
+			return "staff/suathongtinnhanvien";
+	    }
+	    if (isOverEighteen == true)
+	    {
+	    	model.addAttribute("ThongBaoNgaySinh","Ngày sinh không hợp lệ ! Tuổi nhân viên phải đủ 18 trở lên");
 	    	model.addAttribute("nv", nhanVien);
 			return "staff/suathongtinnhanvien";
 	    }
@@ -216,14 +247,6 @@ public class StaffController {
 		return "staff/suathongtinnhanvien";
 	}
 	
-	/*
-	 * //tạo seri public static String taoSeriSanPham() { Random random = new
-	 * Random(); StringBuilder sb = new StringBuilder(); int firstDigit =
-	 * random.nextInt(9) + 1; sb.append(firstDigit); for (int i = 0; i < 10; i++) {
-	 * int digit = random.nextInt(10); sb.append(digit); }
-	 * 
-	 * return sb.toString(); }
-	 */
 	@RequestMapping(value = "dondathang")
 	public String dondathang(ModelMap model,HttpSession s) {
 		
@@ -238,7 +261,6 @@ public class StaffController {
 		listSPNhap.clear();
 		listSL.clear();
 		listSP.clear();
-		listSPNhap.clear();
 		model.addAttribute("DSDDH", list);
 		
 	 	model.addAttribute("ThongBao","  ");
@@ -292,22 +314,37 @@ public class StaffController {
 		org.hibernate.Session session = factory.getCurrentSession();
 		String hql =  "FROM NhaCungCap";
 		Query query = session.createQuery(hql);
-		List<NhanVien> DSNCC =	query.list(); 
+		List<NhaCungCap> DSNCC =	query.list(); 
+		ArrayList<NhaCungCap> DS = new ArrayList<NhaCungCap>();
+		for (NhaCungCap NCC : DSNCC)
+		{
+			if (NCC.getCungCap().size() != 0)
+			{
+				DS.add(NCC);
+			}
+		}
+		String check = "OK";
+		if(DS.size() == 0)
+		{
+			check = "NOT";
+		}
 		hql = "FROM LoaiSanPham";
 		Query query2 = session.createQuery(hql);
 		List<LoaiSanPham> list2 =	query2.list(); 
 		
 		hql = "from DonDatHang";
 		Query query1 = session.createQuery(hql);
-		List<NhanVien> ddh =	query1.list(); 
+		List<DonDatHang> ddh =	query1.list(); 
 		String maDon = "DDH" + String.format("%03d", (ddh.size()+1));
-		model.addAttribute("DSNCC", DSNCC);
+		model.addAttribute("DSNCC", DS);
 		model.addAttribute("DSSP", list2);
 		model.addAttribute("nhanVien",nhanvien);
 		model.addAttribute("maDDH",maDon);
+		model.addAttribute("CHECK",check);
 		Calendar calendar = Calendar.getInstance();
 		Date currentDate = new Date(calendar.getTime().getTime());
 		model.addAttribute("ngayDat",currentDate);
+		System.out.println(check);
 		return "staff/taoThongTinDDH";
 	}
 
@@ -570,6 +607,7 @@ public class StaffController {
 			{
 				return "redirect:dangnhap.htm";
 			}
+			
 			NhanVien nhanvien = (NhanVien) s.getAttribute("user");
 			Session session = factory.getCurrentSession();
 			String hql = "From DonDatHang where maDDH = :maDDH";
@@ -581,7 +619,7 @@ public class StaffController {
 			List<SanPham> listSPGoc = query.list();
 			int sizeSP = listSPGoc.size();
 			 hql = "From PhieuNhap";
-		  query = session.createQuery(hql);
+			 query = session.createQuery(hql);
 				List<PhieuNhap> listPN = query.list(); 
 			int soPhieuNhap = listPN.size() +1 ;
 
@@ -610,7 +648,7 @@ public class StaffController {
 				listSPNhap.clear();
 				return "redirect:dondathang.htm";
 			}
-			
+			listSPNhap.clear();
 			for (CTDonDatHang ct : donDatHang.getCtDonDatHang())
 			{
 				for (int i= 0 ;i< ct.getSoLuong();i++)

@@ -86,7 +86,7 @@
 				style="text-align: center;">
                     <thead>
                         <tr>
-                        <th>Hình Ảnh</th>
+                        <th class="col-md-2">Hình Ảnh</th>
                         	<th >Seri</th>
                             <th >Mã Loại</th>
                             <th >Tên Sản Phẩm</th>
@@ -99,7 +99,7 @@
                     
                     <c:if test = "${SanPhamTim != null}">
                     <tr>
-                     	<td class="col-md-1">
+                     	<td class="col-md-2">
                            <div class="card mb-2 product-wap rounded-0">
                                <div class="card rounded-0">
                                 <img class="card-img rounded-0 img-fluid" src="<c:url value ='/resource/images/${SanPhamTim.maLoai.getAnh()}'/>">
