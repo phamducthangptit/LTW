@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import net.sf.ehcache.search.expression.And;
 import ptithcm.model.CTBaoHanh;
 import ptithcm.model.CTDonDatHang;
 import ptithcm.model.CungCap;
@@ -53,10 +54,12 @@ public class StaffController {
 	public String danhsachnhanvien(ModelMap model,HttpSession s) {
 		
 		
-		if ( s.getAttribute("user") == null)
+		if ( s.getAttribute("user1") == null )
 		{
 			return "redirect:dangnhap.htm";
 		}
+	
+		
 		org.hibernate.Session session = factory.getCurrentSession();
 		String hql =  "FROM NhanVien";
 		Query query = session.createQuery(hql);
@@ -69,7 +72,7 @@ public class StaffController {
 	public String trangthainhanvien(ModelMap model , HttpServletRequest request)
 	{
 		HttpSession s = request.getSession();
-		if ( s.getAttribute("user") == null)
+		if ( s.getAttribute("user1") == null)
 		{
 			return "redirect:dangnhap.htm";
 		}
@@ -96,7 +99,7 @@ public class StaffController {
 	public String Showthemnhanvien(Model model , HttpServletRequest request)
 	{
 		HttpSession s = request.getSession();
-		if ( s.getAttribute("user") == null)
+		if ( s.getAttribute("user1") == null)
 		{
 			return "redirect:dangnhap.htm";
 		}
@@ -114,7 +117,7 @@ public class StaffController {
 	public String themnhanvien(HttpServletRequest request, Model model)
 	{
 		HttpSession s = request.getSession();
-		if ( s.getAttribute("user") == null)
+		if ( s.getAttribute("user1") == null)
 		{
 			return "redirect:dangnhap.htm";
 		}
@@ -126,21 +129,38 @@ public class StaffController {
 		  String Bdate= request.getParameter("birthdate");
 		  Date ngaySinh = Date.valueOf(Bdate); 
 		  String diaChi =request.getParameter("diaChi");
-		 
-	
+		  Calendar calendar = Calendar.getInstance();
+		  Date currentDate = new Date(calendar.getTime().getTime());
+		  calendar.add(Calendar.YEAR, -18);
+		  Date eighteenYearsAgo = new Date(calendar.getTime().getTime());
+		  boolean isOverEighteen = ngaySinh.after(eighteenYearsAgo) ;
+		  
 		Session session = factory.getCurrentSession();
 		
 		String hql = "FROM NhanVien WHERE email = :email";
 		Query query = session.createQuery(hql);
 		query.setParameter("email", email);
 
-		if (query.list().size() == 0) {
+		if (query.list().size() == 0 && isOverEighteen != true ) {
 			
 			 NhanVien nhanVien = new NhanVien(maNV, ho, ten, ngaySinh, SDT,email,"12345678",diaChi,1,chucVu);
 			 
 
 			session.save(nhanVien); 
 			model.addAttribute("Error", "Thêm nhân viên mới thành công!");
+			return "staff/themnhanvien";
+		}
+		else if (isOverEighteen == true)
+		{
+			model.addAttribute("email", email);
+			model.addAttribute("maNV", maNV); 
+			model.addAttribute("Ho", ho);
+			model.addAttribute("Ten", ten); 
+			model.addAttribute("ErrorBD", "Ngày sinh không hợp lệ ! Tuổi nhân viên phải đủ 18 trở lên");
+			model.addAttribute("SDT", SDT); 
+			model.addAttribute("diaChi", diaChi);
+			model.addAttribute("CV", chucVu);
+			 
 			return "staff/themnhanvien";
 		}
 		else {
@@ -163,7 +183,7 @@ public class StaffController {
 	public String Showsuathongtinnhanvien(Model model, HttpServletRequest request)
 	{
 		HttpSession s = request.getSession();
-		if ( s.getAttribute("user") == null)
+		if ( s.getAttribute("user1") == null)
 		{
 			return "redirect:dangnhap.htm";
 		}
@@ -179,10 +199,15 @@ public class StaffController {
 	public String suathongtinnhanvien(HttpServletRequest request, Model model)
 	{
 		HttpSession s = request.getSession();
-		if ( s.getAttribute("user") == null)
+		if ( s.getAttribute("user1") == null)
 		{
 			return "redirect:dangnhap.htm";
 		}
+		 Calendar calendar = Calendar.getInstance();
+		  Date currentDate = new Date(calendar.getTime().getTime());
+		  calendar.add(Calendar.YEAR, -18);
+		  Date eighteenYearsAgo = new Date(calendar.getTime().getTime());
+		  boolean isOverEighteen = Date.valueOf(request.getParameter("birthdate")).after(eighteenYearsAgo) ;
 		Session session = factory.getCurrentSession();
 		String hql = "FROM NhanVien WHERE maNV = :maNV";
 	    Query query = session.createQuery(hql);
@@ -197,6 +222,12 @@ public class StaffController {
 	    if (!nvTemp.getMaNV().equals(listNhanVien.get(0).getMaNV()))
 	    {
 	    	model.addAttribute("ThongBaoEmail","Email này đã được sử dụng vui lòng nhập email khác !");
+	    	model.addAttribute("nv", nhanVien);
+			return "staff/suathongtinnhanvien";
+	    }
+	    if (isOverEighteen == true)
+	    {
+	    	model.addAttribute("ThongBaoNgaySinh","Ngày sinh không hợp lệ ! Tuổi nhân viên phải đủ 18 trở lên");
 	    	model.addAttribute("nv", nhanVien);
 			return "staff/suathongtinnhanvien";
 	    }
@@ -216,18 +247,10 @@ public class StaffController {
 		return "staff/suathongtinnhanvien";
 	}
 	
-	/*
-	 * //tạo seri public static String taoSeriSanPham() { Random random = new
-	 * Random(); StringBuilder sb = new StringBuilder(); int firstDigit =
-	 * random.nextInt(9) + 1; sb.append(firstDigit); for (int i = 0; i < 10; i++) {
-	 * int digit = random.nextInt(10); sb.append(digit); }
-	 * 
-	 * return sb.toString(); }
-	 */
 	@RequestMapping(value = "dondathang")
 	public String dondathang(ModelMap model,HttpSession s) {
 		
-		if ( s.getAttribute("user") == null)
+		if ( s.getAttribute("user1") == null)
 		{
 			return "redirect:dangnhap.htm";
 		}
@@ -238,7 +261,6 @@ public class StaffController {
 		listSPNhap.clear();
 		listSL.clear();
 		listSP.clear();
-		listSPNhap.clear();
 		model.addAttribute("DSDDH", list);
 		
 	 	model.addAttribute("ThongBao","  ");
@@ -249,15 +271,15 @@ public class StaffController {
 	@RequestMapping(value = "taodondathang")
 	public String showtaodondathang(ModelMap model,HttpServletRequest request) {
 		HttpSession s = request.getSession();
-		if ( s.getAttribute("user") == null)
+		if ( s.getAttribute("user1") == null)
 		{
 			return "redirect:dangnhap.htm";
 		}
 		String nCCsl =request.getParameter("NCC");
 		
-		Object user = s.getAttribute("user");
+		Object user1 = s.getAttribute("user1");
 		NhanVien nhanvien = new NhanVien();
-		nhanvien = (NhanVien) user;
+		nhanvien = (NhanVien) user1;
 		Session session = factory.getCurrentSession();
 		String hql =  "FROM NhaCungCap where maNCC = :NCC";
 		Query query = session.createQuery(hql);
@@ -282,32 +304,47 @@ public class StaffController {
 	@RequestMapping(value = "taoThongTinDDH")
 	public String taoThongTinDDH(ModelMap model,HttpServletRequest request) {
 		HttpSession s = request.getSession();
-		if ( s.getAttribute("user") == null)
+		if ( s.getAttribute("user1") == null)
 		{
 			return "redirect:dangnhap.htm";
 		}
-		Object user = s.getAttribute("user");
+		Object user1 = s.getAttribute("user1");
 		NhanVien nhanvien = new NhanVien();
-		nhanvien = (NhanVien) user;
+		nhanvien = (NhanVien) user1;
 		org.hibernate.Session session = factory.getCurrentSession();
 		String hql =  "FROM NhaCungCap";
 		Query query = session.createQuery(hql);
-		List<NhanVien> DSNCC =	query.list(); 
+		List<NhaCungCap> DSNCC =	query.list(); 
+		ArrayList<NhaCungCap> DS = new ArrayList<NhaCungCap>();
+		for (NhaCungCap NCC : DSNCC)
+		{
+			if (NCC.getCungCap().size() != 0)
+			{
+				DS.add(NCC);
+			}
+		}
+		String check = "OK";
+		if(DS.size() == 0)
+		{
+			check = "NOT";
+		}
 		hql = "FROM LoaiSanPham";
 		Query query2 = session.createQuery(hql);
 		List<LoaiSanPham> list2 =	query2.list(); 
 		
 		hql = "from DonDatHang";
 		Query query1 = session.createQuery(hql);
-		List<NhanVien> ddh =	query1.list(); 
+		List<DonDatHang> ddh =	query1.list(); 
 		String maDon = "DDH" + String.format("%03d", (ddh.size()+1));
-		model.addAttribute("DSNCC", DSNCC);
+		model.addAttribute("DSNCC", DS);
 		model.addAttribute("DSSP", list2);
 		model.addAttribute("nhanVien",nhanvien);
 		model.addAttribute("maDDH",maDon);
+		model.addAttribute("CHECK",check);
 		Calendar calendar = Calendar.getInstance();
 		Date currentDate = new Date(calendar.getTime().getTime());
 		model.addAttribute("ngayDat",currentDate);
+		System.out.println(check);
 		return "staff/taoThongTinDDH";
 	}
 
@@ -315,7 +352,7 @@ public class StaffController {
 	public String showchitietdondathang(Model model, HttpServletRequest request)
 	{
 		HttpSession s = request.getSession();
-		if ( s.getAttribute("user") == null)
+		if ( s.getAttribute("user1") == null)
 		{
 			return "redirect:dangnhap.htm";
 		}
@@ -338,7 +375,7 @@ public class StaffController {
 		public String dondatHangDeleted(Model model, HttpServletRequest request)
 		{
 			HttpSession s = request.getSession();
-			if ( s.getAttribute("user") == null)
+			if ( s.getAttribute("user1") == null)
 			{
 				return "redirect:dangnhap.htm";
 			}
@@ -384,11 +421,11 @@ public class StaffController {
 	{
 		
 		HttpSession s = request.getSession();
-		if ( s.getAttribute("user") == null)
+		if ( s.getAttribute("user1") == null)
 		{
 			return "redirect:dangnhap.htm";
 		}
-		Object user = s.getAttribute("user");
+		Object user = s.getAttribute("user1");
 		NhanVien nhanvien = new NhanVien();
 		nhanvien = (NhanVien) user;
 		Session session = factory.getCurrentSession();
@@ -489,13 +526,13 @@ public class StaffController {
 	public String XoaSPtabledondathang(Model model, HttpServletRequest request)
 	{
 		HttpSession s = request.getSession();
-		if ( s.getAttribute("user") == null)
+		if ( s.getAttribute("user1") == null)
 		{
 			return "redirect:dangnhap.htm";
 		}
 		Session session = factory.getCurrentSession();
 		
-		Object user = s.getAttribute("user");
+		Object user = s.getAttribute("user1");
 		NhanVien nhanvien = new NhanVien();
 		nhanvien = (NhanVien) user;
 		int index =-1;
@@ -534,7 +571,7 @@ public class StaffController {
 	public String xemPhieuNhap(Model model, HttpServletRequest request)
 	{
 		HttpSession s = request.getSession();
-		if ( s.getAttribute("user") == null)
+		if ( s.getAttribute("user1") == null)
 		{
 			return "redirect:dangnhap.htm";
 		}
@@ -567,12 +604,13 @@ public class StaffController {
 				HttpSession s
 				)
 		{
-			listSPNhap.clear();
-			if ( s.getAttribute("user") == null)
+			
+			if ( s.getAttribute("user1") == null)
 			{
 				return "redirect:dangnhap.htm";
 			}
-			NhanVien nhanvien = (NhanVien) s.getAttribute("user");
+			
+			NhanVien nhanvien = (NhanVien) s.getAttribute("user1");
 			Session session = factory.getCurrentSession();
 			String hql = "From DonDatHang where maDDH = :maDDH";
 			Query query = session.createQuery(hql);
@@ -583,7 +621,7 @@ public class StaffController {
 			List<SanPham> listSPGoc = query.list();
 			int sizeSP = listSPGoc.size();
 			 hql = "From PhieuNhap";
-		  query = session.createQuery(hql);
+			 query = session.createQuery(hql);
 				List<PhieuNhap> listPN = query.list(); 
 			int soPhieuNhap = listPN.size() +1 ;
 
@@ -612,7 +650,7 @@ public class StaffController {
 				listSPNhap.clear();
 				return "redirect:dondathang.htm";
 			}
-			
+			listSPNhap.clear();
 			for (CTDonDatHang ct : donDatHang.getCtDonDatHang())
 			{
 				for (int i= 0 ;i< ct.getSoLuong();i++)
@@ -641,14 +679,15 @@ public class StaffController {
 				@RequestParam(value = "nhanMay", required = false) String nhanMay,
 				@RequestParam(value = "traMay", required = false) String traMay)
 		{
-			if ( s.getAttribute("user") == null)
+			if ( s.getAttribute("user1") == null)
 			{
 				return "redirect:dangnhap.htm";
 			}
-			NhanVien nhanvien = (NhanVien) s.getAttribute("user");
+			NhanVien nhanvien = (NhanVien) s.getAttribute("user1");
 			Session session = factory.getCurrentSession();
 			String hql ;
 			Query query ;
+		
 			Calendar calendar = Calendar.getInstance();
 			Date currentDate = new Date(calendar.getTime().getTime());
 			if(timSeri != null )
@@ -670,24 +709,30 @@ public class StaffController {
 				else 
 				{
 					 
-				        calendar.setTime(spNhan.get(0).getPhieuBaoHanh().getNgayBatDau());
-				        calendar.add(Calendar.DAY_OF_MONTH, 30);
-				        Date dayreturns = new Date(calendar.getTime().getTime());
+				    calendar.setTime(spNhan.get(0).getPhieuBaoHanh().getNgayBatDau());
+				    calendar.add(Calendar.DAY_OF_MONTH, 30);
+				    Date dayreturns = new Date(calendar.getTime().getTime());
 					model.addAttribute("SanPhamTim",spNhan.get(0));
 					model.addAttribute("seri",request.getParameter("seri"));
 					 model.addAttribute("NgayHientai",currentDate);
 					 model.addAttribute("ThongBao"," ");
-					 System.out.println(dayreturns);
 					if(currentDate.compareTo(spNhan.get(0).getPhieuBaoHanh().getNgayKetThuc()) > 0 )
 					{
 						model.addAttribute("HetHan","HetHan");
+						System.out.println("CHAY");
 					}
 					 if (spNhan.get(0).getPhieuBaoHanh().getNgayBatDau().compareTo(currentDate) <= 0 && currentDate.compareTo(dayreturns) <= 0 &&spNhan.get(0).getSoPhieuTra() == null)
 					 { 
 						 model.addAttribute("DoiTra", "DuocTra");
 					 }
+					 if (spNhan.get(0).getPhieuBaoHanh().getNgayBatDau().compareTo(currentDate) <= 0 && currentDate.compareTo(dayreturns) <= 0 &&spNhan.get(0).getSoPhieuTra() != null)
+					 {
+						 model.addAttribute("DoiTra", "DaTra");
+					
+					 }
 				}
 			}
+		
 			if (nhanMay != null && request.getParameter("trangThaiNhan") != "")
 			{
 				hql = "FROM CTBaoHanh Where ngayTra IS NULL and soPhieuBH.seri.seri = :seri";
@@ -746,7 +791,6 @@ public class StaffController {
 				 model.addAttribute("DoiTra",("DaTra"));
 				 model.addAttribute("HetHan","TraHang");
 			}
-			
 			 model.addAttribute("nhanVien", nhanvien);
 			
 			 return "staff/nhanbaohanh";
@@ -757,11 +801,11 @@ public class StaffController {
 			@RequestParam(defaultValue = "") String loaiBtn,
 			HttpSession s)
 	{
-		if ( s.getAttribute("user") == null)
+		if ( s.getAttribute("user1") == null)
 		{
 			return "redirect:dangnhap.htm";
 		}
-		NhanVien nhanvien = (NhanVien) s.getAttribute("user");
+		NhanVien nhanvien = (NhanVien) s.getAttribute("user1");
 		Session session = factory.getCurrentSession();
 		String hql ;
 		Query query ;
@@ -794,7 +838,7 @@ public class StaffController {
 			@RequestParam(defaultValue = "") String loaiBtn,
 			HttpSession s)
 	{
-		if ( s.getAttribute("user") == null)
+		if ( s.getAttribute("user1") == null)
 		{
 			return "redirect:dangnhap.htm";
 		}
@@ -814,7 +858,7 @@ public class StaffController {
 	public String danhSachGioHangChuaDuyet(Model model,HttpSession s)
 	{
 		
-		if ( s.getAttribute("user") == null)
+		if ( s.getAttribute("user1") == null)
 		{
 			return "redirect:dangnhap.htm";
 		}
@@ -830,11 +874,11 @@ public class StaffController {
 	@RequestMapping("chitietGHchuaduyet")
 	public String chiTietGioHangChuaDuyet(Model model,HttpServletRequest request ,HttpSession s)
 	{
-		if ( s.getAttribute("user") == null)
+		if ( s.getAttribute("user1") == null)
 		{
 			return "redirect:dangnhap.htm";
 		}
-		NhanVien nhanvien = (NhanVien) s.getAttribute("user");
+		NhanVien nhanvien = (NhanVien) s.getAttribute("user1");
 		Session session = factory.getCurrentSession();
 		String hql;
 		Query query;
@@ -885,11 +929,11 @@ public class StaffController {
 	}
 	@RequestMapping("duyet")
 	public String duyet(Model model , HttpServletRequest request ,HttpSession s) {
-		if ( s.getAttribute("user") == null)
+		if ( s.getAttribute("user1") == null)
 		{
 			return "redirect:dangnhap.htm";
 		}
-		NhanVien nhanvien = (NhanVien) s.getAttribute("user");
+		NhanVien nhanvien = (NhanVien) s.getAttribute("user1");
 		Session session = factory.getCurrentSession();
 		String hql  = "FROM GioHang Where idGH = :idGH";
 		Query query = session.createQuery(hql);
@@ -966,8 +1010,8 @@ public class StaffController {
 		@RequestMapping("donhangchuagiao")
 		public String danhSachgiohangchuagiao(Model model,HttpSession s)
 		{
-			
-			if ( s.getAttribute("user") == null)
+			System.out.println(s.getAttribute("user"));
+			if ( s.getAttribute("user2") == null)
 			{
 				return "redirect:dangnhap.htm";
 			}
@@ -984,11 +1028,11 @@ public class StaffController {
 		@RequestMapping("chitietGHchuagiao")
 		public String chiTietGioHangChuaGiao(Model model,HttpServletRequest request ,HttpSession s)
 		{
-			if ( s.getAttribute("user") == null)
+			if ( s.getAttribute("user2") == null)
 			{
 				return "redirect:dangnhap.htm";
 			}
-			NhanVien nhanvien = (NhanVien) s.getAttribute("user");
+			NhanVien nhanvien = (NhanVien) s.getAttribute("user2");
 			Session session = factory.getCurrentSession();
 			String hql;
 			Query query;
@@ -1040,11 +1084,11 @@ public class StaffController {
 		
 		@RequestMapping("nhangiaohang")
 		public String nhangiaohang(Model model , HttpServletRequest request ,HttpSession s) {
-			if ( s.getAttribute("user") == null)
+			if ( s.getAttribute("user2") == null)
 			{
 				return "redirect:dangnhap.htm";
 			}
-			NhanVien nhanvien = (NhanVien) s.getAttribute("user");
+			NhanVien nhanvien = (NhanVien) s.getAttribute("user2");
 			Session session = factory.getCurrentSession();
 			String hql  = "FROM GioHang Where idGH = :idGH";
 			Query query = session.createQuery(hql);
@@ -1059,11 +1103,11 @@ public class StaffController {
 		public String danhSachgiohangdangnhan(Model model, HttpServletRequest request,HttpSession s)
 		{
 			
-			if ( s.getAttribute("user") == null)
+			if ( s.getAttribute("user2") == null)
 			{
 				return "redirect:dangnhap.htm";
 			}
-			NhanVien nhanvien = (NhanVien) s.getAttribute("user");
+			NhanVien nhanvien = (NhanVien) s.getAttribute("user2");
 			Session session = factory.getCurrentSession();
 			String hql ;
 			Query query ;
@@ -1077,11 +1121,11 @@ public class StaffController {
 		@RequestMapping("chitietGHdangnhan")
 		public String chiTietGioHangDangNhan(Model model,HttpServletRequest request ,HttpSession s)
 		{
-			if ( s.getAttribute("user") == null)
+			if ( s.getAttribute("user2") == null)
 			{
 				return "redirect:dangnhap.htm";
 			}
-			NhanVien nhanvien = (NhanVien) s.getAttribute("user");
+			NhanVien nhanvien = (NhanVien) s.getAttribute("user2");
 			Session session = factory.getCurrentSession();
 			String hql;
 			Query query;
@@ -1132,7 +1176,7 @@ public class StaffController {
 		}
 		@RequestMapping("giaohang")
 		public String giaohang(Model model , HttpServletRequest request ,HttpSession s) {
-			if ( s.getAttribute("user") == null)
+			if ( s.getAttribute("user2") == null)
 			{
 				return "redirect:dangnhap.htm";
 			}

@@ -42,7 +42,14 @@ public class UserController {
 	}
 
 	@RequestMapping("/dangnhap")
-	public String showFormDN() {
+	public String showFormDN(HttpSession session) {
+		if (session.getAttribute("user") != null) {
+			return "redirect:/home/index.htm";
+		} else if (session.getAttribute("user1") != null) {
+			return "redirect:/homenv.htm";
+		} else if(session.getAttribute("user2") != null) {
+			return "redirect:/donhangchuagiao.htm";
+		}
 		return "user/login";
 	}
 
@@ -91,12 +98,12 @@ public class UserController {
 				if (nhanVien.getTrangThai() != 0 && nhanVien.getRole().equals("NVGiaoHang"))
 				{
 					HttpSession s = request.getSession();
-					s.setAttribute("user", nhanVien);
+					s.setAttribute("user2", nhanVien);
 					return "redirect:/donhangchuagiao.htm";
 				}
-				else if (nhanVien.getTrangThai() != 0) {
+				else if (nhanVien.getTrangThai() != 0 && !nhanVien.getRole().equals("NVGiaoHang")) {
 					HttpSession s = request.getSession();
-					s.setAttribute("user", nhanVien);
+					s.setAttribute("user1", nhanVien);
 					return "redirect:/homenv.htm";
 				} else {
 					model.addAttribute("ErrorLogin", "Nhân viên không thể đăng nhập vào hệ thống!");
@@ -182,6 +189,9 @@ public class UserController {
 	@RequestMapping(value = "/dangxuat")
 	public String dangXuat(HttpServletRequest request) {
 		HttpSession session = request.getSession();
+		session.removeAttribute("user");
+		session.removeAttribute("user1");
+		session.removeAttribute("user2");
 		session.invalidate(); // ngat phien lam viec
 		return "redirect:/home/index.htm";
 	}

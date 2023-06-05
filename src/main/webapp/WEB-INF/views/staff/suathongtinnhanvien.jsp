@@ -94,6 +94,7 @@
                     <div class="form-group col-md-6 mb-3">
                         <label for="birthdate">Ngày sinh:</label><br>
 			            <input type="date" id="birthdate" name="birthdate" value="${nv.ngaySinh}" placeholder="dd/mm/yyyy" pattern="\d{2}/\d{2}/\d{4}" required>
+                    	<h6 style="color: red; margin-left: 15px">${ThongBaoNgaySinh }</h6>
                     </div>
                     <div class="form-group col-md-6 mb-3">
                         <label for="inputSDT">Số Điện Thoại :</label>

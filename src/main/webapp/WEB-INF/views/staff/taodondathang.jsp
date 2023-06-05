@@ -105,7 +105,7 @@
        				</select>
        				</td>
        				
-						<td> <input type="number" size="4" name="soLuong" min="1" max="100" id="soLuong" value="1"   style="text-align: center;"></td>
+						<td> <input type="number" size="4" name="soLuong" min="1" max="100" id="soLuong" value="1"   style="text-align: center;" required="required"></td>
 						<td> <button type="submit" class="btn btn-success btn-lg px-3" name ="themDDH" value = "themDDH">Thêm</button></td>
 					</tr>
 		
@@ -119,7 +119,7 @@
 				style="text-align: center;">
     		 <thead>
                         <tr>
-                        <th>Hình Ảnh</th>
+                        <th class="col-md-2">Hình Ảnh</th>
                             <th>Sản Phẩm</th>
                             <th>Số lượng</th>
                             <th width = "50px"></th>
@@ -129,7 +129,7 @@
                     <c:if test="${not empty listSP}">
                     <c:forEach var="i"  begin="0" end ="${doLon}">
 					<tr>
-					 <td class="col-md-1">
+					 <td class="col-md-2">
                                  <div class="card mb-2 product-wap rounded-0">
                                  <div class="card rounded-0">
                                 <img class="card-img rounded-0 img-fluid" src="<c:url value ='/resource/images/${listSP.get(i).getAnh()}'/>">

@@ -73,8 +73,8 @@
 										<div class="row">
 											<div class="form-group col-md-6 mb-3">
 												<label for="inputId">Mã Nhân Viên :</label> <input
-													type="text" class="form-control mt-1" id="Id" name="Id"
-													placeholder="Vui Lòng Không Bỏ Trống" required>
+													type="text" class="form-control mt-1" id="Id" name="Id" value="${maNV }"
+													 readonly="readonly">
 											</div>
 											<div class="form-group col-md-6 mb-3">
 												<label for="selectChucVu">Chức Vụ :</label> <br> <select style="padding: 10px; border: 1px solid #ccc; background-color: #fff; color: #333; cursor: pointer;"
@@ -105,13 +105,15 @@
 													type="date" id="birthdate" name="birthdate"
 													value="${birthdate }" placeholder="dd/mm/yyyy"
 													pattern="\d{2}/\d{2}/\d{4}" required>
+													<h6 style="color: red; margin-left: 15px">${ErrorBD }</h6>
 											</div>
+										
 											<div class="form-group col-md-6 mb-3">
 												<label for="inputSDT">Số Điện Thoại :</label> <input
 													type="tel" class="form-control mt-1" id="SDT" name="SDT"
 													value="${SDT }" pattern="[0-9]{10}"
 													placeholder="Vui Lòng Không Bỏ Trống"
-													title="Số điện thoại phải bao gồm 10 chữ số" required>
+													title="Số điện thoại phải bao gồm 10 chữ số không kí tự khác !" required>
 											</div>
 										</div>
 
@@ -119,8 +121,11 @@
 											<label for="inputEmail">Email :</label> <input type="email"
 												class="form-control mt-1" id="email" name="email"
 												value="${email }" placeholder="Vui Lòng Không Bỏ Trống"
-												required>
+												title="Email phải có dạng : Nguyen@Luan..." required>
+												<h6 style="color: red; margin-left: 15px">${ErrorEmail }</h6>
 										</div>
+										
+										
 										<div class="mb-3">
 											<label for="inputDiaChi">Địa Chỉ :</label> <input type="text"
 												class="form-control mt-1" id="diaChi" name="diaChi"
@@ -129,9 +134,10 @@
 										</div>
 										<div class="row">
 											<div class="col text-end mt-2">
-												<button type="submit" class="btn btn-success btn-lg px-3">
+												<button type="submit" class="btn btn-success btn-lg px-2">
 													Thêm <i class="fa fa-check" aria-hidden="true"></i>
 												</button>
+												<a href="danhsachnhanvien.htm" class="btn btn-success btn-lg px-4">Hủy</a>
 												<!-- <button type="submit" class="btn btn-success btn-lg px-3">Hủy</button> -->
 											</div>
 										</div>

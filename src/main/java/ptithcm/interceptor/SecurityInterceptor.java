@@ -12,7 +12,7 @@ public class SecurityInterceptor extends HandlerInterceptorAdapter {
 			throws Exception {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession();
-		if(session.getAttribute("user") == null) {
+		if(session.getAttribute("user") == null && session.getAttribute("user1") == null && session.getAttribute("user2") == null) {
 			response.sendRedirect(request.getContextPath() + "/dangnhap.htm");
 			return false;
 		}

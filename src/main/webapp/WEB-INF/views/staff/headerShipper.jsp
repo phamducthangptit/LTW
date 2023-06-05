@@ -74,7 +74,7 @@
 				
 				<%
 				String hr = "";
-				Object ob = session.getAttribute("user");
+				Object ob = session.getAttribute("user2");
 				KhachHang kh = new KhachHang();
 				NhanVien nv = new NhanVien();
 				try{
