@@ -132,7 +132,7 @@ https://templatemo.com/tm-559-zay-shop
 							  </div>
 								<div class="col-md-12">
 								<label for="moTa" class="form-label">Mô tả:</label>
-	  							<textarea class="form-control" name="moTa" value="${product.getMoTa()}"></textarea>
+	  							<textarea class="form-control" name="moTa" >${product.getMoTa()}</textarea>
 	  							</div>
 	  						<div class="row pb-3" style="margin-top: 10px;">
 	  							<div class="col d-grid">

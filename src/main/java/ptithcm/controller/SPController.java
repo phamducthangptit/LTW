@@ -65,6 +65,11 @@ public class SPController {
 	
 	@RequestMapping(value={ "/", "/index" },method = RequestMethod.GET)
 	public String showHome(ModelMap model, HttpSession session) {
+		if (session.getAttribute("user1") != null) {
+			return "redirect:/homenv.htm";
+		} else if(session.getAttribute("user2") != null) {
+			return "redirect:/donhangchuagiao.htm";
+		}
 		KhachHang nguoi = (KhachHang) session.getAttribute("user");;
 		GioHang gh = null;
 		if(nguoi != null) {
@@ -152,7 +157,7 @@ public class SPController {
 			HttpSession session,
 			@RequestParam(defaultValue = "0") int page
 			) {
-		if(session.getAttribute("user")==null) {
+		if(session.getAttribute("user1")==null) {
 			return "redirect:/dangnhap.htm";
 		}
 		int pageSize = 9;
@@ -186,7 +191,7 @@ public class SPController {
 			HttpSession session,
 			@RequestParam String sp
 			) {
-		if(session.getAttribute("user")==null) {
+		if(session.getAttribute("user1")==null) {
 			return "redirect:/dangnhap.htm";
 		}
 		LoaiSanPham sanPham = tim1LoaiSanPham(sp);
@@ -215,7 +220,7 @@ public class SPController {
 		LoaiSanPham sanPham = tim1LoaiSanPham(maLoai);
 		Hibernate.initialize(sanPham.getMaTheLoai());
 		Hibernate.initialize(sanPham.getMaHang());
-		NhanVien nv = (NhanVien) session.getAttribute("user");
+		NhanVien nv = (NhanVien) session.getAttribute("user1");
 		if(nv==null) {
 			return "redirect:/dangnhap.htm";
 		}
@@ -261,6 +266,7 @@ public class SPController {
 			sanPham.setMoTa(moTa);
 			check++;
 		}
+		//System.out.println(moTa);
 		String theLoai = request.getParameter("theLoai");
 		if (!sanPham.getMaTheLoai().getMaTheLoai().equals(theLoai)) check++;
 		String hang = request.getParameter("hangSanXuat");
@@ -276,11 +282,12 @@ public class SPController {
 			sanPham.setGiaNhap(giaNhap1);
 			check++;
 		}
+		if (!photo.getOriginalFilename().equals("")) {
 		String fileName = saveImage(photo);
 		if(fileName!=null) {
 			sanPham.setAnh(fileName);
 			check++;
-		}
+		} }
 		String s = "";
 		if(check!=0) {
 			s = updateLoaiSanPham(sanPham, theLoai, hang, nv);
@@ -321,7 +328,7 @@ public class SPController {
 	}
 	@RequestMapping(value="danh-muc-san-pham/chinh-sua.htm", params="btnBack")
 	public String backDMSP(HttpSession session) {
-		if(session.getAttribute("user")==null) {
+		if(session.getAttribute("user1")==null) {
 			return "redirect:/dangnhap.htm";
 		}
 		return "redirect:/home/danh-muc-san-pham.htm";
@@ -330,9 +337,7 @@ public class SPController {
 	public String deleteLoaiSanPham(ModelMap model, 
 			HttpSession ss,
 			@PathVariable("sp") String maLoai) {
-		if(ss.getAttribute("user")==null) {
-			return "redirect:/dangnhap.htm";
-		}
+
 		LoaiSanPham sanPham = tim1LoaiSanPham(maLoai);
 		
 		List<ChinhSuaGia> csg = getChinhSuaGia(maLoai);
@@ -458,7 +463,11 @@ public class SPController {
 			@RequestParam(defaultValue = "0") int page,
 			@RequestParam (defaultValue = "") String sp
 			) {
-		
+		if (session.getAttribute("user1") != null) {
+			return "redirect:/homenv.htm";
+		} else if(session.getAttribute("user2") != null) {
+			return "redirect:/donhangchuagiao.htm";
+		}
 		//gioHang.setSanPham(new ArrayList<>());
 		int pageSize = 9;
 		int totalLoaiSanPham ; 
@@ -553,9 +562,15 @@ public class SPController {
 
 	@RequestMapping(value="shop/search", method = RequestMethod.GET)
 	public String searchProduct(ModelMap model,
+			HttpSession session,
 			HttpServletRequest request,
 			@RequestParam(defaultValue = "0") int page
 			) {
+		if (session.getAttribute("user1") != null) {
+			return "redirect:/homenv.htm";
+		} else if(session.getAttribute("user2") != null) {
+			return "redirect:/donhangchuagiao.htm";
+		}
 		inputSearch = request.getParameter("searchInput");
 		if (inputSearch.equals("")) {
 			return "redirect:/home/shop/search.htm";
@@ -722,7 +737,12 @@ public class SPController {
 		return "redirect:/home/gio-hang.htm";
 	}
 	@RequestMapping(value="shop/search/{input}.htm",  params = "linkSearch", method = RequestMethod.GET)
-	public String searchProductLink(ModelMap model,@PathVariable("input") String input) {
+	public String searchProductLink(ModelMap model, HttpSession session,@PathVariable("input") String input) {
+		if (session.getAttribute("user1") != null) {
+			return "redirect:/homenv.htm";
+		} else if(session.getAttribute("user2") != null) {
+			return "redirect:/donhangchuagiao.htm";
+		}
 		System.out.println(input);
 		model.addAttribute("searchInput", input);
 		return "redirect:/home/shop/search.htm";
@@ -1390,7 +1410,7 @@ public class SPController {
 	// Xử lý thêm sản phẩm 
 	@RequestMapping(value="add", method = RequestMethod.GET)
 	public String form(ModelMap model, HttpSession session) {
-		if(session.getAttribute("user")==null) {
+		if(session.getAttribute("user1")==null) {
 			return "redirect:/dangnhap.htm";
 		}
 		String hinhAnh = "sp.png";
@@ -1415,7 +1435,7 @@ public class SPController {
 			model.addAttribute("message", "Mã loại bị trùng");
 			return "sp/themsp";
 		}
-		NhanVien nv = (NhanVien) session.getAttribute("user");
+		NhanVien nv = (NhanVien) session.getAttribute("user1");
 		if(nv==null) {
 			return "redirect:/dangnhap.htm";
 		}
