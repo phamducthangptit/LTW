@@ -53,7 +53,7 @@ https://templatemo.com/tm-559-zay-shop
             <div class="row">
                 <div class="col-lg-5 mt-5">
                     <div class="card mb-3">
-                        <img class="card-img img-fluid" src="<c:url value ='/resource/images/${product.getAnh()}'/>" alt="Card image cap" id="product-detail">
+                        <img id="imagePreview" class="card-img img-fluid" src="<c:url value ='/resource/images/${product.getAnh()}'/>" alt="Card image cap" id="product-detail">
                     </div>
                     <div class = "row">
            				<ul class="list-inline">
@@ -61,7 +61,7 @@ https://templatemo.com/tm-559-zay-shop
                                     <h1 class="h2">Hình ảnh</h1>
                                 </li>
                                 <li class="list-inline-item">
-                                    <input type="file" name="photo" >
+                                    <input type="file" name="photo" id="imageFile" onchange="previewImage(this)" >
                                 </li>
                             </ul>          
                     </div>
@@ -74,47 +74,47 @@ https://templatemo.com/tm-559-zay-shop
                         	<div class="row g-3">
 							  <div class="col-md-4">
 							    <label for="productType">Mã loại sản phẩm:</label>
-							    <input type="text" class="form-control" name="maLoai" readonly="readonly" value="${product.getMaLoai()}">
+							    <input type="text" class="form-control" name="maLoai" maxlength="15" readonly="readonly" value="${product.getMaLoai()}" required="required">
 							  </div>
 							  <div class="col-md-8">
 							    <label for="productName">Tên sản phẩm:</label>
-							    <input type="text" class="form-control"  name="ten" value="${product.getTenSP()}">
+							    <input type="text" class="form-control"  name="ten"  maxlength="50" value="${product.getTenSP()}" required="required">
 							  </div>
 							  <div class="col-md-6">
 							    <label for="productPrice">Giá bán:</label>
-							    <input type="number" class="form-control" name="gia" value="${product.getGia().toPlainString()}">
+							    <input type="number" class="form-control" name="gia" value="${product.getGia().toPlainString()}" required="required">
 							  </div>
 							  <div class="col-md-6">
 							    <label for="productPrice">Giá nhập:</label>
-							    <input type="number" class="form-control" name="giaNhap"value="${product.getGiaNhap().toPlainString()}" >
+							    <input type="number" class="form-control" name="giaNhap"value="${product.getGiaNhap().toPlainString()}" required="required">
 							  </div>
 							  <div class="col-md-6">
 							    <label for="productCPU">CPU:</label>
-							    <input type="text" class="form-control"  name="cpu" value="${product.getcPU()}">
+							    <input type="text" class="form-control"  name="cpu" maxlength="50" value="${product.getcPU()}" required="required">
 							  </div>
 							  <div class="col-md-6">
 							    <label for="productRAM">RAM:</label>
-							    <input type="text" class="form-control" name="ram" value="${product.getRam()}">
+							    <input type="text" class="form-control" name="ram" maxlength="50" value="${product.getRam()}" required="required">
 							  </div>
 							  <div class="col-md-6">
 							    <label for="productHardware">Hardware:</label>
-							    <input type="text" class="form-control"  name="hardware" value="${product.getHardWare()}">
+							    <input type="text" class="form-control"  name="hardware" maxlength="50" value="${product.getHardWare()}" required="required">
 							  </div>
 							  <div class="col-md-6">
 							    <label for="productCard">Card màn hình:</label>
-							    <input type="text" class="form-control"  name="card" value="${product.getCard()}">
+							    <input type="text" class="form-control"  name="card" maxlength="50" value="${product.getCard()}" required="required">
 							  </div>
 							  <div class="col-md-12">
 							    <label for="productScreen">Màn hình:</label>
-							    <input type="text" class="form-control"  name="screen" value="${product.getScreen()}">
+							    <input type="text" class="form-control"  name="screen" maxlength="50" value="${product.getScreen()}" required="required">
 							  </div>
 							  <div class="col-md-12">
 							    <label for="productOS">Hệ điều hành:</label>
-							    <input type="text" class="form-control"  name="os" value="${product.getOs()}">
+							    <input type="text" class="form-control"  name="os" maxlength="50" value="${product.getOs()}" required="required">
 							  </div>
 							  <div class="col-md-6">
 							  	<label for="theLoai" class="form-label">Thể loại:</label>
-							  	<input list="theLoais" name="theLoai" class="form-control" value="${product.getMaTheLoai().getMaTheLoai()}">
+							  	<input list="theLoais" name="theLoai" class="form-control" value="${product.getMaTheLoai().getMaTheLoai()}" required="required">
 							  	<datalist id="theLoais">
 							      <c:forEach items="${listTheLoai}" var="product">
 							        <option value="${product.getMaTheLoai()}">${product.getTenTL()}</option>
@@ -123,7 +123,7 @@ https://templatemo.com/tm-559-zay-shop
 							  </div>
 							  <div class="col-md-6">
 							  	<label for="moTa" class="form-label">Hãng sản xuất:</label>
-							  	<input list="listHang" name="hangSanXuat" class="form-control" value="${product.getMaHang().getMaHang()}">
+							  	<input list="listHang" name="hangSanXuat" class="form-control" value="${product.getMaHang().getMaHang()}" required="required">
 							  	<datalist id="listHang">
 							      <c:forEach items="${listHang}" var="product">
 							      <option value="${product.getMaHang()}">${product.getTenHang()}</option>
@@ -140,9 +140,10 @@ https://templatemo.com/tm-559-zay-shop
 							  	</div>
 	  							<div class="col d-grid">
 							  	<button type="submit" class="btn btn-success btn-lg">Lưu thay đổi</button>
-							  	${message}
+							  
 							  	</div>
 							  </div>
+							  	${message}
                             </div>
                         </div>
                     </div>
@@ -162,7 +163,15 @@ https://templatemo.com/tm-559-zay-shop
     <!-- Start Footer -->
     <%@include file="../staff/footerQL.jsp"%>
     <!-- End Footer -->
-
+<script type="text/javascript">
+function previewImage(input) {
+    var reader = new FileReader();
+    reader.onload = function(e) {
+        document.getElementById('imagePreview').setAttribute('src', e.target.result);
+    };
+    reader.readAsDataURL(input.files[0]);
+}
+</script>
     <!-- Start Script -->
     <script src="assets/js/jquery-1.11.0.min.js"></script>
     <script src="assets/js/jquery-migrate-1.2.1.min.js"></script>

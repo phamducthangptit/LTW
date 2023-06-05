@@ -38,8 +38,9 @@
                         <li><a class="text-decoration-none" href="/BanLaptop/home.htm">Trang chủ</a></li>
                         
                         <li><a class="text-decoration-none" href="/BanLaptop/home/shop.htm">Cửa hàng</a></li>
-                        <li>  <a class="nav-link" href="/BanLaptop/home/about.htm">About</a></li>
-                        <li><a class="nav-link" href="/BanLaptop/home/dang-giao.htm">Đang giao</a></li>
+                        
+                        <li><a class="text-decoration-none" href="/BanLaptop/home/dang-giao.htm">Đang giao</a></li>
+                        <li>  <a class="text-decoration-none" href="/BanLaptop/home/about.htm">Thông tin</a></li>
 
                     </ul>
                 </div>

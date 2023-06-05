@@ -33,6 +33,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import ptithcm.model.BinhLuan;
 import ptithcm.model.CTDotGiamGia;
+import ptithcm.model.CungCap;
 import ptithcm.model.DoanhThuTheoNgay;
 import ptithcm.model.DotGiamGia;
 import ptithcm.model.KhachHang;
@@ -52,6 +53,11 @@ public class Staff1Controller {
 	@RequestMapping(value = "/homenv")
 	public String showHome(ModelMap model) {
 		List<LoaiSanPham> list1 = getLoaiSanPham_HOME();
+		if (list1 == null) {
+			model.addAttribute("listProducts", null);
+			model.addAttribute("product1", null);
+			return "staff/homeNV";
+		}
 		sort(list1);
 		ArrayList<LoaiSanPham> list2 = new ArrayList<>();
 		int n = list1.size() >= 5 ? 5 : list1.size();
@@ -88,6 +94,7 @@ public class Staff1Controller {
 		Query query = session.createQuery(hql);
 
 		List<LoaiSanPham> list = query.list();
+		if(list.size() == 0) return null;
 		for (LoaiSanPham loaiSanPham : list) {
 			loaiSanPham.setSanPham(getSanPhamBestSell(loaiSanPham.getMaLoai()));
 		}
@@ -370,7 +377,12 @@ public class Staff1Controller {
 	}
 
 	@RequestMapping(value = "/themnhacungcap")
-	public String themNhaCC() {
+	public String themNhaCC(Model model) {
+		Session session = factory.getCurrentSession();
+		String hql = "From LoaiSanPham";
+		Query query = session.createQuery(hql);
+		List<LoaiSanPham> listLSP = query.list();
+		model.addAttribute("listSP", listLSP);
 		return "staff/themnhacungcap";
 	}
 
@@ -382,25 +394,45 @@ public class Staff1Controller {
 		String diaChi = request.getParameter("diaChi");
 		String email = request.getParameter("email");
 		String sdt = request.getParameter("SDT");
-
+		
 		String hql = "FROM NhaCungCap";
 		Query query = session.createQuery(hql);
 		NhaCungCap nhaCC = new NhaCungCap("NCC" + query.list().size(), tenNCC, diaChi, sdt, email);
-
-		model.addAttribute("nhaCC", nhaCC);
-
-		hql = "FROM NhaCungCap NCC WHERE NCC.tenNCC = :tenNCC";
+		String[] listLSP = request.getParameterValues("selectedSP");
+		hql = "From LoaiSanPham";
 		query = session.createQuery(hql);
-		query.setParameter("tenNCC", tenNCC);
-		if (query.list().size() == 0) { // check ten ncc
-			session.save(nhaCC);
-			hql = "FROM NhaCungCap";
-			query = session.createQuery(hql);
-			model.addAttribute("listNCC", query.list());
-			return "redirect:/danhsachnhacungcap.htm";
-		} else {
-			model.addAttribute("ErrorTenNCC", "Tên nhà cung cấp đã tồn tại!");
+		List<LoaiSanPham> LSP = query.list();
+		if(listLSP == null) {
+			
+			model.addAttribute("listSP", listLSP);
+			model.addAttribute("ErrorLSP", "Chưa chọn loại sản phẩm cho nhà cung cấp này");
+			model.addAttribute("nhaCC", nhaCC);
+			model.addAttribute("listSP", LSP);
 			return "staff/themnhacungcap";
+		} else {
+			model.addAttribute("nhaCC", nhaCC);
+
+			hql = "FROM NhaCungCap NCC WHERE NCC.tenNCC = :tenNCC";
+			query = session.createQuery(hql);
+			query.setParameter("tenNCC", tenNCC);
+			if (query.list().size() == 0) { // check ten ncc
+				session.save(nhaCC);
+				hql = "FROM NhaCungCap";
+				for (String s : listLSP) {
+					System.out.println(s);
+					LoaiSanPham lsp = (LoaiSanPham) session.get(LoaiSanPham.class, s);
+					CungCap cungCap = new CungCap(lsp, nhaCC);
+					session.save(cungCap);
+				}
+				query = session.createQuery(hql);
+				model.addAttribute("listNCC", query.list());
+				return "redirect:/danhsachnhacungcap.htm";
+			} else {
+				model.addAttribute("ErrorTenNCC", "Tên nhà cung cấp đã tồn tại!");
+				model.addAttribute("nhaCC", nhaCC);
+				model.addAttribute("listSP", LSP);
+				return "staff/themnhacungcap";
+			}
 		}
 	}
 

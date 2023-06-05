@@ -14,9 +14,15 @@
 	<!-- Cấu hình package chứa các controller -->
 	<mvc:interceptors>
 		<mvc:interceptor>
-			<mvc:mapping path="/giohang.htm"/>
-			<!-- <mvc:exclude-mapping path="/user/**"/>
-			<mvc:exclude-mapping path="staff/home.htm"/> -->
+			<mvc:mapping path="/home/**"/>
+			<mvc:exclude-mapping path="/home/"/>
+			<mvc:exclude-mapping path="/home/index.htm"/>
+			<mvc:exclude-mapping path="/home/shop.htm"/>
+			<mvc:exclude-mapping path="/home/shop/search.htm"/>
+			<mvc:exclude-mapping path="/home/shop/search/**"/>
+			<mvc:exclude-mapping path="/home/shop-single.htm"/>
+			<mvc:exclude-mapping path="/home/about.htm"/>
+			<!-- <mvc:exclude-mapping path="staff/home.htm"/> -->
 			<bean class = "ptithcm.interceptor.SecurityInterceptor"/>
 		</mvc:interceptor>
 	</mvc:interceptors>

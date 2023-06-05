@@ -1,5 +1,7 @@
 package ptithcm.controller;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.text.DecimalFormat;
@@ -14,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 
+import org.apache.commons.compress.utils.IOUtils;
 import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -68,6 +71,13 @@ public class SPController {
 			gh = getGioHang(nguoi.getEmail()); 
 		}
 		List<LoaiSanPham> list1 = getLoaiSanPham_HOME();
+		if (list1==null) {
+			model.addAttribute("SLsanPham", "0");
+			model.addAttribute("listProducts", null);
+			model.addAttribute("product1",null);
+			model.addAttribute("listLoaiSanPham", null);
+			return "sp/home";
+		}
 		sort(list1);
 		ArrayList<LoaiSanPham> list2 = new ArrayList<>();
 		ArrayList<LoaiSanPham> list3 = new ArrayList<>();
@@ -75,6 +85,7 @@ public class SPController {
 		int m = list1.size() >= 3 ? 3:list1.size();
 		Hibernate.initialize(list1.get(0).getMaTheLoai());
 		Hibernate.initialize(list1.get(0).getMaHang());
+
 		for(int i=1 ; i < n; i ++ ) {
 			Hibernate.initialize(list1.get(i).getMaTheLoai());
 			Hibernate.initialize(list1.get(i).getMaHang());
@@ -116,6 +127,7 @@ public class SPController {
 		Query query = session.createQuery(hql);
 
 		List<LoaiSanPham> list = query.list();
+		if (list.size() == 0) return null;
 		DotGiamGia dgg = getDotGiamGia();
 		for (LoaiSanPham loaiSanPham : list) {
 		    loaiSanPham.setSanPham(getSanPhamBestSell(loaiSanPham.getMaLoai()));
@@ -137,13 +149,20 @@ public class SPController {
 	}
 	@RequestMapping(value="danh-muc-san-pham", method = RequestMethod.GET)
 	public String showDanhMucSanPham(ModelMap model,
+			HttpSession session,
 			@RequestParam(defaultValue = "0") int page
 			) {
+		if(session.getAttribute("user")==null) {
+			return "redirect:/dangnhap.htm";
+		}
 		int pageSize = 9;
 		int totalLoaiSanPham = getSoLuongLoaiSanPham();
 		int totalPages = (int) Math.ceil((double) totalLoaiSanPham / pageSize);
 		int startPage = Math.max(0, page - 1);
 		int endPage = Math.min(totalPages - 1, page + 1);
+		if(totalPages == 0) {
+			startPage = endPage = 0;
+		}
 		String url ="/BanLaptop/home/danh-muc-san-pham.htm";
 		List<LoaiSanPham> listLoaiSanPham = getLoaiSanPhamDMSP(page,pageSize);
 		for (LoaiSanPham sp: listLoaiSanPham) {
@@ -164,8 +183,12 @@ public class SPController {
 	
 	@RequestMapping(value="danh-muc-san-pham/chinh-sua", method = RequestMethod.GET)
 	public String chinhSuaSanPham(ModelMap model,
+			HttpSession session,
 			@RequestParam String sp
 			) {
+		if(session.getAttribute("user")==null) {
+			return "redirect:/dangnhap.htm";
+		}
 		LoaiSanPham sanPham = tim1LoaiSanPham(sp);
 		Hibernate.initialize(sanPham.getMaTheLoai());
 		Hibernate.initialize(sanPham.getMaHang());
@@ -193,6 +216,9 @@ public class SPController {
 		Hibernate.initialize(sanPham.getMaTheLoai());
 		Hibernate.initialize(sanPham.getMaHang());
 		NhanVien nv = (NhanVien) session.getAttribute("user");
+		if(nv==null) {
+			return "redirect:/dangnhap.htm";
+		}
 		String tenSP = request.getParameter("ten");
 		if (!sanPham.getTenSP().equals(tenSP)) 
 			{	check++;
@@ -240,8 +266,6 @@ public class SPController {
 		String hang = request.getParameter("hangSanXuat");
 		if (!sanPham.getMaHang().getMaHang().equals(hang)) check++;
 		BigDecimal gia1 = new BigDecimal(gia);
-		System.out.println(check);
-		System.out.println(check1);
 		if (sanPham.getGia().compareTo(gia1) != 0) {
 			sanPham.setGia(gia1);
 			check1++;
@@ -252,8 +276,6 @@ public class SPController {
 			sanPham.setGiaNhap(giaNhap1);
 			check++;
 		}
-		//System.out.println(check);
-		//System.out.println(check1);
 		String fileName = saveImage(photo);
 		if(fileName!=null) {
 			sanPham.setAnh(fileName);
@@ -275,7 +297,6 @@ public class SPController {
 				t.commit();
 			} catch(Exception e) {
 				t.rollback();
-				//session1.close();
 				model.addAttribute("message", "Chỉnh sửa giá thất bại");
 			} finally {
 				session1.close();
@@ -296,15 +317,22 @@ public class SPController {
 		} else {
 			model.addAttribute("message", s);
 		}
-		
 		return "sp/chinh-sua";
 	}
 	@RequestMapping(value="danh-muc-san-pham/chinh-sua.htm", params="btnBack")
-	public String backDMSP() {
+	public String backDMSP(HttpSession session) {
+		if(session.getAttribute("user")==null) {
+			return "redirect:/dangnhap.htm";
+		}
 		return "redirect:/home/danh-muc-san-pham.htm";
 	}
 	@RequestMapping(value="danh-muc-san-pham/{sp}.htm", params = "linkDelete") 
-	public String deleteLoaiSanPham(ModelMap model, @PathVariable("sp") String maLoai) {
+	public String deleteLoaiSanPham(ModelMap model, 
+			HttpSession ss,
+			@PathVariable("sp") String maLoai) {
+		if(ss.getAttribute("user")==null) {
+			return "redirect:/dangnhap.htm";
+		}
 		LoaiSanPham sanPham = tim1LoaiSanPham(maLoai);
 		
 		List<ChinhSuaGia> csg = getChinhSuaGia(maLoai);
@@ -509,6 +537,10 @@ public class SPController {
 		model.addAttribute("startPage", startPage);
 		model.addAttribute("endPage", endPage);
 		model.addAttribute("listLoaiSanPham", listLoaiSanPham);
+		for (LoaiSanPham l :  listLoaiSanPham) {
+			System.out.println(l.getMaLoai());
+			System.out.println(l.getCtDotGiamGia());
+		}
 		if (gh == null) {
 			model.addAttribute("SLsanPham", "0");
 		} else {
@@ -698,8 +730,8 @@ public class SPController {
 	@RequestMapping(value="shop-single", method = RequestMethod.GET)
 	public String show1LoaiSanPham(ModelMap model,
 			HttpServletRequest request,
-			@RequestParam() String lsp) {
-		
+			@RequestParam(defaultValue = "") String lsp) {
+		if (lsp.equals("")) return "redirect:/home/shop.htm";
 		LoaiSanPham x = tim1LoaiSanPham(lsp);
 		BigDecimal strippedValue = x.getGia().stripTrailingZeros();
 		x.setGia(strippedValue);
@@ -1050,6 +1082,9 @@ public class SPController {
 			HttpSession session,
 			HttpServletRequest request) {
 		KhachHang nguoi = (KhachHang) session.getAttribute("user");
+		if(nguoi == null) {
+			return "redirect:/dangnhap.htm";
+		}
 		List<GioHang> gh = getGHid_DangGiao(nguoi.getEmail());
 		if (gh == null) {
 			return "sp/dang-giao";
@@ -1176,6 +1211,8 @@ public class SPController {
 		    	loaiSanPham.setCtDotGiamGia(getCTDotGiamGia(dgg.getMaDot(), loaiSanPham.getMaLoai()));
 		    }
 		}
+		
+		
 		return list;
 	}
 	private DotGiamGia getDotGiamGia() {
@@ -1260,9 +1297,19 @@ public class SPController {
 		query.setParameter("product_name1","%" + tmp.get(1)+ "%" );
 		int offset = page * pageSize;
 		List<LoaiSanPham> list = query.setFirstResult(offset).setMaxResults(pageSize).list();
+		DotGiamGia dgg = getDotGiamGia();
 		for (LoaiSanPham loaiSanPham : list) {
 		    loaiSanPham.setSanPham(getSanPham(loaiSanPham.getMaLoai()));
+		    if(dgg == null) {
+		    	loaiSanPham.setCtDotGiamGia(null);
+		    }
+		    else {
+		    	loaiSanPham.setCtDotGiamGia(getCTDotGiamGia(dgg.getMaDot(), loaiSanPham.getMaLoai()));
+		    }
 		}
+		
+		
+		
 		return list;
 	}
 	
@@ -1342,7 +1389,10 @@ public class SPController {
 	}
 	// Xử lý thêm sản phẩm 
 	@RequestMapping(value="add", method = RequestMethod.GET)
-	public String form(ModelMap model) {
+	public String form(ModelMap model, HttpSession session) {
+		if(session.getAttribute("user")==null) {
+			return "redirect:/dangnhap.htm";
+		}
 		String hinhAnh = "sp.png";
 		model.addAttribute("hinhanh", hinhAnh);
 		List<TheLoai> theLoai = getALLTheLoai();
@@ -1366,6 +1416,9 @@ public class SPController {
 			return "sp/themsp";
 		}
 		NhanVien nv = (NhanVien) session.getAttribute("user");
+		if(nv==null) {
+			return "redirect:/dangnhap.htm";
+		}
 		String tenSP = request.getParameter("ten");
 		String gia = request.getParameter("gia");
 		String giaNhap = request.getParameter("giaNhap");
@@ -1410,10 +1463,10 @@ public class SPController {
 			String theLoai,
 			String hangSanXuat, NhanVien nv) {
 			
-			System.out.println(theLoai);
+			//System.out.println(theLoai);
 			TheLoai tl = getTheLoai(theLoai);
 			HangSanXuat hsx = getHangSanxuat(hangSanXuat);
-			System.out.println(hangSanXuat);
+			//System.out.println(hangSanXuat);
 			LocalDate localDate = LocalDate.now();
 			Date currentDate = Date.valueOf(localDate);
 			ChinhSuaGia csg = new ChinhSuaGia(currentDate,x.getGia(), nv, x);
@@ -1466,11 +1519,14 @@ public class SPController {
 				t.commit();
 			} catch(Exception e) {
 				t.rollback();
+//				System.out.println(e.getMessage());
+//				System.out.println(x.getMaLoai());
 				session.close();
 				return "Thêm sản phẩm thất bại";
 			} finally {
 				session.close();
 			}
+			
 			return "TC";
 		}
 	
