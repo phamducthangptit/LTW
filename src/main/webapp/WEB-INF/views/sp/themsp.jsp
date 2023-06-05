@@ -74,47 +74,47 @@ https://templatemo.com/tm-559-zay-shop
                         	<div class="row g-3">
 							  <div class="col-md-4">
 							    <label for="productType">Mã loại sản phẩm:</label>
-							    <input type="text" class="form-control" name="maLoai" placeholder="Vostro 15 3520" >
+							    <input type="text" class="form-control" name="maLoai" placeholder="Vostro 15 3520" maxlength="15" required="required">
 							  </div>
 							  <div class="col-md-8">
 							    <label for="productName">Tên sản phẩm:</label>
-							    <input type="text" class="form-control"  name="ten" placeholder="Laptop DELL" >
+							    <input type="text" class="form-control"  name="ten" placeholder="Laptop DELL" maxlength="50" required="required">
 							  </div>
 							  <div class="col-md-6">
 							    <label for="productPrice">Giá bán:</label>
-							    <input type="number" class="form-control" name="gia" >
+							    <input type="number" class="form-control" name="gia" required="required">
 							  </div>
 							  <div class="col-md-6">
 							    <label for="productPrice">Giá nhập:</label>
-							    <input type="number" class="form-control" name="giaNhap"  >
+							    <input type="number" class="form-control" name="giaNhap" required="required" >
 							  </div>
 							  <div class="col-md-6">
 							    <label for="productCPU">CPU:</label>
-							    <input type="text" class="form-control"  name="cpu" placeholder="Nhập thông tin CPU" >
+							    <input type="text" class="form-control"  name="cpu" maxlength="50" placeholder="Nhập thông tin CPU" required="required" >
 							  </div>
 							  <div class="col-md-6">
 							    <label for="productRAM">RAM:</label>
-							    <input type="text" class="form-control" name="ram" placeholder="Nhập thông tin RAM" >
+							    <input type="text" class="form-control" name="ram" maxlength="50" placeholder="Nhập thông tin RAM" required="required">
 							  </div>
 							  <div class="col-md-6">
 							    <label for="productHardware">Hardware:</label>
-							    <input type="text" class="form-control"  name="hardware" placeholder="Nhập thông tin phần cứng" >
+							    <input type="text" class="form-control"  name="hardware" maxlength="50" placeholder="Nhập thông tin phần cứng" required="required">
 							  </div>
 							  <div class="col-md-6">
 							    <label for="productCard">Card màn hình:</label>
-							    <input type="text" class="form-control"  name="card" placeholder="Nhập thông tin card màn hình" >
+							    <input type="text" class="form-control"  name="card"  maxlength="50" placeholder="Nhập thông tin card màn hình" required="required">
 							  </div>
 							  <div class="col-md-12">
 							    <label for="productScreen">Màn hình:</label>
-							    <input type="text" class="form-control"  name="screen" placeholder="Nhập thông tin màn hình" >
+							    <input type="text" class="form-control"  name="screen" maxlength="50"  placeholder="Nhập thông tin màn hình" required="required">
 							  </div>
 							  <div class="col-md-12">
 							    <label for="productOS">Hệ điều hành:</label>
-							    <input type="text" class="form-control"  name="os" placeholder="Nhập thông tin hệ điều hành" >
+							    <input type="text" class="form-control"  name="os" maxlength="50" placeholder="Nhập thông tin hệ điều hành" required="required">
 							  </div>
 							  <div class="col-md-6">
 							  	<label for="theLoai" class="form-label">Thể loại:</label>
-							  	<input type="text" list="theLoais" name="theLoai" class="form-control" >
+							  	<input type="text" list="theLoais" name="theLoai" class="form-control" required="required">
 							  	<datalist id="theLoais">
 							      <c:forEach items="${listTheLoai}" var="product">
 							        <option value="${product.getMaTheLoai()}">${product.getTenTL()}</option>
@@ -123,7 +123,7 @@ https://templatemo.com/tm-559-zay-shop
 							  </div>
 							  <div class="col-md-6">
 							  	<label for="moTa" class="form-label">Hãng sản xuất:</label>
-							  	<input type="text" list="listHang" name="hangSanXuat" class="form-control" >
+							  	<input type="text" list="listHang" name="hangSanXuat" class="form-control" required="required">
 							  	<datalist id="listHang">
 							      <c:forEach items="${listHang}" var="product">
 							        <option value="${product.getMaHang()}">${product.getTenHang()}</option>

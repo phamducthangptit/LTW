@@ -47,31 +47,35 @@ https://templatemo.com/tm-559-zay-shop
 
     <!-- Open Content -->
     <section class="bg-light">
-        <div class="container pb-5">
+        <div class="container pb-5" >
         <c:if test="${cart == null}">
-        <p>Chưa có sản phẩm nào ....</p>
+        	 <div class="card">
+        	 <div class="col-lg-12 mt-5 text-center align-middle" >
+        		<p>Chưa có sản phẩm nào ....</p>
+        		</div>
+        </div>
         </c:if>
          <c:if test="${cart != null}">
         <c:forEach items="${cart}" var="product">
-        	<div class="row">
-        		
-	                <div class="col-lg-1 mt-5">
-	                <div class="card">
-	                    <div class="card mb-3">
+        
+        		 <div class="card">
+        		 	<div class="row">
+	                <div class="col-lg-2 mt-5" style="text-align: center;">
+	               
+
 	                        <a href="/BanLaptop/home/shop-single.htm?lsp=${product.getLsp().getMaLoai()}">
-                                <img class="card-img rounded-0 img-fluid" src="<c:url value ='/resource/images/${product.getLsp().getAnh()}'/>">
+                                <img class="card-img rounded-0 img-fluid" src="<c:url value ='/resource/images/${product.getLsp().getAnh()}'/>" style="width:100px;height:100px;">
                                 </a>
-	                    </div> 
+
 	                    </div>
-	                </div>
-	                <div class="col-lg-11 mt-5">
-	                	<div class="card">
+	                <div class="col-lg-10 mt-5">
+
 	                	<div class="card-body">
 	                	<div class="row">
 		                		<div class="col-md-5">
-		                		<a href="/BanLaptop/home/shop-single.htm?lsp=${product.getLsp().getMaLoai()}" class="h2 text-decoration-none text-dark">- Tên: ${product.getLsp().getMaLoai()}-${product.getLsp().getTenSP()}</a>
+		                		<a href="/BanLaptop/home/shop-single.htm?lsp=${product.getLsp().getMaLoai()}" class="h2 text-decoration-none text-dark">Tên: ${product.getLsp().getMaLoai()}-${product.getLsp().getTenSP()}</a>
 			  					<p>
-			  					- Đơn giá: 
+			  					 Đơn giá: 
 			  					<c:if test="${product.getLsp().getCtDotGiamGia() == null}">
                                 	${product.getLsp().getGia().toPlainString()} VND 
                                 	<c:set var="soTien" value ="${product.getLsp().getGia()*product.getSoLuong()}"/>

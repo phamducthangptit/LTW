@@ -47,20 +47,24 @@ https://templatemo.com/tm-559-zay-shop
     
 
 
-
+	<c:if test="${product1 != null}">
     <!-- Start Banner Hero -->
     <div id="template-mo-zay-hero-carousel" class="carousel slide" data-bs-ride="carousel">
         <ol class="carousel-indicators">
             <li data-bs-target="#template-mo-zay-hero-carousel" data-bs-slide-to="0" class="active"></li>
             <li data-bs-target="#template-mo-zay-hero-carousel" data-bs-slide-to="1"></li>
             <li data-bs-target="#template-mo-zay-hero-carousel" data-bs-slide-to="2"></li>
+            <li data-bs-target="#template-mo-zay-hero-carousel" data-bs-slide-to="3"></li>
+            <li data-bs-target="#template-mo-zay-hero-carousel" data-bs-slide-to="4"></li>
         </ol>
+        
         <div class="carousel-inner">
+        
         <div class="carousel-item active">
                 <div class="container">
                     <div class="row p-5">
                         <div class="mx-auto col-md-8 col-lg-6 order-lg-last">
-                            <img class="img-fluid" src="<c:url value ='/resource/images/${product1.getAnh()}'/>" alt="">
+                            <img class="img-fluid" src="<c:url value ='/resource/images/${product1.getAnh()}'/>" style="height:400px;">
                         </div>
                         <div class="col-lg-6 mb-0 d-flex align-items-center">
                             <div class="text-align-left">
@@ -74,12 +78,13 @@ https://templatemo.com/tm-559-zay-shop
                     </div>
                 </div>
             </div>
+          <c:if test="${listProducts != null}">
         <c:forEach items="${listProducts}" var="product">
             <div class="carousel-item">
                 <div class="container">
                     <div class="row p-5">
                         <div class="mx-auto col-md-8 col-lg-6 order-lg-last">
-                            <img class="img-fluid" src="<c:url value ='/resource/images/${product.getAnh()}'/>" alt="">
+                            <img class="img-fluid" src="<c:url value ='/resource/images/${product.getAnh()}'/>" style="height:400px;">
                         </div>
                         <div class="col-lg-6 mb-0 d-flex align-items-center">
                             <div class="text-align-left">
@@ -94,6 +99,7 @@ https://templatemo.com/tm-559-zay-shop
                 </div>
             </div>
             </c:forEach>
+            </c:if>
         </div>
         <a class="carousel-control-prev text-decoration-none w-auto ps-3" href="#template-mo-zay-hero-carousel" role="button" data-bs-slide="prev">
             <i class="fas fa-chevron-left"></i>
@@ -102,6 +108,7 @@ https://templatemo.com/tm-559-zay-shop
             <i class="fas fa-chevron-right"></i>
         </a>
     </div>
+       </c:if>
     <!-- End Banner Hero -->
 
 
@@ -148,6 +155,7 @@ https://templatemo.com/tm-559-zay-shop
                 </div>
             </div>
             <div class="row">
+            <c:if test="${listLoaiSanPham != null}">
             <c:forEach items="${listLoaiSanPham}" var="product">
                 <div class="col-12 col-md-4 mb-4">
                     <div class="card h-100">
@@ -175,6 +183,7 @@ https://templatemo.com/tm-559-zay-shop
                     </div>
                 </div>
                 </c:forEach>
+                </c:if>
                </div>
         </div>
     </section>

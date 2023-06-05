@@ -46,7 +46,7 @@ https://templatemo.com/tm-559-zay-shop
     
 
 
-
+	<c:if test="${product1 != null}">
     <!-- Start Banner Hero -->
     <div id="template-mo-zay-hero-carousel" class="carousel slide" data-bs-ride="carousel">
         <ol class="carousel-indicators">
@@ -73,6 +73,7 @@ https://templatemo.com/tm-559-zay-shop
                     </div>
                 </div>
             </div>
+            <c:if test="${listProducts != null}">
         <c:forEach items="${listProducts}" var="product">
             <div class="carousel-item">
                 <div class="container">
@@ -93,6 +94,7 @@ https://templatemo.com/tm-559-zay-shop
                 </div>
             </div>
             </c:forEach>
+            </c:if>
         </div>
         <a class="carousel-control-prev text-decoration-none w-auto ps-3" href="#template-mo-zay-hero-carousel" role="button" data-bs-slide="prev">
             <i class="fas fa-chevron-left"></i>
@@ -102,7 +104,7 @@ https://templatemo.com/tm-559-zay-shop
         </a>
     </div>
     <!-- End Banner Hero -->
-
+</c:if>
 
     
     
