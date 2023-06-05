@@ -16,7 +16,7 @@
 					href="tel:028 3730 6600">028 3730 6600</a>
                 </div>
                 <div>
-                    <a class="text-light" href="https://fb.com/templatemo" target="_blank" rel="sponsored"><i
+                    <a class="text-light" href="http://facebook.com/" target="_blank" rel="sponsored"><i
                             class="fab fa-facebook-f fa-sm fa-fw me-2"></i></a>
                     <a class="text-light" href="https://www.instagram.com/" target="_blank"><i
                             class="fab fa-instagram fa-sm fa-fw me-2"></i></a>
@@ -57,10 +57,11 @@
                             
                         </li>
                         <li class="nav-item">
-                           <a class="nav-link" href="/BanLaptop/home/about.htm">About</a>
+                         <a class="nav-link" href="/BanLaptop/home/dang-giao.htm">Đang giao</a>
+                           
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/BanLaptop/home/dang-giao.htm">Đang giao</a>
+							<a class="nav-link" href="/BanLaptop/home/about.htm">Thông tin</a>
                         </li>
                     </ul>
                 </div>

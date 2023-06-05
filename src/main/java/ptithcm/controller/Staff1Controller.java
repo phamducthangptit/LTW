@@ -53,6 +53,11 @@ public class Staff1Controller {
 	@RequestMapping(value = "/homenv")
 	public String showHome(ModelMap model) {
 		List<LoaiSanPham> list1 = getLoaiSanPham_HOME();
+		if (list1 == null) {
+			model.addAttribute("listProducts", null);
+			model.addAttribute("product1", null);
+			return "staff/homeNV";
+		}
 		sort(list1);
 		ArrayList<LoaiSanPham> list2 = new ArrayList<>();
 		int n = list1.size() >= 5 ? 5 : list1.size();
@@ -89,6 +94,7 @@ public class Staff1Controller {
 		Query query = session.createQuery(hql);
 
 		List<LoaiSanPham> list = query.list();
+		if(list.size() == 0) return null;
 		for (LoaiSanPham loaiSanPham : list) {
 			loaiSanPham.setSanPham(getSanPhamBestSell(loaiSanPham.getMaLoai()));
 		}
