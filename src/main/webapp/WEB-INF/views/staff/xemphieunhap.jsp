@@ -80,9 +80,9 @@
                                 	</div>
                                 	</div>
                           </td> 
-						<td>${sp.seri }</td>
-						<td>${sp.maLoai.maLoai }</td>
-						<td>${sp.maLoai.tenSP}</td>
+						<td class="text-center align-middle">${sp.seri }</td>
+						<td class="text-center align-middle">${sp.maLoai.maLoai }</td>
+						<td class="text-center align-middle">${sp.maLoai.tenSP}</td>
 					</tr>
 					</c:forEach>
                     </tbody>

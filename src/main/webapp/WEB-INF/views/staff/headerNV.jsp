@@ -54,8 +54,16 @@
 			id="templatemo_main_nav">
 			<div class="flex-fill">
 
+				<%
+				Object ob1 = session.getAttribute("user1");
+				NhanVien nv1 = new NhanVien();
+				nv1 = (NhanVien) ob1;
+				if (nv1.getRole().equals("QL"))
+				{
+				%>
 				<ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto"
 					style="max-width: 800px;">
+					
 					<li class="nav-item"><a class="nav-link"
 						href="danhsachnhanvien.htm">Nhân Viên</a></li>
 					<li class="nav-item"><a class="nav-link" href="dondathang.htm">Nhập
@@ -69,8 +77,30 @@
 
 					<li class="nav-item"><a class="nav-link" href="doanhthutheongay.htm">Doanh
 							Thu</a></li>
-			</ul>
+				</ul>
+				<%
+				}
+				else
+				{
+					
+				%>
+				<ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto"
+					style="max-width: 800px;">
+					<li class="nav-item"><a class="nav-link" href="dondathang.htm">Nhập
+							Hàng</a></li>
+					<li class="nav-item"><a class="nav-link"
+						href="/BanLaptop/home/danh-muc-san-pham.htm">Sản Phẩm</a></li>
+					<li class="nav-item"><a class="nav-link"
+						href="danhsachdotgiamgia.htm">Khuyến Mãi</a></li>
+					<li class="nav-item"><a class="nav-link"
+						href="nhanbaohanh.htm">Bảo Hành</a></li>
 
+					<li class="nav-item"><a class="nav-link" href="doanhthutheongay.htm">Doanh
+							Thu</a></li>
+					</ul>
+				<%
+				}
+				%>
 
 
 			</div>

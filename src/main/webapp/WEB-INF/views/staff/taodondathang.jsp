@@ -88,7 +88,6 @@
 				style="text-align: center;">
       	 <thead>
                         <tr>
-                        	
                             <th >Sản Phẩm</th>
                             <th >Số lượng</th>
                             <th ></th>
@@ -104,7 +103,6 @@
        				</c:forEach>
        				</select>
        				</td>
-       				
 						<td> <input type="number" size="4" name="soLuong" min="1" max="100" id="soLuong" value="1"   style="text-align: center;" required="required"></td>
 						<td> <button type="submit" class="btn btn-success btn-lg px-3" name ="themDDH" value = "themDDH">Thêm</button></td>
 					</tr>
@@ -136,10 +134,10 @@
                                 	</div>
                                 	</div>
                        </td> 
-						<td>${listSP.get(i).maLoai} - ${listSP.get(i).tenSP}</td>
+						<td class="text-center align-middle">${listSP.get(i).maLoai} - ${listSP.get(i).tenSP}</td>
 						
-						<td>${listSL.get(i)}</td>
-						<td width = "50px"><a href="XoaSPtabledondathang.htm?maLoai=${listSP.get(i).maLoai}&maNCC=${NCC.maNCC}&ngayDat=${ngayDat}&maDDH=${maDDH}"><i class="fa fa-trash" style = "color : black" aria-hidden="true"></i></a></td>
+						<td class="text-center align-middle">${listSL.get(i)}</td>
+						<td class="text-center align-middle" width = "50px"><a href="XoaSPtabledondathang.htm?maLoai=${listSP.get(i).maLoai}&maNCC=${NCC.maNCC}&ngayDat=${ngayDat}&maDDH=${maDDH}"><i class="fa fa-trash" style = "color : black" aria-hidden="true"></i></a></td>
 					</tr>
 					</c:forEach>
 					</c:if>
