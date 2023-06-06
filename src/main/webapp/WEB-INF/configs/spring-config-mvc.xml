@@ -15,6 +15,25 @@
 	<mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="/home/**"/>
+			<mvc:mapping path="/doanhthutheongay.htm"/>
+			<mvc:mapping path="/doanhthutheothang.htm"/>
+			<mvc:mapping path="/deletencc.htm"/>
+			<mvc:mapping path="/ctncc.htm"/>
+			<mvc:mapping path="/danhsachnhacungcap.htm"/>
+			<mvc:mapping path="/themnhacungcap.htm"/>
+			<mvc:mapping path="/deletedotgg.htm"/>
+			<mvc:mapping path="/ctdotgg.htm"/>
+			<mvc:mapping path="/danhsachdotgiamgia.htm"/>
+			<mvc:mapping path="/taodotgiamgia.htm"/>
+			<mvc:mapping path="/thongtincanhannv.htm"/>
+			<mvc:mapping path="/doimatkhaunv.htm"/>
+			<mvc:mapping path="/homenv.htm"/>
+			<mvc:mapping path="/thongtincanhanuser.htm"/>
+			<mvc:mapping path="/doimatkhauuser.htm"/>
+			<mvc:mapping path="/dangxuat.htm"/>
+			
+			
+			
 			<mvc:exclude-mapping path="/home/"/>
 			<mvc:exclude-mapping path="/home/index.htm"/>
 			<mvc:exclude-mapping path="/home/shop.htm"/>
@@ -22,6 +41,7 @@
 			<mvc:exclude-mapping path="/home/shop/search/**"/>
 			<mvc:exclude-mapping path="/home/shop-single.htm"/>
 			<mvc:exclude-mapping path="/home/about.htm"/>
+			
 			<!-- <mvc:exclude-mapping path="staff/home.htm"/> -->
 			<bean class = "ptithcm.interceptor.SecurityInterceptor"/>
 		</mvc:interceptor>

@@ -56,7 +56,7 @@
         <section class = "bg-light">
         	<div class = "card-body">
             <div class = "container py-5">
-                <h2>Danh sách Giỏ Hàng Chưa Giao</h2>
+                <h2>Danh Sách Giỏ Hàng Chưa Giao</h2>
                <br>  <br>  <br>
                
                 <table class="table table-light table-striped table-hover bordered-dark"

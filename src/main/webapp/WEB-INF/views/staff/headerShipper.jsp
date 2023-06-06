@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@page import="ptithcm.model.NhanVien"%>
-<%@page import="ptithcm.model.KhachHang"%>
 <link rel="shortcut icon" type="image/x-icon"
 	href="<c:url value='/resource/assets/img/logo.png'/>">
 <nav
@@ -75,17 +74,11 @@
 				<%
 				String hr = "";
 				Object ob = session.getAttribute("user2");
-				KhachHang kh = new KhachHang();
+				
+				hr = "thongtincanhannv.htm";
 				NhanVien nv = new NhanVien();
-				try{
-					kh = (KhachHang) ob;
-					hr = "thongtincanhanuser.htm";
-				} catch (Exception ex){
-					nv = (NhanVien) ob;
-					hr = "thongtincanhannv.htm";
-				}
-			
-				if (kh == null) {
+				nv = (NhanVien) ob;
+				if (nv == null) {
 					hr = "dangnhap.htm";
 				}
 				%>
@@ -95,7 +88,7 @@
 					class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark"></span>
 				</a>
 				<%
-				if (kh != null) {
+				if (nv != null) {
 				%>
 				<a class="nav-icon position-relative text-decoration-none"
 					href="dangxuat.htm"> <i

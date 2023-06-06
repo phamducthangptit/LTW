@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Tạo Phiếu Nhập</title>
+<title>Chi Tiết Phiếu Trả</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -25,29 +25,17 @@
 	href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700;900&display=swap">
 <link rel="stylesheet"
 	href="<c:url value='/resource/assets/css/fontawesome.min.css'/>">
-<!--
 
--->
+
 <%@include file="headerNV.jsp"%>
+
+</head>
+<body>
+
 </head>
 <body>
  <!-- Modal -->
-    <div class="modal fade bg-white" id="templatemo_search" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="w-100 pt-1 mb-5 text-right">
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form action="" method="get" class="modal-content modal-body border-0 p-0">
-                <div class="input-group mb-2">
-                    <input type="text" class="form-control" id="inputModalSearch" name="q" placeholder="Search ...">
-                    <button type="submit" class="input-group-text bg-success text-light">
-                        <i class="fa fa-fw fa-search text-white"></i>
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
-
+   
 
     <!-- Start Content Page -->
     <main>
@@ -59,20 +47,19 @@
        <div class = "card">
        <div class = "card-body">
       
-       <h4>Tạo Phiếu Nhập</h4>
+       <h4>Phiếu Trả</h4>
        <ul >
-       	<li class = "pb-3"> Nhân Viên Đặt : <br>${NhanVien.maNV } - ${NhanVien.ho } ${NhanVien.ten }</li>
-       		<li class = "pb-3"> Số Phiếu Nhập : ${soPhieuNhap}</li>
-       	<li class = "pb-3"> Mã Đơn : ${DDH.maDDH }</li>
-       	<li class = "pb-3"> Ngày Lập : ${NgayNhap}</li>
-       	<li class = "pb-3"> Nhà Cung Cấp : ${DDH.maNCC.tenNCC}</li>
+       	<li class = "pb-3"> Nhân Viên Trả : <br>${sp.soPhieuTra.maNV.maNV } - ${sp.soPhieuTra.maNV.ho } ${sp.soPhieuTra.maNV.ten }</li>
+       		<li class = "pb-3"> Số Phiếu Trả : ${sp.soPhieuTra.soPhieuTra}</li>
+       	<li class = "pb-3"> Số Hóa Đơn : ${sp.soPhieuTra.soHoaDon.soHoaDon }</li>
+       	<li class = "pb-3"> Ngày Trả : ${sp.soPhieuTra.ngayTra}</li>
+
        </ul>
-    <a class="btn btn-success btn-lg px-3"href="taophieunhap.htm?idDDH=${DDH.maDDH}&loaiBtn=luu">Lưu Phiếu Nhập</a>
-    <a class="btn btn-success btn-lg px-3"href="taophieunhap.htm?idDDH=${DDH.maDDH}&loaiBtn=huy">Hủy</a>
+     
        </div>
        </div>
        </div>
-       <div class = "col-lg-9 mt-9">
+       <div class = "col-lg-9">
        <table class="table table-light table-striped table-hover bordered-dark"
 				style="text-align: center;">
                     <thead>
@@ -81,10 +68,10 @@
                         	<th width="200">Seri Sản Phẩm</th>
                             <th width="200">Mã Loại Sản Phẩm</th>
                             <th >Tên Sản Phẩm</th>
+                            <th>Đơn Giá Bán</th>
                           </tr>
                     </thead>
                     <tbody>
-                    <c:forEach var="sp" items="${listSPNhap}">
 					<tr>
 						 <td class="col-md-2">
                                  <div class="card mb-2 product-wap rounded-0">
@@ -96,8 +83,8 @@
 						<td class="text-center align-middle">${sp.seri }</td>
 						<td class="text-center align-middle">${sp.maLoai.maLoai }</td>
 						<td class="text-center align-middle">${sp.maLoai.tenSP}</td>
+						<td class="text-center align-middle">${sp.maLoai.gia.intValue()} VND</td>
 					</tr>
-					</c:forEach>
                     </tbody>
                     
        </table>

@@ -54,14 +54,20 @@
 			id="templatemo_main_nav">
 			<div class="flex-fill">
 
+				<%
+				Object ob1 = session.getAttribute("user1");
+				NhanVien nv1 = new NhanVien();
+				nv1 = (NhanVien) ob1;
+				if (nv1.getRole().equals("QL"))
+				{
+				%>
 				<ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto"
 					style="max-width: 800px;">
+					
 					<li class="nav-item"><a class="nav-link"
 						href="danhsachnhanvien.htm">Nhân Viên</a></li>
 					<li class="nav-item"><a class="nav-link" href="dondathang.htm">Nhập
 							Hàng</a></li>
-					<!-- 					<li class="nav-item"><a class="nav-link"
-						href="danhsachdotgiamgia.htm">Đợt giảm giá</a> -->
 					<li class="nav-item"><a class="nav-link"
 						href="/BanLaptop/home/danh-muc-san-pham.htm">Sản Phẩm</a></li>
 					<li class="nav-item"><a class="nav-link"
@@ -71,8 +77,30 @@
 
 					<li class="nav-item"><a class="nav-link" href="doanhthutheongay.htm">Doanh
 							Thu</a></li>
-			</ul>
+				</ul>
+				<%
+				}
+				else
+				{
+					
+				%>
+				<ul class="nav navbar-nav d-flex justify-content-between mx-lg-auto"
+					style="max-width: 800px;">
+					<li class="nav-item"><a class="nav-link" href="dondathang.htm">Nhập
+							Hàng</a></li>
+					<li class="nav-item"><a class="nav-link"
+						href="/BanLaptop/home/danh-muc-san-pham.htm">Sản Phẩm</a></li>
+					<li class="nav-item"><a class="nav-link"
+						href="danhsachdotgiamgia.htm">Khuyến Mãi</a></li>
+					<li class="nav-item"><a class="nav-link"
+						href="nhanbaohanh.htm">Bảo Hành</a></li>
 
+					<li class="nav-item"><a class="nav-link" href="doanhthutheongay.htm">Doanh
+							Thu</a></li>
+					</ul>
+				<%
+				}
+				%>
 
 
 			</div>
@@ -95,17 +123,10 @@
 				<%
 				String hr = "";
 				Object ob = session.getAttribute("user1");
-				KhachHang kh = new KhachHang();
 				NhanVien nv = new NhanVien();
-				try {
-					kh = (KhachHang) ob;
-					hr = "thongtincanhanuser.htm";
-				} catch (Exception ex) {
-					nv = (NhanVien) ob;
-					hr = "thongtincanhannv.htm";
-				}
-
-				if (kh == null) {
+				nv = (NhanVien) ob;
+				hr = "thongtincanhannv.htm";
+				if (nv == null) {
 					hr = "dangnhap.htm";
 				}
 				%>
@@ -115,7 +136,7 @@
 					class="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark"></span>
 				</a>
 				<%
-				if (kh != null) {
+				if (nv != null) {
 				%>
 				<a class="nav-icon position-relative text-decoration-none"
 					href="dangxuat.htm"> <i

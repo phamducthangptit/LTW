@@ -93,10 +93,10 @@
                                </div>
                            </div>
                         </td> 
-						<td>${ct.maLoai.maLoai }</td>
-						<td>${ct.maLoai.tenSP }</td>
-						<td>${ct.soLuong }</td>
-						<td>${ct.donGia.intValue() } VNĐ</td>
+						<td class="text-center align-middle">${ct.maLoai.maLoai }</td>
+						<td class="text-center align-middle">${ct.maLoai.tenSP }</td>
+						<td class="text-center align-middle">${ct.soLuong }</td>
+						<td class="text-center align-middle">${ct.donGia.intValue() } VNĐ</td>
 	
 					</tr>
 					</c:forEach>
