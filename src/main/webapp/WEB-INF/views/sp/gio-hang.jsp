@@ -87,18 +87,17 @@ https://templatemo.com/tm-559-zay-shop
                                 <td class="col-md-1 text-center align-middle">
                                 
                                 	<div class="checkbox-link">
-  									<input type="checkbox" id="checkboxId" class="form-check-input"  ${product.getCheck() == 1 ? 'checked':''} disabled>
   									<c:if test="${product.getCheck() == 0}">
-  									 <div class="align-self-center collapse navbar-collapse flex-fill  d-lg-flex justify-content-lg-between"
-                							id="templatemo_main_nav">
-                                	<a class="nav-link" href="/BanLaptop/home/gio-hang.htm?lsp=${product.getLsp().getMaLoai()}&thaotac=chon">Chọn</a>
-                                	</div>
+  									 
+                                		<a class="nav-link" href="/BanLaptop/home/gio-hang.htm?lsp=${product.getLsp().getMaLoai()}&thaotac=chon">
+                                		<i class="far fa-square fa-lg" style="color: #000000;"></i>
+                                		</a>
+                         
                                 	</c:if>
                                 	<c:if test="${product.getCheck() == 1}">
-  									 <div class="align-self-center collapse navbar-collapse flex-fill  d-lg-flex justify-content-lg-between"
-                							id="templatemo_main_nav">
-                                	<a class="nav-link" href="/BanLaptop/home/gio-hang.htm?lsp=${product.getLsp().getMaLoai()}&thaotac=bochon">Bỏ chọn</a>
-                                	</div>
+                                	<a class="nav-link" href="/BanLaptop/home/gio-hang.htm?lsp=${product.getLsp().getMaLoai()}&thaotac=bochon">
+                                	<i class="far fa-check-square fa-lg" style="color: #000000;"></i>
+                                	</a>
                                 	</c:if>
                                 	</div>
                                 </td>

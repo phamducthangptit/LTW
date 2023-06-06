@@ -223,12 +223,12 @@ https://templatemo.com/tm-559-zay-shop
 										<div class="col d-grid">
 											<button type="submit"
 												class="btn btn-success btn-lg ${product.getSanPham() == null ? 'disabled':''}"
-												name="btnBuy" value="buy">Mua ngay</button>
+												name="btnBuy" value="buy"><i class="fas fa-shipping-fast"></i> Mua ngay</button>
 										</div>
 										<div class="col d-grid">
 											<button type="submit"
 												class="btn btn-success btn-lg ${product.getSanPham() == null ? 'disabled':''}">Thêm
-												vào giỏ hàng</button>
+												vào giỏ hàng <i class="fas fa-cart-plus"></i></button>
 
 										</div>
 									</div>
