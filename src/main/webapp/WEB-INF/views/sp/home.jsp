@@ -64,7 +64,9 @@ https://templatemo.com/tm-559-zay-shop
                 <div class="container">
                     <div class="row p-5">
                         <div class="mx-auto col-md-8 col-lg-6 order-lg-last">
+                        <a href="/BanLaptop/home/shop-single.htm?lsp=${product1.getMaLoai()}">
                             <img class="img-fluid" src="<c:url value ='/resource/images/${product1.getAnh()}'/>" style="height:400px;">
+                        </a>
                         </div>
                         <div class="col-lg-6 mb-0 d-flex align-items-center">
                             <div class="text-align-left">
@@ -84,7 +86,9 @@ https://templatemo.com/tm-559-zay-shop
                 <div class="container">
                     <div class="row p-5">
                         <div class="mx-auto col-md-8 col-lg-6 order-lg-last">
+                        <a href="/BanLaptop/home/shop-single.htm?lsp=${product.getMaLoai()}">
                             <img class="img-fluid" src="<c:url value ='/resource/images/${product.getAnh()}'/>" style="height:400px;">
+                            </a>
                         </div>
                         <div class="col-lg-6 mb-0 d-flex align-items-center">
                             <div class="text-align-left">
@@ -156,28 +160,28 @@ https://templatemo.com/tm-559-zay-shop
             </div>
             <div class="row">
             <c:if test="${listLoaiSanPham != null}">
-            <c:forEach items="${listLoaiSanPham}" var="product">
+            <c:forEach items="${listLoaiSanPham}" var="product2">
                 <div class="col-12 col-md-4 mb-4">
                     <div class="card h-100">
-                        <a href="/BanLaptop/home/shop-single.htm?lsp=${product.getMaLoai()}">
-                            <img src="<c:url value ='/resource/images/${product.getAnh()}'/>" class="card-img-top" alt="...">
+                        <a href="/BanLaptop/home/shop-single.htm?lsp=${product2.getMaLoai()}">
+                            <img src="<c:url value ='/resource/images/${product2.getAnh()}'/>" class="card-img-top" alt="...">
                         </a>
                         <div class="card-body">
                             
-                            <a href="/BanLaptop/home/shop-single.htm?lsp=${product.getMaLoai()}" class="h2 text-decoration-none text-dark">${product.getMaLoai()} ${product.getTenSP()}</a>
+                            <a href="/BanLaptop/home/shop-single.htm?lsp=${product2.getMaLoai()}" class="h2 text-decoration-none text-dark">${product2.getMaLoai()} ${product.getTenSP()}</a>
                             <p class="card-text">
-								<c:if test="${product.getSanPham().size() > 0}">
-                                <p class="text-center mb-0">Còn hàng</p>
+								<c:if test="${product2.getSanPham() != null}">
+                                <p class="text-center mb-0">Lượt bán: ${product2.getSanPham().size()}</p>
                                 </c:if>
-                                <c:if test="${product.getSanPham() == null}">
-                                <p class="text-center mb-0">Hết hàng</p>
+                                <c:if test="${product2.getSanPham() == null}">
+                                <p class="text-center mb-0">Lượt bán: 0</p>
                                 </c:if>
                             </p>
-                             <c:if test="${product.getBinhLuan() == null}">
+                             <c:if test="${product2.getBinhLuan() == null}">
                                 <p class="text-center">Lượt bình luận: 0</p>
                                 </c:if>
-                                <c:if test="${product.getBinhLuan() != null}">
-                                <p class="text-center">Lượt bình luận: ${product.getBinhLuan().size()}</p>
+                                <c:if test="${product2.getBinhLuan() != null}">
+                                <p class="text-center">Lượt bình luận: ${product2.getBinhLuan().size()}</p>
                                 </c:if>
                         </div>
                     </div>

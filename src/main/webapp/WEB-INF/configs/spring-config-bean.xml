@@ -17,7 +17,7 @@
 
 	<bean id="uploadfile" class="ptit.bean.UploadFile">
 		<property name="basePath"
-			value="D:\LapTrinhWeb\LTW\src\main\webapp\resource\images" />
+			value="C:\Users\Admin\Desktop\eclip-workspace\LTW\LTW\src\main\webapp\resource\images" />
 	</bean>
 
 </beans>
