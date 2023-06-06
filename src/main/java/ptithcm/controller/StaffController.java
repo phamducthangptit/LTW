@@ -58,7 +58,11 @@ public class StaffController {
 		{
 			return "redirect:dangnhap.htm";
 		}
-	
+		NhanVien nhanvien = (NhanVien) s.getAttribute("user1");
+		if (!nhanvien.getRole().equals("QL"))
+		{
+			return "redirect:homeNV.htm";
+		}
 		
 		org.hibernate.Session session = factory.getCurrentSession();
 		String hql =  "FROM NhanVien";
@@ -75,6 +79,11 @@ public class StaffController {
 		if ( s.getAttribute("user1") == null)
 		{
 			return "redirect:dangnhap.htm";
+		}
+		NhanVien nhanvien = (NhanVien) s.getAttribute("user1");
+		if (!nhanvien.getRole().equals("QL"))
+		{
+			return "redirect:homeNV.htm";
 		}
 		Session session = factory.getCurrentSession();
 		String hql =  "FROM NhanVien where maNV = :maNV";
@@ -103,6 +112,11 @@ public class StaffController {
 		{
 			return "redirect:dangnhap.htm";
 		}
+		NhanVien nhanvien = (NhanVien) s.getAttribute("user1");
+		if (!nhanvien.getRole().equals("QL"))
+		{
+			return "redirect:homeNV.htm";
+		}
 		Session session = factory.getCurrentSession();
 		String hql =  "FROM NhanVien";
 		Query query = session.createQuery(hql);
@@ -120,6 +134,11 @@ public class StaffController {
 		if ( s.getAttribute("user1") == null)
 		{
 			return "redirect:dangnhap.htm";
+		}
+		NhanVien nhanvien = (NhanVien) s.getAttribute("user1");
+		if (!nhanvien.getRole().equals("QL"))
+		{
+			return "redirect:homeNV.htm";
 		}
 		String maNV = request.getParameter("Id");
 		  String ho = request.getParameter("Ho"); 
@@ -187,6 +206,11 @@ public class StaffController {
 		{
 			return "redirect:dangnhap.htm";
 		}
+		NhanVien nhanvien = (NhanVien) s.getAttribute("user1");
+		if (!nhanvien.getRole().equals("QL"))
+		{
+			return "redirect:homeNV.htm";
+		}
 		Session session = factory.getCurrentSession();
 		String hql = "FROM NhanVien WHERE maNV = :maNV";
 	    Query query = session.createQuery(hql);
@@ -202,6 +226,11 @@ public class StaffController {
 		if ( s.getAttribute("user1") == null)
 		{
 			return "redirect:dangnhap.htm";
+		}
+		NhanVien nhanvien = (NhanVien) s.getAttribute("user1");
+		if (!nhanvien.getRole().equals("QL"))
+		{
+			return "redirect:homeNV.htm";
 		}
 		 Calendar calendar = Calendar.getInstance();
 		  Date currentDate = new Date(calendar.getTime().getTime());
@@ -344,7 +373,6 @@ public class StaffController {
 		Calendar calendar = Calendar.getInstance();
 		Date currentDate = new Date(calendar.getTime().getTime());
 		model.addAttribute("ngayDat",currentDate);
-		System.out.println(check);
 		return "staff/taoThongTinDDH";
 	}
 
@@ -719,7 +747,6 @@ public class StaffController {
 					if(currentDate.compareTo(spNhan.get(0).getPhieuBaoHanh().getNgayKetThuc()) > 0 )
 					{
 						model.addAttribute("HetHan","HetHan");
-						System.out.println("CHAY");
 					}
 					 if (spNhan.get(0).getPhieuBaoHanh().getNgayBatDau().compareTo(currentDate) <= 0 && currentDate.compareTo(dayreturns) <= 0 &&spNhan.get(0).getSoPhieuTra() == null)
 					 { 
@@ -1010,7 +1037,6 @@ public class StaffController {
 		@RequestMapping("donhangchuagiao")
 		public String danhSachgiohangchuagiao(Model model,HttpSession s)
 		{
-			System.out.println(s.getAttribute("user"));
 			if ( s.getAttribute("user2") == null)
 			{
 				return "redirect:dangnhap.htm";
@@ -1097,7 +1123,7 @@ public class StaffController {
 			gioHang.setMaShipper(nhanvien);
 			session.save(gioHang);
 
-			return "redirect:donhangdangnhan.htm";
+			return "redirect:donhangchuagiao.htm";
 		}
 		@RequestMapping("donhangdangnhan")
 		public String danhSachgiohangdangnhan(Model model, HttpServletRequest request,HttpSession s)
@@ -1189,6 +1215,21 @@ public class StaffController {
 			session.save(gioHang);
 
 			return "redirect:donhangdangnhan.htm";
+		}
+		@RequestMapping("ctphieutra")
+		public String xemPhieuTra(Model model , HttpServletRequest request ,HttpSession s) 
+		{
+			if ( s.getAttribute("user1") == null)
+			{
+				return "redirect:dangnhap.htm";
+			}
+			Session session = factory.getCurrentSession();
+			String hql  = "FROM SanPham Where seri = :seri";
+			Query query = session.createQuery(hql);
+			query.setParameter("seri",request.getParameter("seri"));
+			SanPham sp = (SanPham) query.uniqueResult();
+			model.addAttribute("sp",sp);
+			return "staff/ctphieutra";
 		}
 }
 
