@@ -1,6 +1,7 @@
 package ptithcm.controller;
 
 import java.math.BigDecimal;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Date;
 import java.util.List;
 import java.util.Random;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import ptithcm.email.SendEmail;
+import ptithcm.encrypt.PasswordEncoder;
 import ptithcm.model.KhachHang;
 import ptithcm.model.NhanVien;
 
@@ -35,7 +37,6 @@ public class UserController {
 	private String maXacThuc;
 	private String email;
 	private String maLayMk;
-
 	@RequestMapping(value = { "/", "/home" })
 	public String index() {
 		return "redirect:/home/index.htm";
@@ -54,9 +55,9 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/dangnhap", method = RequestMethod.POST)
-	public String dangNhap(HttpServletRequest request, Model model) {
+	public String dangNhap(HttpServletRequest request, Model model) throws NoSuchAlgorithmException {
 		String username = request.getParameter("username");
-		String pass = request.getParameter("pass");
+		String pass = PasswordEncoder.encodePassword(request.getParameter("pass"));
 
 		String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
 		Session session = factory.getCurrentSession();
@@ -125,22 +126,18 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/dangkitaikhoan", method = RequestMethod.POST)
-	public String dangKiTK(HttpServletRequest request, Model model) {
-
+	public String dangKiTK(HttpServletRequest request, Model model) throws NoSuchAlgorithmException {
 		email = request.getParameter("email");
 		String ho = request.getParameter("ho");
 		String ten = request.getParameter("ten");
 		String NS = request.getParameter("ngaySinh");
 		Date ngaySinh = Date.valueOf(NS);
 		String sdt = request.getParameter("SDT");
-		String pass = request.getParameter("pass");
-
+		String pass = PasswordEncoder.encodePassword(request.getParameter("pass"));
 		Session session = factory.getCurrentSession();
-
 		String hql = "FROM KhachHang KH WHERE KH.email = :email";
 		Query query = session.createQuery(hql);
 		query.setParameter("email", email);
-
 		if (query.list().size() == 0) { // email này chưa đăng kí tài khoản nào nên được phép đăng kí
 			KhachHang khachHang = new KhachHang(email, ho, ten, "", ngaySinh, sdt, pass, 0);
 			Random random = new Random(); // random mã để gửi mail
@@ -237,16 +234,16 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "/doimatkhauuser", method = RequestMethod.POST)
-	public String doiMkUser(HttpServletRequest request, Model model) {
+	public String doiMkUser(HttpServletRequest request, Model model) throws NoSuchAlgorithmException {
 		HttpSession s = request.getSession();
 
 		Object user = s.getAttribute("user");
 		KhachHang khachHang = new KhachHang();
 		khachHang = (KhachHang) user;
 		
-		String mkCu = request.getParameter("mkCu");
-		String mkMoi1 = request.getParameter("mkMoi1");
-		String mkMoi2 = request.getParameter("mkMoi2");
+		String mkCu = PasswordEncoder.encodePassword(request.getParameter("mkCu"));
+		String mkMoi1 =PasswordEncoder.encodePassword(request.getParameter("mkMoi1"));
+		String mkMoi2 = PasswordEncoder.encodePassword(request.getParameter("mkMoi2"));
 		if(!khachHang.getPass().equals(mkCu)) {
 			model.addAttribute("ErrorMkCu", "Mật khẩu cũ bạn nhập chưa chính xác!");
 			return "user/doimatkhau";

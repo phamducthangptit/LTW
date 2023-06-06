@@ -3,6 +3,7 @@ package ptithcm.controller;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -31,6 +32,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import ptithcm.encrypt.PasswordEncoder;
 import ptithcm.model.BinhLuan;
 import ptithcm.model.CTDotGiamGia;
 import ptithcm.model.CungCap;
@@ -114,7 +116,10 @@ public class Staff1Controller {
 
 	@RequestMapping(value = "/thongtincanhannv")
 	public String thongTinCaNhan(Model model, HttpSession session) {
-		Object user = session.getAttribute("user");
+		Object user = session.getAttribute("user1");
+		if(user == null) {
+			user = session.getAttribute("user2");
+		}
 		NhanVien nhanVien = new NhanVien();
 		nhanVien = (NhanVien) user;
 		model.addAttribute("nhanVien", nhanVien);
@@ -127,16 +132,19 @@ public class Staff1Controller {
 	}
 
 	@RequestMapping(value = "/doimatkhaunv", method = RequestMethod.POST)
-	public String doiMkUser(HttpServletRequest request, Model model) {
+	public String doiMkUser(HttpServletRequest request, Model model) throws NoSuchAlgorithmException {
 		HttpSession s = request.getSession();
 
-		Object user = s.getAttribute("user");
+		Object user = s.getAttribute("user1");
+		if(user == null) {
+			user = s.getAttribute("user2");
+		}
 		NhanVien nhanVien = new NhanVien();
 		nhanVien = (NhanVien) user;
 
-		String mkCu = request.getParameter("mkCu");
-		String mkMoi1 = request.getParameter("mkMoi1");
-		String mkMoi2 = request.getParameter("mkMoi2");
+		String mkCu = PasswordEncoder.encodePassword(request.getParameter("mkCu"));
+		String mkMoi1 = PasswordEncoder.encodePassword(request.getParameter("mkMoi1"));
+		String mkMoi2 = PasswordEncoder.encodePassword(request.getParameter("mkMoi2"));
 		if (!nhanVien.getPassword().equals(mkCu)) {
 			model.addAttribute("ErrorMkCu", "Mật khẩu cũ bạn nhập chưa chính xác!");
 			return "staff/doimatkhau";
@@ -195,7 +203,7 @@ public class Staff1Controller {
 			Date ngayKT = Date.valueOf(nKT);
 			String moTa = request.getParameter("moTa");
 			int soLuongSPGG = Integer.parseInt(request.getParameter("slSP"));
-			Object user = session.getAttribute("user");
+			Object user = session.getAttribute("user1");
 			NhanVien nhanVien = new NhanVien();
 			nhanVien = (NhanVien) user;
 			String hql = "FROM DotGiamGia";
@@ -237,7 +245,7 @@ public class Staff1Controller {
 				String moTa = request.getParameter("moTa");
 
 				int soLuongSPGG = Integer.parseInt(request.getParameter("slSP"));
-				Object user = session.getAttribute("user");
+				Object user = session.getAttribute("user1");
 				NhanVien nhanVien = new NhanVien();
 				nhanVien = (NhanVien) user;
 				DotGiamGia dotGG = new DotGiamGia(maDot, ngayBD, ngayKT, moTa, nhanVien);
@@ -419,7 +427,6 @@ public class Staff1Controller {
 				session.save(nhaCC);
 				hql = "FROM NhaCungCap";
 				for (String s : listLSP) {
-					System.out.println(s);
 					LoaiSanPham lsp = (LoaiSanPham) session.get(LoaiSanPham.class, s);
 					CungCap cungCap = new CungCap(lsp, nhaCC);
 					session.save(cungCap);
@@ -452,8 +459,22 @@ public class Staff1Controller {
 		Query query = session.createQuery(hql);
 		query.setParameter("mancc", id);
 		NhaCungCap nhaCungCap = (NhaCungCap) query.list().get(0);
+		
+		hql = "SELECT CC.maLoai FROM CungCap CC INNER JOIN CC.maLoai LSP WHERE CC.maLoai.maLoai = LSP.maLoai AND CC.maNCC.maNCC = :id";
+		query = session.createQuery(hql);
+		query.setParameter("id", id);
+		List<LoaiSanPham> lspDaCC = query.list();
+		
+		hql = "FROM LoaiSanPham";
+		query = session.createQuery(hql);
+		List<LoaiSanPham> lspChuaCC = query.list();
+		
+		lspChuaCC.removeAll(lspDaCC);
+		
 		model.addAttribute("nhaCC", nhaCungCap);
 		model.addAttribute("tontaiDDH", nhaCungCap.getDonDatHang().size());
+		model.addAttribute("SPCC", lspDaCC);
+		model.addAttribute("SPCCC", lspChuaCC);
 		return "staff/ctnhacungcap";
 	}
 
@@ -477,10 +498,16 @@ public class Staff1Controller {
 			nhaCungCap.setDiaChi(diaChi);
 			nhaCungCap.setEmail(email);
 			nhaCungCap.setSdt(sdt);
+			String[] listLSP = request.getParameterValues("selectedSP");
+			for (String s : listLSP) {
+				LoaiSanPham lsp = (LoaiSanPham) session.get(LoaiSanPham.class, s);
+				CungCap cungCap = new CungCap(lsp, nhaCungCap);
+				session.save(cungCap);
+			}
 		}
 		model.addAttribute("tontaiDDH", nhaCungCap.getDonDatHang().size());
 		model.addAttribute("nhaCC", nhaCungCap);
-		return "staff/ctnhacungcap";
+		return "redirect:/ctncc.htm?id=" + maNCC;
 
 	}
 
@@ -611,8 +638,15 @@ public class Staff1Controller {
 		q.setParameter("m", Integer.parseInt(thang));
 		q.setParameter("y", Integer.parseInt(nam));
 		List<Integer> ngayCoDoanhThu = q.list();
+		Set<Integer> ncdt = new HashSet<>();
+		for (Integer integer : ngayCoDoanhThu) {
+			ncdt.add(integer);
+		}
+		ngayCoDoanhThu.clear();
+		ngayCoDoanhThu.addAll(ncdt);
 		List<DoanhThuTheoNgay> resultKQ = new ArrayList<>();
 		for (Integer day : ngayCoDoanhThu) {
+			System.out.println(day);
 			Session s = factory.openSession();
 			Query query = ((SQLQuery) s.createSQLQuery("EXEC SP_THONGKEDOANHTHUTHEONGAY :d, :m, :y")
 					.setParameter("d", day, StandardBasicTypes.INTEGER)

@@ -29,7 +29,14 @@
 	justify-content: center;
 }
 </style>
+<%
+	Object ob1 = session.getAttribute("user1");
+	if(ob1 != null){
+%>
 <%@include file="headerNV.jsp"%>
+<%} else {%>
+<%@include file="headerShipper.jsp"%>
+<%} %>
 </head>
 <body>
 	<div class="container mt-4">
@@ -76,9 +83,7 @@
 							value="${nhanVien.email}">
 					</div>
 					<div class="mb-3">
-						<label for="pass" class="form-label">Mật khẩu</label> <input
-							type="password" class="form-control" name="pass"
-							value="${nhanVien.password}" required="required">
+					<a href="doimatkhaunv.htm">Đổi mật khẩu</a>
 					</div>
 					<div class="button-container">
 						<button type="submit" class="btn btn-success mb-4"
