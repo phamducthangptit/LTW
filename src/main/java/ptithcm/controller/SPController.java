@@ -149,7 +149,17 @@ public class SPController {
 		return list;
 	}
 	@RequestMapping(value="about",method = RequestMethod.GET)
-	public String showAbout() {
+	public String showAbout(ModelMap model, HttpSession session) {
+		KhachHang nguoi = (KhachHang) session.getAttribute("user");
+		GioHang gh1 = null;
+		if(nguoi != null) {
+			gh1 = getGioHang(nguoi.getEmail()); 
+		}
+		if (gh1 == null) {
+			model.addAttribute("SLsanPham", "0");
+		} else {
+			model.addAttribute("SLsanPham", getSLSanPhamCuaGH(gh1.getIdGH()));
+		}
 		return "sp/about";
 	}
 	@RequestMapping(value="danh-muc-san-pham", method = RequestMethod.GET)
@@ -480,7 +490,7 @@ public class SPController {
 		int endPage ;
 		String url = "/BanLaptop/home/shop.htm";
 		List<LoaiSanPham> listLoaiSanPham ;
-		KhachHang nguoi = (KhachHang) session.getAttribute("user");;
+		KhachHang nguoi = (KhachHang) session.getAttribute("user");
 		GioHang gh = null;
 		if(nguoi != null) {
 			gh = getGioHang(nguoi.getEmail()); 
@@ -801,7 +811,7 @@ public class SPController {
 		if(lsp.equals("")) {
 		
 		KhachHang nguoi = (KhachHang) session.getAttribute("user");;
-		
+		BigDecimal sum = ((BigDecimal) session.getAttribute("sumGH"));
 		
 		if(nguoi == null) {
 			return "redirect:/dangnhap.htm";
@@ -844,10 +854,11 @@ public class SPController {
 			tmp.setCheck(0);
 			cart.add(tmp);
 		}
-		model.addAttribute("sum",new BigDecimal(0));
+		model.addAttribute("sum",sum);
 		model.addAttribute("SLVP",cart1.size());
 		model.addAttribute("cart", cart);
 		} else {
+			if (cart.size() == 0) return "redirect:/home/gio-hang.htm?lsp=";
 			BigDecimal sum = ((BigDecimal) session.getAttribute("sumGH"));
 			if(sl == -1) {
 				
@@ -951,6 +962,7 @@ public class SPController {
 						break;
 					}
 				}
+				System.out.println(sum);
 				model.addAttribute("sum",sum);
 				model.addAttribute("SLVP",cart1.size());
 				model.addAttribute("cart", cart);
@@ -1134,6 +1146,15 @@ public class SPController {
 				tmp.setCheck(gh.get(i).getTrangThai());
 				cartDangGiao.add(tmp);
 			}
+		}
+		GioHang gh1 = null;
+		if(nguoi != null) {
+			gh1 = getGioHang(nguoi.getEmail()); 
+		}
+		if (gh1 == null) {
+			model.addAttribute("SLsanPham", "0");
+		} else {
+			model.addAttribute("SLsanPham", getSLSanPhamCuaGH(gh1.getIdGH()));
 		}
 		model.addAttribute("cart",cartDangGiao);
 		return "sp/dang-giao";
