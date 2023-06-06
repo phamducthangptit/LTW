@@ -162,9 +162,7 @@ public class StaffController {
 
 		if (query.list().size() == 0 && isOverEighteen != true ) {
 			
-			 NhanVien nhanVien = new NhanVien(maNV, ho, ten, ngaySinh, SDT,email,"12345678",diaChi,1,chucVu);
-			 
-
+			NhanVien nhanVien = new NhanVien(maNV, ho, ten, ngaySinh, SDT,email,"12345678",diaChi,1,chucVu);
 			session.save(nhanVien); 
 			model.addAttribute("Error", "Thêm nhân viên mới thành công!");
 			return "staff/themnhanvien";
@@ -179,7 +177,6 @@ public class StaffController {
 			model.addAttribute("SDT", SDT); 
 			model.addAttribute("diaChi", diaChi);
 			model.addAttribute("CV", chucVu);
-			 
 			return "staff/themnhanvien";
 		}
 		else {
@@ -192,11 +189,8 @@ public class StaffController {
 			model.addAttribute("SDT", SDT); 
 			model.addAttribute("diaChi", diaChi);
 			model.addAttribute("CV", chucVu);
-			 
 			return "staff/themnhanvien";
 		}
-		
-		
 	}
 	@RequestMapping("suathongtinnhanvien")
 	public String Showsuathongtinnhanvien(Model model, HttpServletRequest request)
@@ -304,6 +298,8 @@ public class StaffController {
 		{
 			return "redirect:dangnhap.htm";
 		}
+		listSL.clear();
+		listSP.clear();
 		String nCCsl =request.getParameter("NCC");
 		
 		Object user1 = s.getAttribute("user1");
@@ -352,15 +348,11 @@ public class StaffController {
 				DS.add(NCC);
 			}
 		}
-		String check = "OK";
-		if(DS.size() == 0)
-		{
-			check = "NOT";
-		}
 		hql = "FROM LoaiSanPham";
 		Query query2 = session.createQuery(hql);
 		List<LoaiSanPham> list2 =	query2.list(); 
-		
+		listSL.clear();
+		listSP.clear();
 		hql = "from DonDatHang";
 		Query query1 = session.createQuery(hql);
 		List<DonDatHang> ddh =	query1.list(); 
@@ -369,7 +361,6 @@ public class StaffController {
 		model.addAttribute("DSSP", list2);
 		model.addAttribute("nhanVien",nhanvien);
 		model.addAttribute("maDDH",maDon);
-		model.addAttribute("CHECK",check);
 		Calendar calendar = Calendar.getInstance();
 		Date currentDate = new Date(calendar.getTime().getTime());
 		model.addAttribute("ngayDat",currentDate);
@@ -443,7 +434,8 @@ public class StaffController {
 		}
 	 
 	@RequestMapping("taotabledondathang")
-	public String taotabledondathang(Model model, HttpServletRequest request ,@RequestParam(value = "themDDH", required = false) String themDDH,
+	public String taotabledondathang(Model model, HttpServletRequest request ,
+			@RequestParam(value = "themDDH", required = false) String themDDH,
 			@RequestParam(value = "luuDDH", required = false) String luuDDH,
 			@RequestParam(value = "huy", required = false) String huy)
 	{
@@ -504,8 +496,6 @@ public class StaffController {
 			DonDatHang newDDH =  new DonDatHang(maDDH,ngayDat,nhaCungCap,nhanvien, null);
 			Calendar calendar = Calendar.getInstance();
 			Date currentDate = new Date(calendar.getTime().getTime());
-			if (ngayDat.compareTo(currentDate) < 0) { // ngay bd nho hon ngay kt -> true
-				
 				if (listSP.size() == 0)
 				{
 					model.addAttribute("ThongBao", "Hiện chưa có sản phẩm nào, vui lòng thêm sản phẩm!");
@@ -522,14 +512,6 @@ public class StaffController {
 					listSL.clear();
 					return "redirect:dondathang.htm";
 				}
-				
-			}
-			
-			else {
-				model.addAttribute("ThongBao", "Ngày đặt không được lớn hơn ngày hiện tại, vui lòng chọn lại!");
-			}
-			
-			
 		}
 		String hql = "FROM NhaCungCap WHERE maNCC = :NCC";
 		Query query= session.createQuery(hql);
@@ -559,7 +541,6 @@ public class StaffController {
 			return "redirect:dangnhap.htm";
 		}
 		Session session = factory.getCurrentSession();
-		
 		Object user = s.getAttribute("user1");
 		NhanVien nhanvien = new NhanVien();
 		nhanvien = (NhanVien) user;
@@ -577,12 +558,10 @@ public class StaffController {
 		Query query= session.createQuery(hql);
 		query.setParameter("NCC", request.getParameter("maNCC"));
 		NhaCungCap nhaCungCap = (NhaCungCap) query.uniqueResult();
-		
 		hql = "FROM CungCap where maNCC.maNCC = :NCC";
 		query = session.createQuery(hql);
 		query.setParameter("NCC",request.getParameter("maNCC"));
 		List<CungCap> list2 =query.list(); 
-		
 		model.addAttribute("DSCC",list2);
 		model.addAttribute("listSP",listSP);
 		model.addAttribute("listSL",listSL);
@@ -632,12 +611,10 @@ public class StaffController {
 				HttpSession s
 				)
 		{
-			
 			if ( s.getAttribute("user1") == null)
 			{
 				return "redirect:dangnhap.htm";
 			}
-			
 			NhanVien nhanvien = (NhanVien) s.getAttribute("user1");
 			Session session = factory.getCurrentSession();
 			String hql = "From DonDatHang where maDDH = :maDDH";
@@ -648,11 +625,10 @@ public class StaffController {
 			query = session.createQuery(hql);
 			List<SanPham> listSPGoc = query.list();
 			int sizeSP = listSPGoc.size();
-			 hql = "From PhieuNhap";
-			 query = session.createQuery(hql);
-				List<PhieuNhap> listPN = query.list(); 
+			hql = "From PhieuNhap";
+			query = session.createQuery(hql);
+			List<PhieuNhap> listPN = query.list(); 
 			int soPhieuNhap = listPN.size() +1 ;
-
 			PhieuNhap phieuNhap = new PhieuNhap();
 			Calendar calendar = Calendar.getInstance();
 			Date currentDate = new Date(calendar.getTime().getTime());
@@ -748,11 +724,13 @@ public class StaffController {
 					{
 						model.addAttribute("HetHan","HetHan");
 					}
-					 if (spNhan.get(0).getPhieuBaoHanh().getNgayBatDau().compareTo(currentDate) <= 0 && currentDate.compareTo(dayreturns) <= 0 &&spNhan.get(0).getSoPhieuTra() == null)
+					 if (spNhan.get(0).getPhieuBaoHanh().getNgayBatDau().compareTo(currentDate) <= 0 
+							 && currentDate.compareTo(dayreturns) <= 0 &&spNhan.get(0).getSoPhieuTra() == null)
 					 { 
 						 model.addAttribute("DoiTra", "DuocTra");
 					 }
-					 if (spNhan.get(0).getPhieuBaoHanh().getNgayBatDau().compareTo(currentDate) <= 0 && currentDate.compareTo(dayreturns) <= 0 &&spNhan.get(0).getSoPhieuTra() != null)
+					 if (spNhan.get(0).getPhieuBaoHanh().getNgayBatDau().compareTo(currentDate) <= 0 
+							 && currentDate.compareTo(dayreturns) <= 0 &&spNhan.get(0).getSoPhieuTra() != null)
 					 {
 						 model.addAttribute("DoiTra", "DaTra");
 					
@@ -895,6 +873,7 @@ public class StaffController {
 		hql = "FROM GioHang Where trangThai = 1";
 		query = session.createQuery(hql);
 		List<GioHang> listGH = query.list();
+		
 		model.addAttribute("listGH",listGH);
 		return "staff/duyetgiohang";
 	}
@@ -1213,7 +1192,6 @@ public class StaffController {
 			GioHang gioHang = (GioHang) query.uniqueResult();
 			gioHang.setTrangThai(3);
 			session.save(gioHang);
-
 			return "redirect:donhangdangnhan.htm";
 		}
 		@RequestMapping("ctphieutra")
