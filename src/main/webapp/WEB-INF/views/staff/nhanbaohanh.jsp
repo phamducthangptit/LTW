@@ -106,22 +106,24 @@
                                </div>
                            </div>
                         </td> 
-						<td>${SanPhamTim.seri }</td>
-						<td>${SanPhamTim.maLoai.maLoai }</td>
-						<td>${SanPhamTim.maLoai.tenSP}</td>
-						<td>${SanPhamTim.phieuBaoHanh.ngayBatDau} đến ${SanPhamTim.phieuBaoHanh.ngayKetThuc}
+						<td class="text-center align-middle">${SanPhamTim.seri }</td>
+						<td class="text-center align-middle">${SanPhamTim.maLoai.maLoai }</td>
+						<td class="text-center align-middle">${SanPhamTim.maLoai.tenSP}</td>
+						<td class="text-center align-middle">${SanPhamTim.phieuBaoHanh.ngayBatDau} đến ${SanPhamTim.phieuBaoHanh.ngayKetThuc}
 						<c:if test ="${HetHan.equals('HetHan')}">
 						<br>Hết Hạn Bảo Hành
 						</c:if>
 						</td>
-						<td>
+						<td class="text-center align-middle">
 						<a  href="kiemtrabaohanh.htm?seri=${SanPhamTim.seri}"><i class="fa fa-bars" style = "color : black" aria-hidden="true"></i></a>
 						</td>
 						<c:if test ="${DoiTra.equals('DuocTra')}">
-						<td><button type="submit" class="btn btn-success btn-lg px-3 " name ="traMay" value = "traMay">Trả Hàng</button></td>
+						<td class="text-center align-middle"><button type="submit" class="btn btn-success btn-lg px-3 " name ="traMay" value = "traMay">Trả Hàng</button></td>
 						</c:if>
 						<c:if test ="${DoiTra.equals('DaTra')}">
-						<td>Đã Trả</td>
+						<td class="text-center align-middle"><div id="templatemo_main_nav">
+						Đã Trả <a class = "nav-link"  href="ctphieutra.htm?seri=${SanPhamTim.seri }">Xem Phiếu Trả</a></div></td>
+						
 						</c:if>
 						<c:if test ="${DoiTra == null}">
 						<td>Hết hạn đổi trả</td>

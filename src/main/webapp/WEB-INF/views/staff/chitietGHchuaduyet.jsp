@@ -100,9 +100,9 @@
                               </div>
                             </div>
                         </td> 
-						<td>${listSP.get(i).maLoai.maLoai} </td>
-						<td>${listSP.get(i).maLoai.tenSP}</td>
-						<td>${listSL.get(i)}</td>
+						<td class="text-center align-middle">${listSP.get(i).maLoai.maLoai} </td>
+						<td class="text-center align-middle">${listSP.get(i).maLoai.tenSP}</td>
+						<td class="text-center align-middle">${listSL.get(i)}</td>
 					</tr>
 					</c:forEach>
 					</c:if>
