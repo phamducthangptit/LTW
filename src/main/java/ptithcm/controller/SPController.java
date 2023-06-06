@@ -62,7 +62,7 @@ public class SPController {
 	
 	// Xử lý danh muc sản phẩm
 	String inputSearch = "";
-	
+	int sapXep = 0;
 	@RequestMapping(value={ "/", "/index" },method = RequestMethod.GET)
 	public String showHome(ModelMap model, HttpSession session) {
 		if (session.getAttribute("user1") != null) {
@@ -445,7 +445,7 @@ public class SPController {
 				//session.save(csg);
 				t.commit();
 			} catch(Exception e) {
-				System.out.println(e.getMessage());
+				//System.out.println(e.getMessage());
 				t.rollback();
 				//session.close();
 				return "Thay đổi sản phẩm thất bại";
@@ -460,6 +460,7 @@ public class SPController {
 	@RequestMapping(value="shop", method = RequestMethod.GET)
 	public String showShop(ModelMap model,
 			HttpSession session,
+			HttpServletRequest request,
 			@RequestParam(defaultValue = "0") int page,
 			@RequestParam (defaultValue = "") String sp
 			) {
@@ -469,10 +470,12 @@ public class SPController {
 			return "redirect:/donhangchuagiao.htm";
 		}
 		//gioHang.setSanPham(new ArrayList<>());
+		if(request.getParameter("sapXep") != null) {
+			sapXep = Integer.parseInt(request.getParameter("sapXep"));
+		}
 		int pageSize = 9;
 		int totalLoaiSanPham ; 
 		int totalPages ;
-		
 		int startPage ;
 		int endPage ;
 		String url = "/BanLaptop/home/shop.htm";
@@ -524,14 +527,14 @@ public class SPController {
 		}
 		
 
-			totalLoaiSanPham = searchSLProduct1(inputSearch);
+			totalLoaiSanPham = getSoLuongLoaiSanPham();
 			totalPages = (int) Math.ceil((double) totalLoaiSanPham / pageSize);
 			if (totalPages ==0) totalPages = 1;
 			startPage = Math.max(0, page - 1);
 			endPage = Math.min(totalPages - 1, page + 1);
-			listLoaiSanPham = this.searchProduct1(page, pageSize, inputSearch);
-			List<LoaiSanPham> listLoaiSanPham1 = getLoaiSanPham(page,pageSize);
-			model.addAttribute("listLoais", listLoaiSanPham1);
+
+			listLoaiSanPham = getLoaiSanPham(page,pageSize,sapXep);
+			model.addAttribute("listLoais", listLoaiSanPham);
 
 		for (LoaiSanPham x:listLoaiSanPham) {
 			BigDecimal strippedValue = x.getGia().stripTrailingZeros();
@@ -546,10 +549,10 @@ public class SPController {
 		model.addAttribute("startPage", startPage);
 		model.addAttribute("endPage", endPage);
 		model.addAttribute("listLoaiSanPham", listLoaiSanPham);
-		for (LoaiSanPham l :  listLoaiSanPham) {
-			System.out.println(l.getMaLoai());
-			System.out.println(l.getCtDotGiamGia());
-		}
+//		for (LoaiSanPham l :  listLoaiSanPham) {
+//			System.out.println(l.getMaLoai());
+//			System.out.println(l.getCtDotGiamGia());
+//		}
 		if (gh == null) {
 			model.addAttribute("SLsanPham", "0");
 		} else {
@@ -565,13 +568,19 @@ public class SPController {
 			HttpSession session,
 			HttpServletRequest request,
 			@RequestParam(defaultValue = "0") int page
+			
 			) {
 		if (session.getAttribute("user1") != null) {
 			return "redirect:/homenv.htm";
 		} else if(session.getAttribute("user2") != null) {
 			return "redirect:/donhangchuagiao.htm";
 		}
-		inputSearch = request.getParameter("searchInput");
+		if(request.getParameter("searchInput") != null) {
+			inputSearch = request.getParameter("searchInput");
+		}
+		if(request.getParameter("sapXep") != null) {
+			sapXep = Integer.parseInt(request.getParameter("sapXep"));
+		}
 		if (inputSearch.equals("")) {
 			return "redirect:/home/shop/search.htm";
 		}
@@ -581,9 +590,9 @@ public class SPController {
 		if (totalPages ==0) totalPages = 1;
 		int startPage = Math.max(0, page - 1);
 		int endPage = Math.min(totalPages - 1, page + 1);
-		String url = "/BanLaptop/home/shop.htm";
-		List<LoaiSanPham> listLoaiSanPham = this.searchProduct1(page, pageSize, inputSearch);
-		List<LoaiSanPham> listLoaiSanPham1 = getLoaiSanPham(page,pageSize);
+		String url = "/BanLaptop/home/shop/search.htm";
+		List<LoaiSanPham> listLoaiSanPham = this.searchProduct1(page, pageSize, inputSearch, sapXep);
+		List<LoaiSanPham> listLoaiSanPham1 = getLoaiSanPham(page,pageSize,sapXep);
 		List<HangSanXuat> listHang = getHang();
 		List<TheLoai> listTheLoai = getTheLoai();
 		for (LoaiSanPham x:listLoaiSanPham) {
@@ -743,7 +752,7 @@ public class SPController {
 		} else if(session.getAttribute("user2") != null) {
 			return "redirect:/donhangchuagiao.htm";
 		}
-		System.out.println(input);
+		//System.out.println(input);
 		model.addAttribute("searchInput", input);
 		return "redirect:/home/shop/search.htm";
 	}
@@ -1215,9 +1224,14 @@ public class SPController {
 		return list;
 	}
 	
-	private List<LoaiSanPham> getLoaiSanPham(int page, int pageSize) {
+	private List<LoaiSanPham> getLoaiSanPham(int page, int pageSize, int sapXep) {
 		Session session = factory.getCurrentSession();
 		String hql = "FROM LoaiSanPham";
+		if (sapXep == 0) {
+			hql += " ORDER BY gia ASC";
+		} else {
+			hql += " ORDER BY gia DESC";
+		}
 		Query query = session.createQuery(hql);
 		int offset = page * pageSize;
 		List<LoaiSanPham> list = query.setFirstResult(offset).setMaxResults(pageSize).list();
@@ -1305,13 +1319,18 @@ public class SPController {
 		return count;
 	}
 	
-	private List<LoaiSanPham> searchProduct1(int page, int pageSize, String s) {
+	private List<LoaiSanPham> searchProduct1(int page, int pageSize, String s, int sapXep) {
 		Session session = factory.getCurrentSession();
 		ArrayList<String> tmp = catChuoi(s);
 		String hql = "FROM LoaiSanPham WHERE maLoai LIKE :product_name"
 				+" OR  tenSP LIKE :product_name1"
 				+" OR  maTheLoai.tenTL LIKE :product_name"
 				+" OR  maHang.tenHang LIKE :product_name";
+		if (sapXep == 0) {
+			hql += " ORDER BY gia ASC";
+		} else {
+			hql += " ORDER BY gia DESC";
+		}
 		Query query = session.createQuery(hql);
 		query.setParameter("product_name","%" +tmp.get(0) + "%");
 		query.setParameter("product_name1","%" + tmp.get(1)+ "%" );
