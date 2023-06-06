@@ -30,8 +30,8 @@
 }
 </style>
 <%
-	Object ob1 = session.getAttribute("user1");
-	if(ob1 != null){
+	Object ob2 = session.getAttribute("user1");
+	if(ob2 != null){
 %>
 <%@include file="headerNV.jsp"%>
 <%} else {%>
