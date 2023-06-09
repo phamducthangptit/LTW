@@ -18,5 +18,7 @@ public class PasswordEncoder {
         }
         return hexString.toString();
     }
-
+    public static void main(String[] args) throws NoSuchAlgorithmException {
+		System.out.println(encodePassword("ggg"));
+	}
 }

@@ -72,9 +72,6 @@
        	</li>
        	<li class = "pb-3" > Mã Đơn : <input type = "text" style="width: 100px;border :none"id ="maDDH" name = "maDDH" value ="${maDDH }" readonly="readonly"></li>
        	<li class = "pb-3"> Ngày Đặt : <input type="date" style="width: 150px;border :none" id="ngayDat" name="ngayDat" value="${ngayDat}" placeholder="dd/MM/yyyy" pattern="\d{2}/\d{2}/\d{4}" readonly="readonly"></li>
-       	<c:if test = "${ CHECK.equals('NOT')})">
-       	<li class = "pb-3">Hiện Không Có Nhà Cung Cấp Đủ Yêu Cầu Nhập Hàng !</li>
-       	</c:if>
        
        	<li class = "pb-3"> Nhà Cung Cấp : <select type="text" id="NCC" name="NCC" style="padding: 10px; border: 1px solid #ccc; background-color: #fff; color: #333; cursor: pointer;">
        		

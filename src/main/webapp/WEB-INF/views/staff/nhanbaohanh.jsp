@@ -126,7 +126,7 @@
 						
 						</c:if>
 						<c:if test ="${DoiTra == null}">
-						<td>Hết hạn đổi trả</td>
+						<td class="text-center align-middle">Hết hạn đổi trả</td>
 						</c:if>
 						
 						<c:if test ="${!DoiTra.equals('DaTra')}">
