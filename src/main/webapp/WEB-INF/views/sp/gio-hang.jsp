@@ -162,7 +162,7 @@ https://templatemo.com/tm-559-zay-shop
                             	Tổng:
                             </td>
                             <td class="align-middle">
-                            	${SLVP} vật phẩm.
+                            	${SLVP}	loại sản phẩm.
                             </td>
                             <td>
                             </td>

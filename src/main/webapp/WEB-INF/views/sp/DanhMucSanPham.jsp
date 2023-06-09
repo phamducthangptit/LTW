@@ -110,7 +110,8 @@ https://templatemo.com/tm-559-zay-shop
                                 	</a>
                                 </td>
                                 <td class="text-center align-middle">
-                                	<a class="btn ${product.getSanPham() == null ? '' : 'disabled'}" href="/BanLaptop/home/danh-muc-san-pham/${product.getMaLoai()}.htm?linkDelete" >
+                                	<a class="btn ${product.getSanPham() == null ? '' : 'disabled'}" 
+                                	href="/BanLaptop/home/danh-muc-san-pham/${product.getMaLoai()}.htm?linkDelete" >
                                 	<i class="fas fa-trash-alt fa-lg" style="color: #000000;"></i>
                                 	</a>
                                 </td>
