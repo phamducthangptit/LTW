@@ -56,6 +56,7 @@
         	<div class = "card-body">
             <div class = "container py-5">
                 <h2>Danh sách Giỏ Hàng Chờ Duyệt</h2>
+                     <h6 style="color: red; right: 15px ; text-align: right">${ERROR}</h6>
                <br>  <br>  <br>
                
                 <table class="table table-light table-striped table-hover bordered-dark"

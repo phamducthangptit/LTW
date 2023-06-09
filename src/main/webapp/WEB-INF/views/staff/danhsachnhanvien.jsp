@@ -55,7 +55,7 @@
         	<div class = "card-body">
             <div class = "container py-5">
                 <h2>Danh sách nhân viên</h2>
-                
+                <h6 style="color: red; right: 15px ; text-align: right">${Error}</h6>
             <h3><a href="themnhanvien.htm" class="btn btn-success btn-lg px-3"><i class="fa fa-user-plus" aria-hidden="true"></i>  Thêm Nhân Viên Mới</a></h3>
             <p>   </p>
             <form class="employee-list" action="staff/danhsachnhanvien.htm" method="POST">
