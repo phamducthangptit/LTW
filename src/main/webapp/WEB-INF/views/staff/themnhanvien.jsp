@@ -66,6 +66,7 @@
 							<form class="employee-list" action="themnhanvien.htm"
 								method="POST">
 								<h6 style="color: red; margin-left: 15px">${ErrorId }</h6>
+								<h6 style="color: red; margin-left: 15px">${Error}</h6>
 								<!-- Start Contact -->
 								<div class="container py-5" lang="vi">
 									<div class="row py-5">
@@ -80,7 +81,7 @@
 												<label for="selectChucVu">Chức Vụ :</label> <br> <select style="padding: 10px; border: 1px solid #ccc; background-color: #fff; color: #333; cursor: pointer;"
 													type="text" id="CV" name="CV" value="${CV }">
 													<option value="NVBanHang">Nhân Viên Bán Hàng</option>
-													<option value="NVBaoHanh">Nhân Viên Bảo Hành</option>
+													<!-- <option value="NVBaoHanh">Nhân Viên Bảo Hành</option> -->
 													<option value="NVGiaoHang">Nhân Viên Giao Hàng</option>
 													<option value="QL">Quản Lí</option>
 												</select>
@@ -111,9 +112,9 @@
 											<div class="form-group col-md-6 mb-3">
 												<label for="inputSDT">Số Điện Thoại :</label> <input
 													type="tel" class="form-control mt-1" id="SDT" name="SDT"
-													value="${SDT }" pattern="[0-9]{10}"
+													value="${SDT }" pattern="0[0-9]{9}"
 													placeholder="Vui Lòng Không Bỏ Trống"
-													title="Số điện thoại phải bao gồm 10 chữ số không kí tự khác !" required>
+													title="Số điện thoại phải bao gồm 10 chữ số, bắt đầu bằng số 0 !" required>
 											</div>
 										</div>
 
@@ -153,87 +154,5 @@
 	</main>
 	<!-- End Contact -->
 	<%@include file="footerQL.jsp"%>
-    <!-- Start Content Page -->
-    <main>
-       <section class="bg-light">
-       <div class = "container pd-5">
-       <div class="card">
-       	<div class="card-body">
-            <div class = "container py-5">
-                <h2>Thêm Nhân Viên Mới</h2>
-              
-         <form class="employee-list" action="themnhanvien.htm" method="POST">
-         <h6 style="color: red; margin-left: 15px">${Error }</h6>
-	<!-- Start Contact -->
-    <div class="container py-5" lang="vi">
-        <div class="row py-5">
-            
-                <div class="row">
-                    <div class="form-group col-md-6 mb-3">
-                        <label for="inputId">Mã Nhân Viên :</label>
-                        <input type="text" class="form-control mt-1" id="Id" name="Id" value = "${maNV}" placeholder="Vui Lòng Không Bỏ Trống" required readonly="readonly">
-                    </div>
-                    <div class="form-group col-md-6 mb-3">
-                        <label for="selectChucVu" >Chức Vụ :</label>
-                        <br>
-                        <select type="text" id="CV" name="CV" value="${CV }" >
-                            <option value="NVBanHang" >Nhân Viên Bán Hàng</option>
-                            <option value="NVBaoHanh" >Nhân Viên Bảo Hành</option>
-                            <option value="NVGiaoHang">Nhân Viên Giao Hàng</option>
-                            <option value="QL">Quản Lí</option>
-                          </select>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="form-group col-md-6 mb-3">
-                        <label for="inputHo">Họ :</label>
-                        <input type="text" class="form-control mt-1" id="Ho" name="Ho" value="${Ho }" placeholder="Vui Lòng Không Bỏ Trống" required>
-                    </div>
-                    <div class="form-group col-md-6 mb-3">
-                        <label for="inputTen">Tên :</label>
-                        <input type="text" class="form-control mt-1" id="Ten" name="Ten" value="${Ten }" placeholder="Vui Lòng Không Bỏ Trống" required>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="form-group col-md-6 mb-3">
-                        <label for="birthdate">Ngày sinh:</label><br>
-			            <input type="date" id="birthdate" name="birthdate" value="${birthdate }" placeholder="dd/mm/yyyy" pattern="\d{2}/\d{2}/\d{4}" required>
-                    </div>
-                    <div class="form-group col-md-6 mb-3">
-                        <label for="inputSDT">Số Điện Thoại :</label>
-                        <input type="tel" class="form-control mt-1" id="SDT" name="SDT" value="${SDT }" pattern="[0-9]{10}" placeholder="Vui Lòng Không Bỏ Trống" title="Số điện thoại phải bao gồm 10 chữ số" required>
-                    </div>
-                </div>
-
-                <div class="mb-3">
-                    <label for="inputEmail">Email :</label>
-                    <input type="email" class="form-control mt-1" id="email" name="email" value="${email }" placeholder="Vui Lòng Không Bỏ Trống" required>
-               <h6 style="color: red; margin-left: 15px">${ErrorEmail }</h6>
-                </div>
-                <div class="mb-3">
-                    <label for="inputDiaChi">Địa Chỉ :</label>
-                    <input type="text" class="form-control mt-1" id="diaChi" name="diaChi" value="${diaChi }"  placeholder="Vui Lòng Không Bỏ Trống" required>
-                    <br>
-                    
-                </div>
-                <div class="row">
-                    <div class="col text-end mt-2">
-                        <button type="submit" class="btn btn-success btn-lg px-3">Thêm <i class="fa fa-check" aria-hidden="true"></i></button>
-                        <!-- <button type="submit" class="btn btn-success btn-lg px-3">Hủy</button> -->
-                    </div>
-                </div>
-        </div>
-        
-    </div>
-    </form>
-    </div>
-    </div>
-    </div>
-    </div>
-    </section>
-    </main>
-    <!-- End Contact -->
-    <%@include file="footerQL.jsp" %>
->>>>>>> e151fdc52d2f0009d45594b1d15c0ff0098585bb
 </body>
 </html>

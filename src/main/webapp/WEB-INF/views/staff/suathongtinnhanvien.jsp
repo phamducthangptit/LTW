@@ -72,9 +72,9 @@
                     <div class="form-group col-md-6 mb-3">
                         <label for="selectChucVu" >Chức Vụ :</label>
                         <br>
-                        <select type ="text" id="CV" name="CV">
+                        <select style="padding: 10px; border: 1px solid #ccc; background-color: #fff; color: #333; cursor: pointer;" type ="text" id="CV" name="CV">
 						    <option value="NVBanHang" ${nv.role == "NVBanHang" ? "selected" : ""}>Nhân Viên Bán Hàng</option>
-						    <option value="NVBaoHanh" ${nv.role == "NVBaoHanh" ? "selected" : ""}>Nhân Viên Bảo Hành</option>
+						   <%--  <option value="NVBaoHanh" ${nv.role == "NVBaoHanh" ? "selected" : ""}>Nhân Viên Bảo Hành</option> --%>
 						    <option value="NVGiaoHang" ${nv.role == "NVGiaoHang" ? "selected" : ""}>Nhân Viên Giao Hàng</option>
 						    <option value="QL" ${nv.role == "QL" ? "selected" : ""}>Quản Lí</option>
 						</select>
