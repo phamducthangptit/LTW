@@ -18,10 +18,4 @@ public class PasswordEncoder {
         }
         return hexString.toString();
     }
-<<<<<<< HEAD
-=======
-    public static void main(String[] args) throws NoSuchAlgorithmException {
-		System.out.println(encodePassword("ggg"));
-	}
->>>>>>> 01de4166bea5c321dbdebd61f7f3406f7962e498
 }
