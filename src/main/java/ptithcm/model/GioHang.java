@@ -1,6 +1,6 @@
 package ptithcm.model;
 
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -29,8 +29,7 @@ public class GioHang {
 	@Column(name="TRANGTHAI")
 	private int trangThai;
 	
-	@Temporal(TemporalType.TIMESTAMP)
-	@DateTimeFormat(pattern="dd/MM/yyyy HH:mm:ss")
+
 	@Column(name="NGAYTAO")
 	private Date ngayTao;
 	

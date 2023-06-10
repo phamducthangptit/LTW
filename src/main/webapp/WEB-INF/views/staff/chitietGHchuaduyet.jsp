@@ -66,7 +66,7 @@
        <ul >
        	<li class = "pb-3"> Nhân Viên Duyệt : <br>${nhanVien.maNV } - ${nhanVien.ho } ${nhanVien.ten }</li>
        		<li class = "pb-3"> ID Giỏ Hàng : ${gioHang.idGH}</li>
-       	<li class = "pb-3"> Ngày Tạo : ${gioHang.ngayTao }</li>
+       	<li class = "pb-3"> Ngày Tạo : ${gioHang.ngayTao}	</li>
        	<li class = "pb-3"> Email Khách Hàng: ${gioHang.email.email}</li>
        </ul>
        <c:if test = "${gioHang.trangThai == 1}">

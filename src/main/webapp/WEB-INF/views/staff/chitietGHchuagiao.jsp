@@ -67,6 +67,7 @@
        		<li class = "pb-3"> ID Giỏ Hàng : ${gioHang.idGH}</li>
        	<li class = "pb-3"> Ngày Tạo : ${gioHang.ngayTao }</li>
        	<li class = "pb-3"> Email Khách Hàng: ${gioHang.email.email}</li>
+       	<li class = "pb-3"> Địa Chỉ Khách Hàng: ${gioHang.email.diaChi}</li>
        	 <li class = "pb-3"> SĐT Khách Hàng: ${gioHang.email.sdt}</li>
        </ul>
   

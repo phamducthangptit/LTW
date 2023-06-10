@@ -4,6 +4,8 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+
+
 public class PasswordEncoder {
     public static String encodePassword(String password) throws NoSuchAlgorithmException {
         MessageDigest digest = MessageDigest.getInstance("SHA-256");
@@ -16,4 +18,10 @@ public class PasswordEncoder {
         }
         return hexString.toString();
     }
+<<<<<<< HEAD
+=======
+    public static void main(String[] args) throws NoSuchAlgorithmException {
+		System.out.println(encodePassword("ggg"));
+	}
+>>>>>>> 01de4166bea5c321dbdebd61f7f3406f7962e498
 }

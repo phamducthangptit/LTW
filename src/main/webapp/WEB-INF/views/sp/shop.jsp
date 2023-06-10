@@ -56,7 +56,9 @@ https://templatemo.com/tm-559-zay-shop
                         </a>
                         <ul class="collapse show list-unstyled pl-3">
                          <c:forEach items="${listTheLoai}" var="tl">
-                            <li><a class="text-decoration-none" href="/BanLaptop/home/shop/search/${tl.getTenTL()}.htm?linkSearch">${tl.getTenTL()}</a></li>
+                            <li><a class="text-decoration-none" href="/BanLaptop/home/shop/search/${tl.getTenTL()}.htm?linkSearch">
+                            <i class="fas fa-dice-d6 fa-xs" style="color: #000000;"></i>
+                             - ${tl.getTenTL()}</a></li>
                             </c:forEach>
                         </ul>
                     </li>
@@ -67,7 +69,9 @@ https://templatemo.com/tm-559-zay-shop
                         </a>
                         <ul id="collapseTwo" class="collapse list-unstyled pl-3">
                             <c:forEach items="${listHang}" var="hang">
-                            <li><a class="text-decoration-none" href="/BanLaptop/home/shop/search/${hang.getTenHang()}.htm?linkSearch">${hang.getTenHang()}</a></li>
+                            <li><a class="text-decoration-none" href="/BanLaptop/home/shop/search/${hang.getTenHang()}.htm?linkSearch">
+                            <i class="fas fa-dice-d6 fa-xs" style="color: #000000;"></i>
+                             - ${hang.getTenHang()}</a></li>
                             </c:forEach>
                         </ul>
                     </li>
@@ -76,21 +80,25 @@ https://templatemo.com/tm-559-zay-shop
 
             <div class="col-lg-9">
                 <div class="row">
-                    <div class="col-md-4">
-                        <ul class="list-inline shop-top-menu pb-3 pt-1" style="display: none;">
+                    <div class="col-md-5">
+                        <ul class="list-inline shop-top-menu pb-3 pt-1" >
                             <li class="list-inline-item">
-                                <a class="h3 text-dark text-decoration-none mr-3" href="#">All</a>
+                                <h5>Sắp xếp giá:</h5>
                             </li>
                             <li class="list-inline-item">
-                                <a class="h3 text-dark text-decoration-none mr-3" href="#">Men's</a>
+                                <a class="h4 text-dark text-decoration-none mr-3" href="${url}?sapXep=0">
+                                <i class="fas fa-long-arrow-alt-up fa-xs" style="color: #000000;"></i>
+                                tăng dần</a>
                             </li>
                             <li class="list-inline-item">
-                                <a class="h3 text-dark text-decoration-none" href="#">Women's</a>
+                                <a class="h4 text-dark text-decoration-none" href="${url}?sapXep=1">
+                                <i class="fas fa-long-arrow-alt-down fa-xs" style="color: #000000;"></i>
+                                giảm dần</a>
                             </li>
                         </ul>
                     </div>
                     
-                    <div class="col-md-8 pb-4">
+                    <div class="col-md-7 pb-4">
                     	<form action="/BanLaptop/home/shop/search.htm">
                         <div class="row">
                         <div class="col-md-8">
@@ -119,8 +127,10 @@ https://templatemo.com/tm-559-zay-shop
                                 <div
                                     class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
                                     <ul class="list-unstyled">
-                                        
-                                        <li ><a class="btn btn-success text-white mt-2 ${product.getSanPham() == null ? 'disabled' : ''}" href="${url}?page=${currentPage}&sp=${product.getMaLoai()}"><i
+                                        <li><a class="btn btn-success text-white mt-2" href="/BanLaptop/home/shop-single.htm?lsp=${product.getMaLoai()}"><i
+                                                    class="far fa-eye"></i></a></li>
+                                        <li ><a class="btn btn-success text-white mt-2 ${product.getSanPham() == null ? 'disabled' : ''}" 
+                                        href="${url}?page=${currentPage}&sp=${product.getMaLoai()}"><i
                                                     class="fas fa-cart-plus"></i></a></li>
                                     </ul>
                                 </div>
