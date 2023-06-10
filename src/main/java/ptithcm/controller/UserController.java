@@ -175,7 +175,7 @@ public class UserController {
 			Query query = session.createQuery(hql);
 			query.setParameter("email", email);
 			query.executeUpdate();
-			return "user/login";
+			return "redirect:/dangnhap.htm";
 		} else {
 			model.addAttribute("ErrorAccount", "Mã không đúng! Vui lòng nhập lại mã xác thực!");
 			return "user/xacthuctaikhoan";
@@ -273,7 +273,7 @@ public class UserController {
 	public String layLaiMk(HttpServletRequest request, Model model,
 			@RequestParam(value = "guiMa", required = false) String guiMa,
 			@RequestParam(value = "xacNhanMa", required = false) String xacNhanMa,
-			@RequestParam(value = "xacNhanMk", required = false) String xacNhanMk) {
+			@RequestParam(value = "xacNhanMk", required = false) String xacNhanMk) throws NoSuchAlgorithmException {
 		String email = request.getParameter("email");
 		String maXN = request.getParameter("maXN");
 		if(guiMa != null) {//neu click vao gui ma
@@ -308,9 +308,9 @@ public class UserController {
 			Session session = factory.getCurrentSession();
 			Query query = session.createQuery(hql);
 			query.setParameter("email", email);
-			query.setParameter("pass", pass);
+			query.setParameter("pass", PasswordEncoder.encodePassword(pass));
 			query.executeUpdate();
 		}
-		return "user/login";
+		return "redirect:/dangnhap.htm";
 	}
 }

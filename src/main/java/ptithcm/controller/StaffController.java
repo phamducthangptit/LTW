@@ -1,6 +1,7 @@
 package ptithcm.controller;
 
 
+import java.security.NoSuchAlgorithmException;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import net.sf.ehcache.search.expression.And;
+import ptithcm.encrypt.PasswordEncoder;
 import ptithcm.model.CTBaoHanh;
 import ptithcm.model.CTDonDatHang;
 import ptithcm.model.CungCap;
@@ -128,7 +130,7 @@ public class StaffController {
 		return "staff/themnhanvien";
 	}
 	@RequestMapping(value = "/themnhanvien", method = RequestMethod.POST)
-	public String themnhanvien(HttpServletRequest request, Model model)
+	public String themnhanvien(HttpServletRequest request, Model model) throws NoSuchAlgorithmException
 	{
 		HttpSession s = request.getSession();
 		if ( s.getAttribute("user1") == null)
@@ -162,7 +164,7 @@ public class StaffController {
 
 		if (query.list().size() == 0 && isOverEighteen != true ) {
 			
-			 NhanVien nhanVien = new NhanVien(maNV, ho, ten, ngaySinh, SDT,email,"12345678",diaChi,1,chucVu);
+			 NhanVien nhanVien = new NhanVien(maNV, ho, ten, ngaySinh, SDT,email,PasswordEncoder.encodePassword("12345678"),diaChi,1,chucVu);
 			 
 
 			session.save(nhanVien); 

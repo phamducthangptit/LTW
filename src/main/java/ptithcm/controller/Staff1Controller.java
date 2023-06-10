@@ -208,8 +208,11 @@ public class Staff1Controller {
 			nhanVien = (NhanVien) user;
 			String hql = "FROM DotGiamGia";
 			Query query = s.createQuery(hql);
+			int size = query.list().size();
+			DotGiamGia dgg = (DotGiamGia) query.list().get(size - 1);
+			int id = Integer.parseInt(dgg.getMaDot().substring(3));
 			DotGiamGia dotGG = new DotGiamGia("", ngayBD, ngayKT, moTa, nhanVien);
-			dotGG.setMaDot("DGG" + (query.list().size() + 1));
+			dotGG.setMaDot("DGG" + (id + 1));
 			if (ngayBD.compareTo(ngayKT) <= 0) { // ngay bd nho hon ngay kt -> true
 				s.save(dotGG);
 				model.addAttribute("ErrorGG", "");
@@ -405,7 +408,10 @@ public class Staff1Controller {
 		
 		String hql = "FROM NhaCungCap";
 		Query query = session.createQuery(hql);
-		NhaCungCap nhaCC = new NhaCungCap("NCC" + query.list().size(), tenNCC, diaChi, sdt, email);
+		int size = query.list().size();
+		NhaCungCap ncc = (NhaCungCap) query.list().get(size - 1);
+		int id = Integer.parseInt(ncc.getMaNCC().substring(3));
+		NhaCungCap nhaCC = new NhaCungCap("NCC" + (id + 1), tenNCC, diaChi, sdt, email);
 		String[] listLSP = request.getParameterValues("selectedSP");
 		hql = "From LoaiSanPham";
 		query = session.createQuery(hql);
@@ -527,6 +533,11 @@ public class Staff1Controller {
 		Session session = factory.getCurrentSession();
 		NhaCungCap nhaCungCapCheck = (NhaCungCap) session.get(NhaCungCap.class, id);
 		if (nhaCungCapCheck.getDonDatHang().size() == 0) {
+			String hql = "DELETE FROM CungCap CC WHERE CC.maNCC.maNCC = :maNCC";
+			Query query = session.createQuery(hql);
+			query.setParameter("maNCC", nhaCungCapCheck.getMaNCC());
+			query.executeUpdate();
+			
 			session.delete(nhaCungCapCheck);
 		}
 		String hql = "FROM NhaCungCap";

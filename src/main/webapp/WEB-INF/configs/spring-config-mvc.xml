@@ -14,7 +14,7 @@
 	<!-- Cấu hình package chứa các controller -->
 	<mvc:interceptors>
 		<mvc:interceptor>
-			<mvc:mapping path="/home/**"/>
+			
 			<mvc:mapping path="/doanhthutheongay.htm"/>
 			<mvc:mapping path="/doanhthutheothang.htm"/>
 			<mvc:mapping path="/deletencc.htm"/>
@@ -30,9 +30,9 @@
 			<mvc:mapping path="/homenv.htm"/>
 			<mvc:mapping path="/thongtincanhanuser.htm"/>
 			<mvc:mapping path="/doimatkhauuser.htm"/>
-			<mvc:mapping path="/dangxuat.htm"/>
+			<mvc:mapping path="/dangxuat.htm"/>	
 			
-			
+			<mvc:mapping path="/home/**"/>
 			
 			<mvc:exclude-mapping path="/home/"/>
 			<mvc:exclude-mapping path="/home/index.htm"/>
